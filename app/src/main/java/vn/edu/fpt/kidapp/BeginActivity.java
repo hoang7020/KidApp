@@ -13,6 +13,7 @@ import android.widget.ImageView;
 
 import vn.edu.fpt.kidapp.JsonModel.CapturePicture;
 import vn.edu.fpt.kidapp.database.DBManager;
+import vn.edu.fpt.kidapp.utils.Constant;
 
 public class BeginActivity extends AppCompatActivity {
 
@@ -44,6 +45,7 @@ public class BeginActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 mMediaPlayer.start();
+                Constant.FLAG = true;
                 Intent intent = new Intent(BeginActivity.this, CameraActivity.class);
                 startActivityForResult(intent, CAMERA_REQUEST_CODE);
             }

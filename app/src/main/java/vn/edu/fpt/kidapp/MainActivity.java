@@ -22,6 +22,7 @@ import java.util.Locale;
 import vn.edu.fpt.kidapp.receiver.EnglishTranslateReceiver;
 import vn.edu.fpt.kidapp.receiver.PicturePredictReceiver;
 import vn.edu.fpt.kidapp.utils.ClarifaiUtil;
+import vn.edu.fpt.kidapp.utils.Constant;
 import vn.edu.fpt.kidapp.utils.FileUtil;
 
 
@@ -64,6 +65,7 @@ public class MainActivity extends AppCompatActivity implements TextToSpeech.OnIn
             @Override
             public void onClick(View v) {
                 mMediaPlayer.start();
+                Constant.FLAG = true;
                 Intent intent = new Intent(MainActivity.this, CameraActivity.class);
                 startActivityForResult(intent, CAMERA_REQUEST_CODE);
             }
@@ -109,9 +111,13 @@ public class MainActivity extends AppCompatActivity implements TextToSpeech.OnIn
     @Override
     protected void onStart() {
         super.onStart();
-        mLoading = new LoadingFragment();
-        mLoading.setCancelable(false);
-        mLoading.show(getFragmentManager(), "Loading");
+        if(Constant.FLAG) {
+            mLoading = new LoadingFragment();
+            mLoading.setCancelable(false);
+            mLoading.show(getFragmentManager(), "Loading");
+        }
+        Log.e(TAG, "onStart: " + Constant.FLAG);
+        Constant.FLAG = false;
 
         mReceiverPicturePredict = new PicturePredictReceiver(txtResult1, txtResult2, txtResult3);
         mReceiverEnglishTranslate = new EnglishTranslateReceiver(txtVietname1, txtVietname2, txtVietname3, mLoading);
@@ -171,5 +177,10 @@ public class MainActivity extends AppCompatActivity implements TextToSpeech.OnIn
     protected void onDestroy() {
         super.onDestroy();
         mMediaPlayer.release();
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
     }
 }
