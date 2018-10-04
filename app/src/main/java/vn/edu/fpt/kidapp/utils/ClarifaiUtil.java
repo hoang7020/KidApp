@@ -86,9 +86,9 @@ public class ClarifaiUtil {
 //
 //                    Intent intent = new Intent();
 //                    intent.setAction("ACTION_PREDICT_SUCCESS");
-//                    intent.putExtra("result1", rs.get().workflowResults().get(0).predictions().get(0).data().get(0).asConcept().name());
-//                    intent.putExtra("result2", rs.get().workflowResults().get(0).predictions().get(0).data().get(1).asConcept().name());
-//                    intent.putExtra("result3", rs.get().workflowResults().get(0).predictions().get(0).data().get(2).asConcept().name());
+//                    intent.putExtra("result1", rs.get().workflowResults().get(0).predictions().get(0).start().get(0).asConcept().name());
+//                    intent.putExtra("result2", rs.get().workflowResults().get(0).predictions().get(0).start().get(1).asConcept().name());
+//                    intent.putExtra("result3", rs.get().workflowResults().get(0).predictions().get(0).start().get(2).asConcept().name());
                     context.sendBroadcast(intent);
                 } catch (Exception e) {
                     Log.e(TAG, "run: " + e.getMessage());
