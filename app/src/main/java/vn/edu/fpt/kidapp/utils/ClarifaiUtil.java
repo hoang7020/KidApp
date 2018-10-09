@@ -37,7 +37,7 @@ public class ClarifaiUtil {
     private static final String API_KEY = "1544ba6a0f794ae6883d31b5445260cf";
 
     private ClarifaiClient client;
-    List<ClarifaiOutput<Prediction>> result;
+    private List<ClarifaiOutput<Prediction>> result;
 
     public ClarifaiUtil() {
         client = new ClarifaiBuilder(API_KEY)

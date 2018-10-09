@@ -39,12 +39,6 @@ public class CameraActivity extends AppCompatActivity {
         @Override
         public void onPictureTaken(byte[] jpeg) {
             super.onPictureTaken(jpeg);
-//            FileUtil.savePictureToSdcard(FILE_NAME, jpeg);
-//            Intent intent = getIntent();
-//            intent.putExtra("FILENAME", FILE_NAME);
-//            setResult(RESULT_OK, intent);
-//            finish();
-
             FileUtil.savePictureToSdcard(FILE_NAME, jpeg);
             Intent intent = new Intent(CameraActivity.this, CropImageActivity.class);
             intent.putExtra("FILENAME", FILE_NAME);

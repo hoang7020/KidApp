@@ -8,38 +8,53 @@ import android.widget.TextView;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Vector;
 
+import vn.edu.fpt.kidapp.interfaces.Observer;
+import vn.edu.fpt.kidapp.interfaces.Observerable;
 import vn.edu.fpt.kidapp.utils.TranslateUtil;
 
-public class PicturePredictReceiver extends BroadcastReceiver {
+public class PicturePredictReceiver extends BroadcastReceiver implements Observerable {
 
     private static final String TAG = PicturePredictReceiver.class.getSimpleName();
 
-    private TextView txtResult1, txtResult2, txtResult3;
+    private Vector<Observer> observers;
 
-    public PicturePredictReceiver(TextView result1, TextView result2, TextView result3) {
-        this.txtResult1 = result1;
-        this.txtResult2 = result2;
-        this.txtResult3 = result3;
+    public PicturePredictReceiver() {
+        observers = new Vector<>();
     }
-
-    String result1;
 
     @Override
     public void onReceive(Context context, final Intent intent) {
         if (intent.getAction().equals("ACTION_PREDICT_SUCCESS")) {
-            result1 = intent.getStringExtra("result1");
-            String result2 = intent.getStringExtra("result2");
-            String result3 = intent.getStringExtra("result3");
-            txtResult1.setText(result1);
-            txtResult2.setText(result2);
-            txtResult3.setText(result3);
+            String rs1 = intent.getStringExtra("result1");
+            String rs2 = intent.getStringExtra("result2");
+            String rs3 = intent.getStringExtra("result3");
+            sendNotification(Observerable.PICTURE_PREDICT, rs1, rs2, rs3);
             List<TranslateUtil.RequestBody> listEng = new ArrayList<>();
-            listEng.add(new TranslateUtil.RequestBody(result1));
-            listEng.add(new TranslateUtil.RequestBody(result2));
-            listEng.add(new TranslateUtil.RequestBody(result3));
+            listEng.add(new TranslateUtil.RequestBody(rs1));
+            listEng.add(new TranslateUtil.RequestBody(rs2));
+            listEng.add(new TranslateUtil.RequestBody(rs3));
             TranslateUtil.translateEnglishToVietnamese(listEng, context);
 
+        }
+    }
+
+    @Override
+    public void registerObserver(Observer observer) {
+        observers.add(observer);
+    }
+
+    @Override
+    public void removeObserver(Observer observer) {
+        observers.remove(observer);
+    }
+
+    @Override
+    public void sendNotification(int type, String rs1, String rs2, String rs3) {
+        for (int i = 0; i < observers.size(); i++) {
+            Observer observer = observers.get(i);
+            observer.getNotification(type, rs1, rs2, rs3);
         }
     }
 }

@@ -19,6 +19,8 @@ import android.widget.Toast;
 
 import java.util.Locale;
 
+import vn.edu.fpt.kidapp.interfaces.Observer;
+import vn.edu.fpt.kidapp.interfaces.Observerable;
 import vn.edu.fpt.kidapp.receiver.EnglishTranslateReceiver;
 import vn.edu.fpt.kidapp.receiver.PicturePredictReceiver;
 import vn.edu.fpt.kidapp.utils.ClarifaiUtil;
@@ -26,7 +28,7 @@ import vn.edu.fpt.kidapp.utils.Constant;
 import vn.edu.fpt.kidapp.utils.FileUtil;
 
 
-public class MainActivity extends AppCompatActivity implements TextToSpeech.OnInitListener {
+public class MainActivity extends AppCompatActivity implements TextToSpeech.OnInitListener, Observer {
 
     private static final String TAG = MainActivity.class.getSimpleName();
     private static final int CAMERA_REQUEST_CODE = 1111;
@@ -38,6 +40,9 @@ public class MainActivity extends AppCompatActivity implements TextToSpeech.OnIn
     private TextToSpeech tts;
     private MediaPlayer mMediaPlayer;
     private DialogFragment mLoading;
+
+    private PicturePredictReceiver mReceiverPicturePredict;
+    private EnglishTranslateReceiver mReceiverEnglishTranslate;
 
 
     @Override
@@ -53,7 +58,7 @@ public class MainActivity extends AppCompatActivity implements TextToSpeech.OnIn
 
         initView();
 
-        Toast.makeText(this, "OK", Toast.LENGTH_SHORT).show();
+        initLoadingDialog();
         Intent intent = this.getIntent();
         String fileName = intent.getStringExtra("FILENAME");
         Bitmap bm = FileUtil.readFileFromSdCard(fileName);
@@ -96,6 +101,7 @@ public class MainActivity extends AppCompatActivity implements TextToSpeech.OnIn
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == CAMERA_REQUEST_CODE) {
             if (resultCode == RESULT_OK) {
+                initLoadingDialog();
                 String fileName = data.getStringExtra("FILENAME");
                 Bitmap bm = FileUtil.readFileFromSdCard(fileName);
                 ivResult.setImageBitmap(bm);
@@ -105,23 +111,15 @@ public class MainActivity extends AppCompatActivity implements TextToSpeech.OnIn
         }
     }
 
-    PicturePredictReceiver mReceiverPicturePredict;
-    EnglishTranslateReceiver mReceiverEnglishTranslate;
-
     @Override
     protected void onStart() {
         super.onStart();
-        if(Constant.FLAG) {
-            mLoading = new LoadingFragment();
-            mLoading.setCancelable(false);
-            mLoading.show(getFragmentManager(), "Loading");
-        }
-        Log.e(TAG, "onStart: " + Constant.FLAG);
-        Constant.FLAG = false;
-
-        mReceiverPicturePredict = new PicturePredictReceiver(txtResult1, txtResult2, txtResult3);
-        mReceiverEnglishTranslate = new EnglishTranslateReceiver(txtVietname1, txtVietname2, txtVietname3, mLoading);
+        mReceiverPicturePredict = new PicturePredictReceiver();
+        mReceiverPicturePredict.registerObserver(this);
         registerReceiver(mReceiverPicturePredict, new IntentFilter("ACTION_PREDICT_SUCCESS"));
+
+        mReceiverEnglishTranslate = new EnglishTranslateReceiver();
+        mReceiverEnglishTranslate.registerObserver(this);
         registerReceiver(mReceiverEnglishTranslate, new IntentFilter("ACTION_TRANSLATE_SUCCESS"));
 
     }
@@ -182,5 +180,26 @@ public class MainActivity extends AppCompatActivity implements TextToSpeech.OnIn
     @Override
     protected void onPause() {
         super.onPause();
+    }
+
+    private void initLoadingDialog() {
+        mLoading = new LoadingFragment();
+        mLoading.setCancelable(false);
+        mLoading.show(getFragmentManager(), "Loading");
+    }
+
+    @Override
+    public void getNotification(int type, String rs1, String rs2, String rs3) {
+        if (type == Observerable.PICTURE_PREDICT) {
+            txtResult1.setText(rs1);
+            txtResult2.setText(rs2);
+            txtResult3.setText(rs3);
+        }
+        if (type == Observerable.ENGLISH_TRANSLATE) {
+            txtVietname1.setText(rs1);
+            txtVietname2.setText(rs2);
+            txtVietname3.setText(rs3);
+            mLoading.dismiss();
+        }
     }
 }
