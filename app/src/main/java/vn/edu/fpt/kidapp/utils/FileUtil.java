@@ -2,6 +2,7 @@ package vn.edu.fpt.kidapp.utils;
 
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.net.Uri;
 import android.os.Environment;
 import android.util.Log;
 
@@ -11,6 +12,7 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.net.URI;
 
 public class FileUtil {
 
@@ -54,5 +56,12 @@ public class FileUtil {
         bm.compress(Bitmap.CompressFormat.JPEG, 100, stream);
         byte[] bytesArray = stream.toByteArray();
         return bytesArray;
+    }
+
+    public static Uri getImageUri(String fileName) {
+        File sdcard = Environment.getExternalStorageDirectory();
+        File file = new File(sdcard.getAbsolutePath() + "/KidApp/", fileName);
+        Uri uri = Uri.fromFile(file);
+        return uri;
     }
 }

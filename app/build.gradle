@@ -29,4 +29,5 @@ dependencies {
     implementation 'com.otaliastudios:cameraview:1.6.0'
     implementation 'com.clarifai.clarifai-api2:core:2.5.1'
     implementation 'com.airbnb.android:lottie:2.5.0'
+    implementation 'com.theartofdev.edmodo:android-image-cropper:2.7.+'
 }
