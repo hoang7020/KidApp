@@ -3,26 +3,35 @@ package vn.edu.fpt.kidapp;
 import android.Manifest;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.graphics.Bitmap;
 import android.media.MediaPlayer;
 import android.os.Build;
+import android.provider.MediaStore;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
+
+import com.theartofdev.edmodo.cropper.CropImage;
 
 import vn.edu.fpt.kidapp.JsonModel.CapturePicture;
 import vn.edu.fpt.kidapp.database.DBManager;
 import vn.edu.fpt.kidapp.utils.Constant;
+import vn.edu.fpt.kidapp.utils.FileUtil;
 
 public class BeginActivity extends AppCompatActivity {
 
     private static final String TAG = BeginActivity.class.getSimpleName();
 
-    public static final int CAMERA_REQUEST_CODE = 2222;
+    private static final int CAMERA_REQUEST_CODE = 1111;
+    private static final int CROP_IMAGE_CODE = 2222;
 
     private MediaPlayer mMediaPlayer;
     private MediaPlayer mWelcome;
+
+    private String FILE_NAME = "IMG_" + System.currentTimeMillis() + ".jpg";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -44,9 +53,12 @@ public class BeginActivity extends AppCompatActivity {
         btnCamera.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                mMediaPlayer.start();
-                Constant.FLAG = true;
-                Intent intent = new Intent(BeginActivity.this, CameraActivity.class);
+//                mMediaPlayer.start();
+//                Constant.FLAG = true;
+//                Intent intent = new Intent(BeginActivity.this, CameraActivity.class);
+//                startActivityForResult(intent, CAMERA_REQUEST_CODE);
+
+                Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
                 startActivityForResult(intent, CAMERA_REQUEST_CODE);
             }
         });
@@ -66,9 +78,25 @@ public class BeginActivity extends AppCompatActivity {
         super.onActivityResult(requestCode, resultCode, data);
         if(requestCode == CAMERA_REQUEST_CODE) {
             if (resultCode == RESULT_OK) {
-                String pictureName = data.getStringExtra("FILENAME");
+//                String pictureName = data.getStringExtra("FILENAME");
+//                Intent intent = new Intent(BeginActivity.this, MainActivity.class);
+//                intent.putExtra("FILENAME", pictureName);
+//                startActivity(intent);
+//                finish();
+                if (data != null) {
+                    Bitmap photo = (Bitmap) data.getExtras().get("data");
+                    byte[] dataPhoto = FileUtil.convertBitmapToByteArray(photo);
+                    FileUtil.savePictureToSdcard(FILE_NAME, dataPhoto);
+                    Intent intent = new Intent(BeginActivity.this, CropImageActivity.class);
+                    intent.putExtra("FILENAME", FILE_NAME);
+                    startActivityForResult(intent, CROP_IMAGE_CODE);
+                }
+            }
+        }
+        if (requestCode == CROP_IMAGE_CODE) {
+            if (resultCode == RESULT_OK) {
                 Intent intent = new Intent(BeginActivity.this, MainActivity.class);
-                intent.putExtra("FILENAME", pictureName);
+                intent.putExtra("FILENAME", FILE_NAME);
                 startActivity(intent);
                 finish();
             }

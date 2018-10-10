@@ -6,6 +6,7 @@ import android.content.IntentFilter;
 import android.graphics.Bitmap;
 import android.media.MediaPlayer;
 import android.os.Bundle;
+import android.provider.MediaStore;
 import android.speech.tts.TextToSpeech;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
@@ -32,6 +33,7 @@ public class MainActivity extends AppCompatActivity implements TextToSpeech.OnIn
 
     private static final String TAG = MainActivity.class.getSimpleName();
     private static final int CAMERA_REQUEST_CODE = 1111;
+    private static final int CROP_IMAGE_CODE = 2222;
 
     private ImageView btnRead1, btnRead2, btnRead3, btnCamera;
     private TextView txtResult1, txtResult2, txtResult3, txtVietname1, txtVietname2, txtVietname3;
@@ -43,6 +45,8 @@ public class MainActivity extends AppCompatActivity implements TextToSpeech.OnIn
 
     private PicturePredictReceiver mReceiverPicturePredict;
     private EnglishTranslateReceiver mReceiverEnglishTranslate;
+
+    private String FILE_NAME = "IMG_" + System.currentTimeMillis() + ".jpg";
 
 
     @Override
@@ -70,8 +74,7 @@ public class MainActivity extends AppCompatActivity implements TextToSpeech.OnIn
             @Override
             public void onClick(View v) {
                 mMediaPlayer.start();
-                Constant.FLAG = true;
-                Intent intent = new Intent(MainActivity.this, CameraActivity.class);
+                Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
                 startActivityForResult(intent, CAMERA_REQUEST_CODE);
             }
         });
@@ -101,9 +104,21 @@ public class MainActivity extends AppCompatActivity implements TextToSpeech.OnIn
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == CAMERA_REQUEST_CODE) {
             if (resultCode == RESULT_OK) {
+                if (data != null) {
+                    Bitmap photo = (Bitmap) data.getExtras().get("data");
+                    byte[] dataPhoto = FileUtil.convertBitmapToByteArray(photo);
+                    FileUtil.savePictureToSdcard(FILE_NAME, dataPhoto);
+                    Intent intent = new Intent(MainActivity.this, CropImageActivity.class);
+                    intent.putExtra("FILENAME", FILE_NAME);
+                    startActivityForResult(intent, CROP_IMAGE_CODE);
+                }
+
+            }
+        }
+        if (requestCode == CROP_IMAGE_CODE) {
+            if (resultCode == RESULT_OK) {
                 initLoadingDialog();
-                String fileName = data.getStringExtra("FILENAME");
-                Bitmap bm = FileUtil.readFileFromSdCard(fileName);
+                Bitmap bm = FileUtil.readFileFromSdCard(FILE_NAME);
                 ivResult.setImageBitmap(bm);
                 ClarifaiUtil util = new ClarifaiUtil();
                 util.predictImage(FileUtil.convertBitmapToByteArray(bm), this);

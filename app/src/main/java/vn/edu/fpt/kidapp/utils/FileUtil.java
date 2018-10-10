@@ -34,7 +34,6 @@ public class FileUtil {
     }
 
     public static Bitmap readFileFromSdCard(String fileName) {
-
         File sdcard = Environment.getExternalStorageDirectory();
         File file = new File(sdcard.getAbsolutePath() + "/KidApp/", fileName);
         Bitmap bitmap = null;
