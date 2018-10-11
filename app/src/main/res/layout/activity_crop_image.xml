@@ -5,23 +5,40 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
+    android:weightSum="10"
     tools:context=".CropImageActivity">
 
     <com.theartofdev.edmodo.cropper.CropImageView
         android:id="@+id/cropImageView"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"></com.theartofdev.edmodo.cropper.CropImageView>
+        android:layout_height="0px"
+        android:layout_weight="9"></com.theartofdev.edmodo.cropper.CropImageView>
 
-    <Button
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="OK"
-        android:id="@+id/btnCrop"/>
+        android:layout_height="0px"
+        android:layout_weight="1"
+        android:orientation="horizontal"
+        android:weightSum="2">
 
-    <Button
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Cancel"
-        android:id="@+id/btnCancel"/>
+        <ImageButton
+            android:id="@+id/btnCrop"
+            android:layout_width="0px"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:scaleType="fitCenter"
+            android:src="@drawable/ok"
+            android:text="OK" />
+
+        <ImageButton
+            android:id="@+id/btnCancel"
+            android:layout_width="0px"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:scaleType="fitCenter"
+            android:src="@drawable/cancel"
+            android:text="Cancel" />
+    </LinearLayout>
+
 
 </LinearLayout>

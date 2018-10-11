@@ -6,6 +6,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageButton;
 
 import com.theartofdev.edmodo.cropper.CropImageView;
 
@@ -14,7 +15,7 @@ import vn.edu.fpt.kidapp.utils.FileUtil;
 public class CropImageActivity extends AppCompatActivity {
 
     CropImageView cropImageView;
-    Button btnCrop, btnCancel;
+    ImageButton btnCrop, btnCancel;
     Intent intent;
     String fileName;
 
