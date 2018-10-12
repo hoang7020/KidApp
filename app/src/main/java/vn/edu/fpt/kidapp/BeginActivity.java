@@ -8,8 +8,11 @@ import android.os.Build;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
+
+import java.util.List;
 
 import vn.edu.fpt.kidapp.JsonModel.CapturePicture;
 import vn.edu.fpt.kidapp.database.DBManager;
@@ -30,8 +33,16 @@ public class BeginActivity extends AppCompatActivity {
         setContentView(R.layout.activity_begin);
 
         DBManager db = new DBManager(this);
-        CapturePicture pic = new CapturePicture("PIC01", "dog", "cat", "chicken", "cho", "meo", "ga", 1234);
-//        db.addPicture(pic);
+        CapturePicture pic1 = new CapturePicture("PIC01", "dog", "cat", "chicken", "cho", "meo", "ga", 1234);
+        CapturePicture pic2 = new CapturePicture("PIC02", "dog", "cat", "chicken", "cho", "meo", "ga", 1234);
+        CapturePicture pic3 = new CapturePicture("PIC03", "dog", "cat", "chicken", "cho", "meo", "ga", 1234);
+//        db.addPicture(pic1);
+//        db.addPicture(pic2);
+//        db.addPicture(pic3);
+        List<CapturePicture> list = db.getAllPicture();
+        for (CapturePicture pi : list) {
+            Log.e(TAG, "onCreate: " + pi.getName() + " " + pi.getEng1() + " " + pi.getEng2() + " " + pi.getEng3() + " " + pi.getVie1() + " " + pi.getVie2() + " " + pi.getVie3() + " " + pi.getTimeShoot());
+        }
 //        CapturePicture pi = db.getPictureById("PIC01");
 //        Log.e(TAG, "onCreate: " + pi.getName() + " " + pi.getEng1() + " " + pi.getEng2() + " " + pi.getEng3() + " " + pi.getVie1() + " " + pi.getVie2() + " " + pi.getVie3() + " " + pi.getTimeShoot());
 //        db.deletePictureByName("PIC01");
@@ -52,7 +63,7 @@ public class BeginActivity extends AppCompatActivity {
         });
     }
 
-    public void initPermission(){
+    public void initPermission() {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
             if (checkSelfPermission(Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED
                     && checkSelfPermission(Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED) {
@@ -64,7 +75,7 @@ public class BeginActivity extends AppCompatActivity {
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if(requestCode == CAMERA_REQUEST_CODE) {
+        if (requestCode == CAMERA_REQUEST_CODE) {
             if (resultCode == RESULT_OK) {
                 String pictureName = data.getStringExtra("FILENAME");
                 Intent intent = new Intent(BeginActivity.this, MainActivity.class);

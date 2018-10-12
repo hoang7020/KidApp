@@ -9,6 +9,9 @@ import android.graphics.Picture;
 import android.support.annotation.Nullable;
 import android.util.Log;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import vn.edu.fpt.kidapp.JsonModel.CapturePicture;
 
 public class DBManager extends SQLiteOpenHelper {
@@ -61,6 +64,27 @@ public class DBManager extends SQLiteOpenHelper {
         values.put(TIMESHOOT, pic.getTimeShoot());
         db.insert(TABLE_NAME, null, values);
         db.close();
+    }
+
+    public List<CapturePicture> getAllPicture() {
+        List<CapturePicture> listPicture = new ArrayList<>();
+        SQLiteDatabase db = this.getReadableDatabase();
+        Cursor cursor = db.rawQuery("SELECT * FROM " + TABLE_NAME, null);
+        if (cursor.moveToFirst()) {
+            do {
+                CapturePicture pic = new CapturePicture(
+                        cursor.getString(0),
+                        cursor.getString(1),
+                        cursor.getString(2),
+                        cursor.getString(3),
+                        cursor.getString(4),
+                        cursor.getString(5),
+                        cursor.getString(6),
+                        cursor.getFloat(7));
+                listPicture.add(pic);
+            } while (cursor.moveToNext());
+        }
+        return listPicture;
     }
 
     public CapturePicture getPictureByName(String name) {
