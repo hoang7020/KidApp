@@ -1,6 +1,7 @@
 package vn.edu.fpt.kidapp.JsonModel;
 
 public class CapturePicture {
+    private int id;
     private String name;
     private String eng1;
     private String eng2;
@@ -8,12 +9,14 @@ public class CapturePicture {
     private String vie1;
     private String vie2;
     private String vie3;
-    private float timeShoot;
+    private double timeshoot;
+
 
     public CapturePicture() {
     }
 
-    public CapturePicture(String name, String eng1, String eng2, String eng3, String vie1, String vie2, String vie3, float timeShoot) {
+    public CapturePicture(int id, String name, String eng1, String eng2, String eng3, String vie1, String vie2, String vie3, double timeshoot) {
+        this.id = id;
         this.name = name;
         this.eng1 = eng1;
         this.eng2 = eng2;
@@ -21,7 +24,15 @@ public class CapturePicture {
         this.vie1 = vie1;
         this.vie2 = vie2;
         this.vie3 = vie3;
-        this.timeShoot = timeShoot;
+        this.timeshoot = timeshoot;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
     }
 
     public String getName() {
@@ -80,11 +91,11 @@ public class CapturePicture {
         this.vie3 = vie3;
     }
 
-    public float getTimeShoot() {
-        return timeShoot;
+    public double getTimeshoot() {
+        return timeshoot;
     }
 
-    public void setTimeShoot(float timeShoot) {
-        this.timeShoot = timeShoot;
+    public void setTimeshoot(double timeshoot) {
+        this.timeshoot = timeshoot;
     }
 }

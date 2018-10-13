@@ -19,6 +19,8 @@ import android.widget.Toast;
 
 import java.util.Locale;
 
+import vn.edu.fpt.kidapp.JsonModel.CapturePicture;
+import vn.edu.fpt.kidapp.database.DBManager;
 import vn.edu.fpt.kidapp.interfaces.Observer;
 import vn.edu.fpt.kidapp.interfaces.Observerable;
 import vn.edu.fpt.kidapp.receiver.EnglishTranslateReceiver;
@@ -40,6 +42,7 @@ public class MainActivity extends AppCompatActivity implements TextToSpeech.OnIn
     private TextToSpeech tts;
     private MediaPlayer mMediaPlayer;
     private DialogFragment mLoading;
+    private String fileName;
 
     private PicturePredictReceiver mReceiverPicturePredict;
     private EnglishTranslateReceiver mReceiverEnglishTranslate;
@@ -60,7 +63,7 @@ public class MainActivity extends AppCompatActivity implements TextToSpeech.OnIn
 
         initLoadingDialog();
         Intent intent = this.getIntent();
-        String fileName = intent.getStringExtra("FILENAME");
+        fileName = intent.getStringExtra("FILENAME");
         Bitmap bm = FileUtil.readFileFromSdCard(fileName);
         ivResult.setImageBitmap(bm);
         ClarifaiUtil util = new ClarifaiUtil();
@@ -102,7 +105,7 @@ public class MainActivity extends AppCompatActivity implements TextToSpeech.OnIn
         if (requestCode == CAMERA_REQUEST_CODE) {
             if (resultCode == RESULT_OK) {
                 initLoadingDialog();
-                String fileName = data.getStringExtra("FILENAME");
+                fileName = data.getStringExtra("FILENAME");
                 Bitmap bm = FileUtil.readFileFromSdCard(fileName);
                 ivResult.setImageBitmap(bm);
                 ClarifaiUtil util = new ClarifaiUtil();
@@ -200,6 +203,19 @@ public class MainActivity extends AppCompatActivity implements TextToSpeech.OnIn
             txtVietname2.setText(rs2);
             txtVietname3.setText(rs3);
             mLoading.dismiss();
+            DBManager db = new DBManager(this);
+            int id = db.getMaxId();
+            CapturePicture pic = new CapturePicture(
+                    id + 1,
+                    fileName,
+                    txtResult1.getText().toString(),
+                    txtResult2.getText().toString(),
+                    txtResult3.getText().toString(),
+                    rs1,
+                    rs2,
+                    rs3,
+                    System.currentTimeMillis());
+            db.addPicture(pic);
         }
     }
 }

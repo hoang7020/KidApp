@@ -35,14 +35,15 @@ public class DBManager extends SQLiteOpenHelper {
     @Override
     public void onCreate(SQLiteDatabase db) {
         String sql = "CREATE TABLE " + TABLE_NAME + " (" +
-                NAME + " TEXT PRIMARY KEY, " +
+                ID + " INTEGER PRIMARY KEY, " +
+                NAME + " TEXT, " +
                 ENG1 + " TEXT, " +
                 ENG2 + " TEXT, " +
                 ENG3 + " TEXT, " +
                 VIE1 + " TEXT, " +
                 VIE2 + " TEXT, " +
                 VIE3 + " TEXT, " +
-                TIMESHOOT + " FLOAT)";
+                TIMESHOOT + " DOUBLE)";
         db.execSQL(sql);
     }
 
@@ -54,6 +55,7 @@ public class DBManager extends SQLiteOpenHelper {
     public void addPicture(CapturePicture pic) {
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues values = new ContentValues();
+        values.put(ID, pic.getId());
         values.put(NAME, pic.getName());
         values.put(ENG1, pic.getEng1());
         values.put(ENG2, pic.getEng2());
@@ -61,7 +63,7 @@ public class DBManager extends SQLiteOpenHelper {
         values.put(VIE1, pic.getVie1());
         values.put(VIE2, pic.getVie2());
         values.put(VIE3, pic.getVie3());
-        values.put(TIMESHOOT, pic.getTimeShoot());
+        values.put(TIMESHOOT, pic.getTimeshoot());
         db.insert(TABLE_NAME, null, values);
         db.close();
     }
@@ -73,14 +75,15 @@ public class DBManager extends SQLiteOpenHelper {
         if (cursor.moveToFirst()) {
             do {
                 CapturePicture pic = new CapturePicture(
-                        cursor.getString(0),
+                        cursor.getInt(0),
                         cursor.getString(1),
                         cursor.getString(2),
                         cursor.getString(3),
                         cursor.getString(4),
                         cursor.getString(5),
                         cursor.getString(6),
-                        cursor.getFloat(7));
+                        cursor.getString(7),
+                        cursor.getDouble(8));
                 listPicture.add(pic);
             } while (cursor.moveToNext());
         }
@@ -90,7 +93,7 @@ public class DBManager extends SQLiteOpenHelper {
     public CapturePicture getPictureByName(String name) {
         SQLiteDatabase db = this.getReadableDatabase();
         Cursor cursor = db.query(TABLE_NAME,
-                new String[] {NAME, ENG1, ENG2, ENG3, VIE1, VIE2, VIE3, TIMESHOOT},
+                new String[] {ID, NAME, ENG1, ENG2, ENG3, VIE1, VIE2, VIE3, TIMESHOOT},
                 NAME + "=?",
                 new String[] {String.valueOf(name)},
                 null, null, null, null);
@@ -99,14 +102,15 @@ public class DBManager extends SQLiteOpenHelper {
         }
         Log.e("DB", "getPictureById: " + cursor.toString());
         CapturePicture pic = new CapturePicture(
-                cursor.getString(0),
+                cursor.getInt(0),
                 cursor.getString(1),
                 cursor.getString(2),
                 cursor.getString(3),
                 cursor.getString(4),
                 cursor.getString(5),
                 cursor.getString(6),
-                cursor.getFloat(7));
+                cursor.getString(7),
+                cursor.getDouble(8));
         cursor.close();
         db.close();
         return pic;
@@ -116,5 +120,16 @@ public class DBManager extends SQLiteOpenHelper {
         SQLiteDatabase db = this.getWritableDatabase();
         db.delete(TABLE_NAME, NAME + "=?", new String[] {String.valueOf(name)});
         db.close();
+    }
+
+    public int getMaxId() {
+        int id = 0;
+        SQLiteDatabase db = getReadableDatabase();
+        Cursor cursor = db.rawQuery("select max(" + ID + ") from " + TABLE_NAME, null);
+        if (cursor != null) {
+            cursor.moveToFirst();
+            id = cursor.getInt(0);
+        }
+        return id;
     }
 }

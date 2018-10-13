@@ -19,7 +19,7 @@ public class FileUtil {
     private static final String TAG = FileUtil.class.getSimpleName();
 
     public static void savePictureToSdcard(String fileName, byte[] data) {
-        final File appKidDir = new File(Environment.getExternalStorageDirectory() + "/KidApp/");
+        File appKidDir = new File(Environment.getExternalStorageDirectory() + "/KidApp/");
         appKidDir.mkdirs();
         File picture = new File(appKidDir, fileName);
         try {

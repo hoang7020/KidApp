@@ -32,17 +32,16 @@ public class BeginActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_begin);
 
-        DBManager db = new DBManager(this);
-        CapturePicture pic1 = new CapturePicture("PIC01", "dog", "cat", "chicken", "cho", "meo", "ga", 1234);
-        CapturePicture pic2 = new CapturePicture("PIC02", "dog", "cat", "chicken", "cho", "meo", "ga", 1234);
-        CapturePicture pic3 = new CapturePicture("PIC03", "dog", "cat", "chicken", "cho", "meo", "ga", 1234);
+//        CapturePicture pic1 = new CapturePicture("PIC01", "dog", "cat", "chicken", "cho", "meo", "ga", 1234);
+//        CapturePicture pic2 = new CapturePicture("PIC02", "dog", "cat", "chicken", "cho", "meo", "ga", 1234);
+//        CapturePicture pic3 = new CapturePicture("PIC03", "dog", "cat", "chicken", "cho", "meo", "ga", 1234);
 //        db.addPicture(pic1);
 //        db.addPicture(pic2);
 //        db.addPicture(pic3);
-        List<CapturePicture> list = db.getAllPicture();
-        for (CapturePicture pi : list) {
-            Log.e(TAG, "onCreate: " + pi.getName() + " " + pi.getEng1() + " " + pi.getEng2() + " " + pi.getEng3() + " " + pi.getVie1() + " " + pi.getVie2() + " " + pi.getVie3() + " " + pi.getTimeShoot());
-        }
+//        List<CapturePicture> list = db.getAllPicture();
+//        for (CapturePicture pi : list) {
+//            Log.e(TAG, "onCreate: " + pi.getName() + " " + pi.getEng1() + " " + pi.getEng2() + " " + pi.getEng3() + " " + pi.getVie1() + " " + pi.getVie2() + " " + pi.getVie3() + " " + pi.getTimeShoot());
+//        }
 //        CapturePicture pi = db.getPictureById("PIC01");
 //        Log.e(TAG, "onCreate: " + pi.getName() + " " + pi.getEng1() + " " + pi.getEng2() + " " + pi.getEng3() + " " + pi.getVie1() + " " + pi.getVie2() + " " + pi.getVie3() + " " + pi.getTimeShoot());
 //        db.deletePictureByName("PIC01");
