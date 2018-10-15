@@ -1,4 +1,4 @@
-package vn.edu.fpt.kidapp.JsonModel;
+package vn.edu.fpt.kidapp.Model;
 
 public class CapturePicture {
     private int id;

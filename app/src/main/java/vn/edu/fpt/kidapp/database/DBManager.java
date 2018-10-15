@@ -5,14 +5,13 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
-import android.graphics.Picture;
 import android.support.annotation.Nullable;
 import android.util.Log;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import vn.edu.fpt.kidapp.JsonModel.CapturePicture;
+import vn.edu.fpt.kidapp.Model.CapturePicture;
 
 public class DBManager extends SQLiteOpenHelper {
 
@@ -71,7 +70,7 @@ public class DBManager extends SQLiteOpenHelper {
     public List<CapturePicture> getAllPicture() {
         List<CapturePicture> listPicture = new ArrayList<>();
         SQLiteDatabase db = this.getReadableDatabase();
-        Cursor cursor = db.rawQuery("SELECT * FROM " + TABLE_NAME, null);
+        Cursor cursor = db.rawQuery("SELECT * FROM " + TABLE_NAME + " ORDER BY " + ID + " DESC", null);
         if (cursor.moveToFirst()) {
             do {
                 CapturePicture pic = new CapturePicture(

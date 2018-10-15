@@ -12,6 +12,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -19,7 +20,7 @@ import android.widget.Toast;
 
 import java.util.Locale;
 
-import vn.edu.fpt.kidapp.JsonModel.CapturePicture;
+import vn.edu.fpt.kidapp.Model.CapturePicture;
 import vn.edu.fpt.kidapp.database.DBManager;
 import vn.edu.fpt.kidapp.interfaces.Observer;
 import vn.edu.fpt.kidapp.interfaces.Observerable;
@@ -34,6 +35,7 @@ public class MainActivity extends AppCompatActivity implements TextToSpeech.OnIn
 
     private static final String TAG = MainActivity.class.getSimpleName();
     private static final int CAMERA_REQUEST_CODE = 1111;
+    private static final int HISTORY_REQUEST_CODE = 2222;
 
     private ImageView btnRead1, btnRead2, btnRead3, btnCamera;
     private TextView txtResult1, txtResult2, txtResult3, txtVietname1, txtVietname2, txtVietname3;
@@ -154,10 +156,10 @@ public class MainActivity extends AppCompatActivity implements TextToSpeech.OnIn
     public void onInit(int status) {
         if (status == TextToSpeech.SUCCESS) {
             int result = tts.setLanguage(Locale.US);
-            if (result == TextToSpeech.LANG_MISSING_DATA
-                    || result == TextToSpeech.LANG_NOT_SUPPORTED) {
-                Log.e("TTS", "This JSONLanguage is not supported");
-            }
+//            if (result == TextToSpeech.LANG_MISSING_DATA
+//                    || result == TextToSpeech.LANG_NOT_SUPPORTED) {
+//                Log.e("TTS", "This TranslateResult is not supported");
+//            }
         } else {
             Log.e("TTS", "Initilization Failed!");
         }
@@ -172,6 +174,19 @@ public class MainActivity extends AppCompatActivity implements TextToSpeech.OnIn
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.menu_main, menu);
         return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.btnHistory:
+                Toast.makeText(this, "History", Toast.LENGTH_SHORT).show();
+                Intent intent = new Intent(MainActivity.this, HistoryActivity.class);
+                startActivity(intent);
+                return true;
+            default:
+                return true;
+        }
     }
 
     @Override

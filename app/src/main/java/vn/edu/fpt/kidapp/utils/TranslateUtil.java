@@ -22,7 +22,7 @@ import java.util.UUID;
 
 import javax.net.ssl.HttpsURLConnection;
 
-import vn.edu.fpt.kidapp.JsonModel.JSONLanguage;
+import vn.edu.fpt.kidapp.Model.TranslateResult;
 
 public class TranslateUtil {
     private static final String TAG = TranslateUtil.class.getSimpleName();
@@ -94,10 +94,10 @@ public class TranslateUtil {
         context.sendBroadcast(intent);
     }
 
-    public static List<JSONLanguage> convertJSONToList(String json) {
-        List<JSONLanguage> list = null;
+    public static List<TranslateResult> convertJSONToList(String json) {
+        List<TranslateResult> list = null;
         Gson gson = new Gson();
-        list = gson.fromJson(json, new TypeToken<List<JSONLanguage>>() {}.getType());
+        list = gson.fromJson(json, new TypeToken<List<TranslateResult>>() {}.getType());
         return list;
     }
 

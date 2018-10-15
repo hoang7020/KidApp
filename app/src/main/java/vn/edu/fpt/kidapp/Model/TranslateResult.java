@@ -1,10 +1,10 @@
-package vn.edu.fpt.kidapp.JsonModel;
+package vn.edu.fpt.kidapp.Model;
 
 import java.util.List;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
-public class JSONLanguage {
+public class TranslateResult {
     @SerializedName("detectedLanguage")
     @Expose
     private DetectedLanguage detectedLanguage;

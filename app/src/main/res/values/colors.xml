@@ -4,6 +4,6 @@
     <color name="colorPrimaryDark">#303F9F</color>
     <color name="colorAccent">#FF4081</color>
     <color name="colorBackground">#ffffff</color>
-    <color name="colorToolbar">#FFD951</color>
+    <color name="colorToolbar">#51a5ff</color>
     <color name="textStartActivity">#211717</color>
 </resources>
