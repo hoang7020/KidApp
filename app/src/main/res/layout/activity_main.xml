@@ -16,6 +16,8 @@
         android:layout_weight="1"
         android:background="@color/colorToolbar"
         android:elevation="4dp"
+        app:title="Cú Cú"
+        app:titleTextColor="#ffffff"
         android:theme="@style/ThemeOverlay.AppCompat.ActionBar"
         app:popupTheme="@style/ThemeOverlay.AppCompat.Light" />
 
@@ -189,10 +191,10 @@
 
     <ImageView
         android:id="@+id/btnCamera"
-        android:layout_width="100dp"
+        android:layout_width="70dp"
         android:layout_height="0dp"
     android:layout_gravity="center"
     android:layout_weight="2"
-    android:src="@drawable/owl" />
+    android:src="@drawable/camera" />
 
 </LinearLayout>

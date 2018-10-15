@@ -56,7 +56,6 @@ public class MainActivity extends AppCompatActivity implements TextToSpeech.OnIn
         setContentView(R.layout.activity_main);
 
         mToolbar = (Toolbar) findViewById(R.id.my_toolbar);
-        mToolbar.setTitle("Cú Cú Thông Thái");
         setSupportActionBar(mToolbar);
 //        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 //        getSupportActionBar().setDisplayShowHomeEnabled(true);
@@ -112,6 +111,11 @@ public class MainActivity extends AppCompatActivity implements TextToSpeech.OnIn
                 ivResult.setImageBitmap(bm);
                 ClarifaiUtil util = new ClarifaiUtil();
                 util.predictImage(FileUtil.convertBitmapToByteArray(bm), this);
+            }
+        }
+        if (requestCode == HISTORY_REQUEST_CODE) {
+            if (resultCode == RESULT_OK) {
+
             }
         }
     }
@@ -182,7 +186,7 @@ public class MainActivity extends AppCompatActivity implements TextToSpeech.OnIn
             case R.id.btnHistory:
                 Toast.makeText(this, "History", Toast.LENGTH_SHORT).show();
                 Intent intent = new Intent(MainActivity.this, HistoryActivity.class);
-                startActivity(intent);
+                startActivityForResult(intent, HISTORY_REQUEST_CODE);
                 return true;
             default:
                 return true;
