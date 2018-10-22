@@ -9,6 +9,10 @@ import android.widget.ImageView;
 
 import com.otaliastudios.cameraview.CameraListener;
 import com.otaliastudios.cameraview.CameraView;
+import com.otaliastudios.cameraview.Facing;
+import com.otaliastudios.cameraview.Flash;
+import com.otaliastudios.cameraview.Gesture;
+import com.otaliastudios.cameraview.GestureAction;
 
 import vn.edu.fpt.kidapp.utils.FileUtil;
 
@@ -25,7 +29,11 @@ public class CameraActivity extends AppCompatActivity {
         setContentView(R.layout.activity_camera);
         initView();
         mCamera.addCameraListener(cameraListener);
-        mCamera.setJpegQuality(10);
+        mCamera.setJpegQuality(100);
+        mCamera.mapGesture(Gesture.TAP, GestureAction.FOCUS_WITH_MARKER);
+        mCamera.mapGesture(Gesture.PINCH, GestureAction.ZOOM);
+
+
         btnShoot.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -76,5 +84,23 @@ public class CameraActivity extends AppCompatActivity {
     protected void onDestroy() {
         super.onDestroy();
         mCamera.destroy();
+    }
+
+    public void clickToChangeCamera(View view) {
+        mCamera.toggleFacing();
+
+    }
+    ImageView btnFlash;
+
+    public void clickToFlash(View view) {
+        btnFlash = findViewById(R.id.btnFlash);
+        if(mCamera.getFlash()==Flash.ON){
+            mCamera.setFlash(Flash.OFF);
+            btnFlash.setImageResource(R.drawable.flashoff);
+        }else{
+            mCamera.setFlash(Flash.ON);
+            btnFlash.setImageResource(R.drawable.flashon);
+
+        }
     }
 }

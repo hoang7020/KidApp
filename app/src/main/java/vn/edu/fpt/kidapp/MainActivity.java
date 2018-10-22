@@ -116,6 +116,18 @@ public class MainActivity extends AppCompatActivity implements TextToSpeech.OnIn
         if (requestCode == HISTORY_REQUEST_CODE) {
             if (resultCode == RESULT_OK) {
 
+
+                CapturePicture pic = (CapturePicture) data.getSerializableExtra("PICTURE");
+                Bitmap bm = FileUtil.readFileFromSdCard(pic.getName());
+                ivResult.setImageBitmap(bm);
+                txtResult1.setText(pic.getEng1());
+                txtResult2.setText(pic.getEng2());
+                txtResult3.setText(pic.getEng3());
+                txtVietname1.setText(pic.getVie1());
+                txtVietname2.setText(pic.getVie2());
+                txtVietname3.setText(pic.getVie3());
+
+
             }
         }
     }
@@ -184,8 +196,8 @@ public class MainActivity extends AppCompatActivity implements TextToSpeech.OnIn
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.btnHistory:
-                Toast.makeText(this, "History", Toast.LENGTH_SHORT).show();
-                Intent intent = new Intent(MainActivity.this, HistoryActivity.class);
+
+                Intent intent = new Intent(MainActivity.this, ViewHistoryActivity.class);
                 startActivityForResult(intent, HISTORY_REQUEST_CODE);
                 return true;
             default:

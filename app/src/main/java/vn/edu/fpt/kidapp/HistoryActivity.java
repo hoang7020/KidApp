@@ -1,5 +1,6 @@
 package vn.edu.fpt.kidapp;
 
+import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
@@ -7,6 +8,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
+import android.widget.Toast;
 
 import java.util.List;
 
@@ -43,6 +45,26 @@ public class HistoryActivity extends AppCompatActivity {
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 CapturePicture pic = (CapturePicture) parent.getItemAtPosition(position);
                 Log.e(TAG, "onItemClick: " + pic.getId() + " " + pic.getEng1() + " " + pic.getVie1() + " " + pic.getName());
+
+                Intent intent = new Intent();
+                intent.putExtra("FILENAME",pic.getName());
+                intent.putExtra("Eng1",pic.getEng1());
+                intent.putExtra("Eng2",pic.getEng2());
+                intent.putExtra("Eng3",pic.getEng3());
+                intent.putExtra("Vie1",pic.getVie1());
+                intent.putExtra("Vie2",pic.getVie2());
+                intent.putExtra("Vie3",pic.getVie3());
+
+
+
+                setResult(RESULT_OK,intent);
+                finish();
+
+
+
+
+
+
             }
         });
     }

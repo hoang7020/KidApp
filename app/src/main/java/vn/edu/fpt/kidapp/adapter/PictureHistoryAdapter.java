@@ -35,9 +35,7 @@ public class PictureHistoryAdapter extends ArrayAdapter<CapturePicture> {
             viewHolder = new ViewHolder();
             convertView = LayoutInflater.from(context).inflate(R.layout.picture_history_item_layout, parent, false);
             viewHolder.imvPicture = convertView.findViewById(R.id.imvPicture);
-            viewHolder.txtEng1 = convertView.findViewById(R.id.txtEng1);
-            viewHolder.txtEng2 = convertView.findViewById(R.id.txtEng2);
-            viewHolder.txtEng3 = convertView.findViewById(R.id.txtEng3);
+
             convertView.setTag(viewHolder);
         } else {
             viewHolder = (ViewHolder) convertView.getTag();
@@ -45,10 +43,10 @@ public class PictureHistoryAdapter extends ArrayAdapter<CapturePicture> {
         CapturePicture pic = getItem(position);
         Bitmap picture = FileUtil.readFileFromSdCard(pic.getName());
         viewHolder.imvPicture.setImageBitmap(picture);
-        viewHolder.txtEng1.setText(pic.getEng1());
-        viewHolder.txtEng2.setText(pic.getEng2());
-        viewHolder.txtEng3.setText(pic.getEng3());
+
         return convertView;
+
+
     }
 
     @Override
@@ -58,6 +56,6 @@ public class PictureHistoryAdapter extends ArrayAdapter<CapturePicture> {
 
     public class ViewHolder {
         ImageView imvPicture;
-        TextView txtEng1, txtEng2, txtEng3;
+        
     }
 }

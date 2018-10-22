@@ -1,6 +1,8 @@
 package vn.edu.fpt.kidapp.Model;
 
-public class CapturePicture {
+import java.io.Serializable;
+
+public class CapturePicture implements Serializable {
     private int id;
     private String name;
     private String eng1;
