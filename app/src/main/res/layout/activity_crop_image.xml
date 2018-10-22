@@ -22,6 +22,15 @@
         android:weightSum="2">
 
         <ImageButton
+            android:id="@+id/btnCancel"
+            android:layout_width="0px"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:scaleType="fitCenter"
+            android:src="@drawable/cancel"
+            android:text="Cancel" />
+
+        <ImageButton
             android:id="@+id/btnCrop"
             android:layout_width="0px"
             android:layout_height="wrap_content"
@@ -30,14 +39,6 @@
             android:src="@drawable/ok"
             android:text="OK" />
 
-        <ImageButton
-            android:id="@+id/btnCancel"
-            android:layout_width="0px"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:scaleType="fitCenter"
-            android:src="@drawable/cancel"
-            android:text="Cancel" />
     </LinearLayout>
 
 

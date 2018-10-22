@@ -6,13 +6,4 @@
         app:showAsAction="always"
         android:title="History">
     </item>
-    <item
-        android:id="@+id/action1"
-        android:title="AAAAAaa"
-        app:showAsAction="never"/>
-
-    <item
-        android:id="@+id/action2"
-        android:title="BBBBBbb"
-        app:showAsAction="never"/>
 </menu>

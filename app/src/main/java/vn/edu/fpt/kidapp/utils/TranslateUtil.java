@@ -5,9 +5,6 @@ import android.content.Intent;
 import android.util.Log;
 
 import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
-import com.google.gson.JsonElement;
-import com.google.gson.JsonParser;
 import com.google.gson.reflect.TypeToken;
 
 import java.io.BufferedReader;
@@ -30,7 +27,6 @@ public class TranslateUtil {
     static String host = "https://api.cognitive.microsofttranslator.com";
     static String path = "/translate?api-version=3.0";
     static String params = "&to=en&to=vi";
-    static String text = "Hello world!";
 
     public static class RequestBody {
         String Text;
@@ -56,14 +52,12 @@ public class TranslateUtil {
                     connection.setRequestProperty("X-ClientTraceId", UUID.randomUUID().toString());
                     connection.setDoOutput(true);
 
-                    DataOutputStream wr = new DataOutputStream(connection.getOutputStream());
-//                    List<RequestBody> objList = new ArrayList();
-//                    objList.add(new RequestBody(text));
+                    DataOutputStream dos = new DataOutputStream(connection.getOutputStream());
                     String content = new Gson().toJson(objList);
                     byte[] encoded_content = content.getBytes("UTF-8");
-                    wr.write(encoded_content, 0, encoded_content.length);
-                    wr.flush();
-                    wr.close();
+                    dos.write(encoded_content, 0, encoded_content.length);
+                    dos.flush();
+                    dos.close();
 
                     StringBuilder response = new StringBuilder ();
                     BufferedReader in = new BufferedReader(new InputStreamReader(connection.getInputStream(), "UTF-8"));
@@ -72,9 +66,6 @@ public class TranslateUtil {
                         response.append(line);
                     }
                     in.close();
-
-                    Log.e(TAG, "JSON: " + response.toString());
-
                     sendBroadCast(response.toString(), context);
                 } catch (UnsupportedEncodingException e) {
                     Log.e(TAG, "UnsupportedEncodingException: " + e.getMessage());
@@ -99,12 +90,5 @@ public class TranslateUtil {
         Gson gson = new Gson();
         list = gson.fromJson(json, new TypeToken<List<TranslateResult>>() {}.getType());
         return list;
-    }
-
-    public static String prettify(String json_text) {
-        JsonParser parser = new JsonParser();
-        JsonElement json = parser.parse(json_text);
-        Gson gson = new GsonBuilder().setPrettyPrinting().create();
-        return gson.toJson(json);
     }
 }

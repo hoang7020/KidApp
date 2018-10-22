@@ -42,7 +42,7 @@
     <TextView
         android:layout_width="139dp"
         android:layout_height="91dp"
-        android:text="Chào bạn nhỏ! Mình là Cú Cú Thông Thái. Chạm vào mình để chụp hình nào!"
+        android:text="Chào bạn nhỏ! Mình là Cú Cú Thông Thái. Chạm vào mình để bắt đầu nào!"
         android:textColor="@color/textStartActivity"
         android:textStyle="italic"
         app:layout_constraintBottom_toBottomOf="@+id/imageView"
