@@ -11,7 +11,7 @@ import android.util.Log;
 import java.util.ArrayList;
 import java.util.List;
 
-import vn.edu.fpt.kidapp.Model.CapturePicture;
+import vn.edu.fpt.kidapp.model.CapturePicture;
 
 public class DBManager extends SQLiteOpenHelper {
 

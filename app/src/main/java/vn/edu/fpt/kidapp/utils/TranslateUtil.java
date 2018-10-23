@@ -19,7 +19,7 @@ import java.util.UUID;
 
 import javax.net.ssl.HttpsURLConnection;
 
-import vn.edu.fpt.kidapp.Model.TranslateResult;
+import vn.edu.fpt.kidapp.model.TranslateResult;
 
 public class TranslateUtil {
     private static final String TAG = TranslateUtil.class.getSimpleName();

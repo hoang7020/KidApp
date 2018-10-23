@@ -16,11 +16,10 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import java.util.Locale;
 
-import vn.edu.fpt.kidapp.Model.CapturePicture;
+import vn.edu.fpt.kidapp.model.CapturePicture;
 import vn.edu.fpt.kidapp.database.DBManager;
 import vn.edu.fpt.kidapp.interfaces.Observer;
 import vn.edu.fpt.kidapp.interfaces.Observerable;

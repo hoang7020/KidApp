@@ -8,11 +8,10 @@ import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
-import android.widget.Toast;
 
 import java.util.List;
 
-import vn.edu.fpt.kidapp.Model.CapturePicture;
+import vn.edu.fpt.kidapp.model.CapturePicture;
 import vn.edu.fpt.kidapp.adapter.PictureHistoryAdapter;
 import vn.edu.fpt.kidapp.database.DBManager;
 
