@@ -14,7 +14,7 @@
         android:roundIcon="@drawable/owl"
         android:supportsRtl="true"
         android:theme="@style/Theme.AppCompat.Light.NoActionBar">
-        <activity android:name=".StartActivity">
+        <activity android:name=".LoginActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -28,7 +28,9 @@
             android:name=".CropImageActivity"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar" />
         <activity android:name=".HistoryActivity" />
-        <activity android:name=".ViewHistoryActivity"></activity>
+        <activity android:name=".ViewHistoryActivity" />
+        <activity android:name=".StartActivity" />
+        <activity android:name=".RegisterActivity"></activity>
     </application>
 
 </manifest>
