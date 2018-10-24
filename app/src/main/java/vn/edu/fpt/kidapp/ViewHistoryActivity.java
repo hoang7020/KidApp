@@ -77,13 +77,31 @@ public class ViewHistoryActivity extends AppCompatActivity {
         popupMenu.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
             @Override
             public boolean onMenuItemClick(MenuItem item) {
-                Toast.makeText(ViewHistoryActivity.this, item.getTitle(), Toast.LENGTH_SHORT).show();
+
                 if(item.getTitle().equals("Delete")){
-                    db.deletePictureByName(listPicture.get(pos).getName());
-                    listPicture.remove(pos);
+                    AlertDialog.Builder alert = new AlertDialog.Builder(ViewHistoryActivity.this);
+                    alert.setTitle("Confirm");
+                    alert.setMessage("Do you want to delete this photo?");
+                    alert.setIcon(R.drawable.flashon);
+                    alert.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            db.deletePictureByName(listPicture.get(pos).getName());
+                            listPicture.remove(pos);
 
 
-                    adapter.notifyDataSetChanged();
+                            adapter.notifyDataSetChanged();
+
+                        }
+                    });
+                    alert.setNegativeButton("No", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            
+                        }
+                    });
+                    alert.show();
+
                 }
 
 
