@@ -31,7 +31,7 @@ public class RegisterActivity extends AppCompatActivity {
                 String confirmPassword = edtConfirmPassword.getText().toString();
                 String address = edtAddress.getText().toString();
                 if (password.equals(confirmPassword)) {
-                    DBManagerAPI dba = new DBManagerAPI();
+                    DBManagerAPI dba = new DBManagerAPI(getApplicationContext());
                     dba.register(username, password, address);
                 } else {
                     Log.e(TAG, "onClick: " + "Confirm Password does not match!!!");

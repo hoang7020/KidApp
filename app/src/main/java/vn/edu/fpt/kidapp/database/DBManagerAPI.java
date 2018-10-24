@@ -1,5 +1,7 @@
 package vn.edu.fpt.kidapp.database;
 
+import android.content.Context;
+import android.content.Intent;
 import android.util.Log;
 
 import com.google.gson.Gson;
@@ -9,6 +11,7 @@ import java.io.BufferedReader;
 import java.io.DataOutputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.io.Serializable;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
@@ -22,8 +25,13 @@ public class DBManagerAPI {
     private static final String host = "http://10.82.140.22:49833";
     private Gson gson;
 
-    public DBManagerAPI() {
+    private Context context;
+
+    public static final String ACTION_LOGIN = "ACTION_LOGIN";
+
+    public DBManagerAPI(Context context) {
         gson = new Gson();
+        this.context = context;
     }
 
     private HttpURLConnection createConnection(URL url) {
@@ -76,9 +84,7 @@ public class DBManagerAPI {
                     String params = "username=" + username + "&password=" + password;
                     setParams(urlConnection, params);
                     String result = readResponse(urlConnection);
-                    Log.e(TAG, "Result LOGIN: " + result);
-                    UserResultJSON resultJSON = gson.fromJson(result, new TypeToken<UserResultJSON>() {}.getType());
-                    Log.e(TAG, "Result LOGIN: " + resultJSON.getStatus().getCode() + " " + resultJSON.getData().getUsername());
+                    sendDataBroadcast(result, ACTION_LOGIN);
                 } catch (MalformedURLException e) {
                     e.printStackTrace();
                 } catch (IOException e) {
@@ -106,5 +112,12 @@ public class DBManagerAPI {
                 }
             }
         }).start();
+    }
+
+    private void sendDataBroadcast(String result, String action) {
+        Intent intent = new Intent();
+        intent.setAction(action);
+        intent.putExtra("API_RESULT", result);
+        context.sendBroadcast(intent);
     }
 }

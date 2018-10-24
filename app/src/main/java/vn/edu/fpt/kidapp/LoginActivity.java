@@ -1,6 +1,7 @@
 package vn.edu.fpt.kidapp;
 
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -8,11 +9,14 @@ import android.widget.Button;
 import android.widget.EditText;
 
 import vn.edu.fpt.kidapp.database.DBManagerAPI;
+import vn.edu.fpt.kidapp.receiver.UserReceiver;
 
 public class LoginActivity extends AppCompatActivity {
 
-    EditText edtUsername, edtPassword;
-    Button btnLogin, btnRegister;
+    private EditText edtUsername, edtPassword;
+    private Button btnLogin, btnRegister;
+
+    private UserReceiver userReceiver;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -26,7 +30,7 @@ public class LoginActivity extends AppCompatActivity {
             public void onClick(View v) {
                 String username = edtUsername.getText().toString();
                 String password = edtPassword.getText().toString();
-                DBManagerAPI dba = new DBManagerAPI();
+                DBManagerAPI dba = new DBManagerAPI(getApplicationContext());
                 dba.login(username, password);
             }
         });
@@ -38,6 +42,19 @@ public class LoginActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        userReceiver = new UserReceiver();
+        registerReceiver(userReceiver, new IntentFilter(DBManagerAPI.ACTION_LOGIN));
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        unregisterReceiver(userReceiver);
     }
 
     private void initView() {
