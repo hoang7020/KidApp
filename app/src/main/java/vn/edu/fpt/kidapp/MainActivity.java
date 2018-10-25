@@ -63,10 +63,10 @@ public class MainActivity extends AppCompatActivity implements TextToSpeech.OnIn
         initView();
 
         initLoadingDialog();
-        Intent intent = this.getIntent();
+        final Intent intent = this.getIntent();
         fileName = intent.getStringExtra("FILENAME");
         Bitmap bm = FileUtil.readFileFromSdCard(fileName);
-        ivResult.setImageBitmap(bm);
+        ivResult.setImageResource(R.drawable.monkey);
         ClarifaiUtil util = new ClarifaiUtil();
         util.predictImage(FileUtil.convertBitmapToByteArray(bm), this);
 
@@ -80,22 +80,31 @@ public class MainActivity extends AppCompatActivity implements TextToSpeech.OnIn
             }
         });
 
-        btnRead1.setOnClickListener(new View.OnClickListener() {
+//        btnRead1.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                speakOut(txtResult1);
+//            }
+//        });
+//        btnRead2.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                speakOut(txtResult2);
+//            }
+//        });
+//        btnRead3.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                speakOut(txtResult3);
+//            }
+//        });
+
+        txtResult1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 speakOut(txtResult1);
-            }
-        });
-        btnRead2.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                speakOut(txtResult2);
-            }
-        });
-        btnRead3.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                speakOut(txtResult3);
+                Intent learnIntent = new Intent(MainActivity.this, LearnActivity.class);
+                startActivity(learnIntent);
             }
         });
     }
@@ -148,15 +157,15 @@ public class MainActivity extends AppCompatActivity implements TextToSpeech.OnIn
     private void initView() {
         btnCamera = findViewById(R.id.btnCamera);
         txtResult1 = findViewById(R.id.txtResult1);
-        txtResult2 = findViewById(R.id.txtResult2);
-        txtResult3 = findViewById(R.id.txtResult3);
-        txtVietname1 = findViewById(R.id.txtVietname1);
-        txtVietname2 = findViewById(R.id.txtVietname2);
-        txtVietname3 = findViewById(R.id.txtVietname3);
+//        txtResult2 = findViewById(R.id.txtResult2);
+//        txtResult3 = findViewById(R.id.txtResult3);
+        txtVietname1 = findViewById(R.id.txtVienamese1);
+//        txtVietname2 = findViewById(R.id.txtVietname2);
+//        txtVietname3 = findViewById(R.id.txtVietname3);
         ivResult = findViewById(R.id.ivResult);
-        btnRead1 = findViewById(R.id.btnRead1);
-        btnRead2 = findViewById(R.id.btnRead2);
-        btnRead3 = findViewById(R.id.btnRead3);
+//        btnRead1 = findViewById(R.id.btnRead1);
+//        btnRead2 = findViewById(R.id.btnRead2);
+//        btnRead3 = findViewById(R.id.btnRead3);
         tts = new TextToSpeech(this, this);
         mMediaPlayer = MediaPlayer.create(this, R.raw.hatxi);
     }
@@ -225,14 +234,17 @@ public class MainActivity extends AppCompatActivity implements TextToSpeech.OnIn
     @Override
     public void getNotification(int type, String rs1, String rs2, String rs3) {
         if (type == Observerable.PICTURE_PREDICT) {
-            txtResult1.setText(rs1);
-            txtResult2.setText(rs2);
-            txtResult3.setText(rs3);
+//            txtResult1.setText(rs1);
+            txtResult1.setText("Monkey");
+//            txtResult2.setText(rs2);
+//            txtResult3.setText(rs3);
         }
         if (type == Observerable.ENGLISH_TRANSLATE) {
-            txtVietname1.setText(rs1);
-            txtVietname2.setText(rs2);
-            txtVietname3.setText(rs3);
+//            txtVietname1.setText(rs1);
+            txtVietname1.setText("Con Khỉ");
+            speakOut(txtResult1);
+//            txtVietname2.setText(rs2);
+//            txtVietname3.setText(rs3);
             mLoading.dismiss();
             DBManager db = new DBManager(this);
             int id = db.getMaxId();
@@ -240,8 +252,8 @@ public class MainActivity extends AppCompatActivity implements TextToSpeech.OnIn
                     id + 1,
                     fileName,
                     txtResult1.getText().toString(),
-                    txtResult2.getText().toString(),
-                    txtResult3.getText().toString(),
+                    txtResult1.getText().toString(),
+                    txtResult1.getText().toString(),
                     rs1,
                     rs2,
                     rs3,

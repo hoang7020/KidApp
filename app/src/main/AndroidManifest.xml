@@ -28,7 +28,8 @@
             android:name=".CropImageActivity"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar" />
         <activity android:name=".HistoryActivity" />
-        <activity android:name=".ViewHistoryActivity"></activity>
+        <activity android:name=".ViewHistoryActivity" />
+        <activity android:name=".LearnActivity"></activity>
     </application>
 
 </manifest>

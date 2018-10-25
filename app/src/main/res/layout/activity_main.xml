@@ -1,198 +1,107 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/colorBackground"
-    android:orientation="vertical"
-    android:weightSum="12"
     tools:context=".MainActivity">
 
     <android.support.v7.widget.Toolbar
         android:id="@+id/my_toolbar"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_weight="1"
         android:background="@color/colorToolbar"
         android:theme="@style/ToolBarStyle"
         app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
         app:title="Cú Cú"
         app:titleTextColor="#ffffff" />
 
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="9">
+    <ProgressBar
+        android:id="@+id/progressBar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_centerVertical="true"
+        android:layout_marginStart="8dp"
+        android:layout_marginLeft="8dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginRight="8dp"
+        android:layout_marginBottom="120dp"
+        android:indeterminate="true"
+        android:translationZ="3dp"
+        android:visibility="invisible"
+        app:layout_constraintBottom_toTopOf="@+id/btnCamera"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/my_toolbar"
+        app:layout_constraintVertical_bias="0.765" />
 
-        <ProgressBar
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerHorizontal="true"
-            android:layout_centerVertical="true"
-            android:indeterminate="true"
-            android:visibility="invisible" />
+    <LinearLayout
+        android:gravity="center"
+        android:orientation="vertical"
+        android:layout_width="381dp"
+        android:layout_height="228dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginLeft="8dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginRight="8dp"
+        android:layout_marginBottom="8dp"
+        app:layout_constraintBottom_toTopOf="@+id/ivResult"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.384"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="1.0">
 
-        <LinearLayout
+        <TextView
+            android:id="@+id/txtResult1"
+            android:fontFamily="@font/lapsusprobold"
+            android:gravity="center"
+            android:textSize="40dp"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:orientation="vertical"
-            android:weightSum="11">
+            android:layout_height="wrap_content"/>
+        <TextView
+            android:fontFamily="@font/gloriahallelujah"
+            android:gravity="center"
+            android:id="@+id/txtVienamese1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+    </LinearLayout>
 
-            <ImageView
-                android:id="@+id/ivResult"
-                android:layout_width="match_parent"
-                android:layout_height="0px"
-                android:layout_gravity="center"
-                android:layout_weight="6.5" />
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="0dp"
-                android:layout_gravity="center"
-                android:layout_weight="1.5"
-                android:orientation="horizontal"
-                android:weightSum="10">
-
-                <ImageView
-                    android:id="@+id/btnRead1"
-                    android:layout_width="0dp"
-                    android:layout_height="50dp"
-                    android:layout_gravity="center"
-                    android:layout_weight="3"
-                    android:scaleType="fitCenter"
-                    android:src="@drawable/speaker"
-                    android:text="Read" />
-
-                <TextView
-                    android:id="@+id/txtResult1"
-                    android:layout_width="0dp"
-                    android:layout_height="40dp"
-                    android:layout_centerInParent="true"
-                    android:layout_gravity="center"
-                    android:layout_weight="3"
-                    android:background="@drawable/border_eng"
-                    android:gravity="center"
-                    android:text="English" />
-
-                <TextView
-                    android:id="@+id/txtVietname1"
-                    android:layout_width="0dp"
-                    android:layout_height="40dp"
-                    android:layout_centerInParent="true"
-                    android:layout_gravity="center"
-                    android:layout_weight="3"
-                    android:background="@drawable/border_vie"
-                    android:gravity="center"
-                    android:text="Vietnamese" />
-
-                <TextView
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1" />
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="0dp"
-                android:layout_gravity="center"
-                android:layout_weight="1.5"
-                android:orientation="horizontal"
-                android:weightSum="10">
-
-                <ImageView
-                    android:id="@+id/btnRead2"
-                    android:layout_width="0dp"
-                    android:layout_height="50dp"
-                    android:layout_gravity="center"
-                    android:layout_weight="3"
-                    android:scaleType="fitCenter"
-                    android:src="@drawable/speaker"
-                    android:text="Read" />
-
-                <TextView
-                    android:id="@+id/txtResult2"
-                    android:layout_width="0dp"
-                    android:layout_height="40dp"
-                    android:layout_centerInParent="true"
-                    android:layout_gravity="center"
-                    android:layout_weight="3"
-                    android:background="@drawable/border_eng"
-                    android:gravity="center"
-                    android:text="English" />
-
-
-                <TextView
-                    android:id="@+id/txtVietname2"
-                    android:layout_width="0dp"
-                    android:layout_height="40dp"
-                    android:layout_centerInParent="true"
-                    android:layout_gravity="center"
-                    android:layout_weight="3"
-                    android:background="@drawable/border_vie"
-                    android:gravity="center"
-                    android:text="Vietnamese" />
-
-                <TextView
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1" />
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="0dp"
-                android:layout_gravity="center"
-                android:layout_weight="1.5"
-                android:orientation="horizontal"
-                android:weightSum="10">
-
-                <ImageView
-                    android:id="@+id/btnRead3"
-                    android:layout_width="0dp"
-                    android:layout_height="50dp"
-                    android:layout_gravity="center"
-                    android:layout_weight="3"
-                    android:scaleType="fitCenter"
-                    android:src="@drawable/speaker"
-                    android:text="Read" />
-
-                <TextView
-                    android:id="@+id/txtResult3"
-                    android:layout_width="0dp"
-                    android:layout_height="40dp"
-                    android:layout_centerInParent="true"
-                    android:layout_gravity="center"
-                    android:layout_weight="3"
-                    android:background="@drawable/border_eng"
-                    android:gravity="center"
-                    android:text="English" />
-
-                <TextView
-                    android:id="@+id/txtVietname3"
-                    android:layout_width="0dp"
-                    android:layout_height="40dp"
-                    android:layout_centerInParent="true"
-                    android:layout_gravity="center"
-                    android:layout_weight="3"
-                    android:background="@drawable/border_vie"
-                    android:gravity="center"
-                    android:text="Vietnamese" />
-
-                <TextView
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1" />
-            </LinearLayout>
-        </LinearLayout>
-    </RelativeLayout>
 
     <ImageView
         android:id="@+id/btnCamera"
-        android:layout_width="70dp"
-        android:layout_height="0dp"
+        android:layout_width="71dp"
+        android:layout_height="54dp"
         android:layout_gravity="center"
+        android:layout_marginStart="8dp"
+        android:layout_marginLeft="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginRight="8dp"
+        android:layout_marginBottom="8dp"
         android:layout_weight="2"
-        android:src="@drawable/camera" />
+        android:src="@drawable/camera"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.501"
+        app:layout_constraintStart_toStartOf="parent" />
 
-</LinearLayout>
+    <ImageView
+        android:id="@+id/ivResult"
+        android:layout_width="383dp"
+        android:layout_height="206dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginLeft="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginRight="8dp"
+        android:layout_marginBottom="8dp"
+        android:translationZ="1dp"
+        app:layout_constraintBottom_toTopOf="@+id/btnCamera"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.466"
+        app:layout_constraintStart_toStartOf="parent" />
+
+</android.support.constraint.ConstraintLayout>
