@@ -5,29 +5,25 @@ import android.content.Intent;
 import android.util.Log;
 
 import com.google.gson.Gson;
-import com.google.gson.reflect.TypeToken;
 
 import java.io.BufferedReader;
 import java.io.DataOutputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.io.Serializable;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
-import java.util.List;
-
-import vn.edu.fpt.kidapp.model.UserResultJSON;
 
 public class DBManagerAPI {
     private static final String TAG = DBManagerAPI.class.getSimpleName();
 
-    private static final String host = "http://10.82.140.22:49833";
+    private static final String host = "http://192.168.1.9:49833";
     private Gson gson;
 
     private Context context;
 
     public static final String ACTION_LOGIN = "ACTION_LOGIN";
+    public static final String ACTION_REGISTER = "ACTION_REGISTER";
 
     public DBManagerAPI(Context context) {
         gson = new Gson();
@@ -84,7 +80,7 @@ public class DBManagerAPI {
                     String params = "username=" + username + "&password=" + password;
                     setParams(urlConnection, params);
                     String result = readResponse(urlConnection);
-                    sendDataBroadcast(result, ACTION_LOGIN);
+                    sendDataBroadcast(ACTION_LOGIN, result);
                 } catch (MalformedURLException e) {
                     e.printStackTrace();
                 } catch (IOException e) {
@@ -105,6 +101,7 @@ public class DBManagerAPI {
                     setParams(urlConnection, params);
                     String result = readResponse(urlConnection);
                     Log.e(TAG, "Result REGISTER: " + result);
+                    sendDataBroadcast(ACTION_REGISTER, result);
                 } catch (MalformedURLException e) {
                     e.printStackTrace();
                 } catch (IOException e) {
@@ -114,7 +111,7 @@ public class DBManagerAPI {
         }).start();
     }
 
-    private void sendDataBroadcast(String result, String action) {
+    private void sendDataBroadcast(String action, String result) {
         Intent intent = new Intent();
         intent.setAction(action);
         intent.putExtra("API_RESULT", result);

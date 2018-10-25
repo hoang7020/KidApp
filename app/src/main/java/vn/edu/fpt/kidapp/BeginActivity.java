@@ -1,6 +1,7 @@
 package vn.edu.fpt.kidapp;
 
 import android.Manifest;
+import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.media.MediaPlayer;
@@ -21,6 +22,8 @@ public class BeginActivity extends AppCompatActivity {
 
     private MediaPlayer mMediaPlayer;
     private MediaPlayer mWelcome;
+
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
