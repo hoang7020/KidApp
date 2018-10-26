@@ -38,7 +38,7 @@ public class MainActivity extends AppCompatActivity implements TextToSpeech.OnIn
     private static final int HISTORY_REQUEST_CODE = 2222;
 
     private ImageView btnRead1, btnRead2, btnRead3, btnCamera;
-    private TextView txtResult1, txtResult2, txtResult3, txtVietname1, txtVietname2, txtVietname3;
+    private TextView txtResult1, txtResult2, txtResult3, txtVietname1, txtVietname2, txtVietname3, txtPronunciation;
     private ImageView ivResult;
     private Toolbar mToolbar;
     private TextToSpeech tts;
@@ -162,6 +162,7 @@ public class MainActivity extends AppCompatActivity implements TextToSpeech.OnIn
         txtVietname1 = findViewById(R.id.txtVienamese1);
 //        txtVietname2 = findViewById(R.id.txtVietname2);
 //        txtVietname3 = findViewById(R.id.txtVietname3);
+        txtPronunciation = findViewById(R.id.txtPronunciation);
         ivResult = findViewById(R.id.ivResult);
 //        btnRead1 = findViewById(R.id.btnRead1);
 //        btnRead2 = findViewById(R.id.btnRead2);
@@ -236,6 +237,7 @@ public class MainActivity extends AppCompatActivity implements TextToSpeech.OnIn
         if (type == Observerable.PICTURE_PREDICT) {
 //            txtResult1.setText(rs1);
             txtResult1.setText("Monkey");
+            txtPronunciation.setText("/'mʌŋki/ ");
 //            txtResult2.setText(rs2);
 //            txtResult3.setText(rs3);
         }

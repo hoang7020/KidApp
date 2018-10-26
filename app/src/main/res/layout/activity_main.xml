@@ -39,36 +39,46 @@
         app:layout_constraintVertical_bias="0.765" />
 
     <LinearLayout
-        android:gravity="center"
-        android:orientation="vertical"
+        android:id="@+id/linearLayout"
         android:layout_width="381dp"
         android:layout_height="228dp"
         android:layout_marginStart="8dp"
         android:layout_marginLeft="8dp"
-        android:layout_marginTop="8dp"
         android:layout_marginEnd="8dp"
         android:layout_marginRight="8dp"
-        android:layout_marginBottom="8dp"
-        app:layout_constraintBottom_toTopOf="@+id/ivResult"
+        android:layout_marginBottom="12dp"
+        android:gravity="center"
+        android:orientation="vertical"
+        app:layout_constraintBottom_toTopOf="@+id/btnCamera"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.384"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="1.0">
+        app:layout_constraintStart_toStartOf="parent">
 
         <TextView
             android:id="@+id/txtResult1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
             android:fontFamily="@font/lapsusprobold"
             android:gravity="center"
-            android:textSize="40dp"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"/>
+            android:text="Monkey"
+            android:textColor="#ff6f00"
+            android:textSize="40dp" />
+
         <TextView
-            android:fontFamily="@font/gloriahallelujah"
+            android:id="@+id/txtPronunciation"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
             android:gravity="center"
+            android:text="/'mʌŋki/ " />
+
+        <TextView
             android:id="@+id/txtVienamese1"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/gloriahallelujah"
+            android:gravity="center"
+            android:text="Con Khỉ"
+            android:textSize="20dp" />
     </LinearLayout>
 
 
@@ -99,9 +109,11 @@
         android:layout_marginRight="8dp"
         android:layout_marginBottom="8dp"
         android:translationZ="1dp"
-        app:layout_constraintBottom_toTopOf="@+id/btnCamera"
+        app:layout_constraintBottom_toTopOf="@+id/linearLayout"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.466"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintHorizontal_bias="0.533"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/my_toolbar"
+        app:layout_constraintVertical_bias="0.0" />
 
 </android.support.constraint.ConstraintLayout>
