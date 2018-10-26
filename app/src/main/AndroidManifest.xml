@@ -14,22 +14,22 @@
         android:roundIcon="@drawable/owl"
         android:supportsRtl="true"
         android:theme="@style/Theme.AppCompat.Light.NoActionBar">
-        <activity android:name=".StartActivity">
+        <activity android:name=".BeginActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".BeginActivity" />
         <activity android:name=".MainActivity" />
+        <activity android:name=".LearnActivity" />
         <activity android:name=".CameraActivity" />
         <activity
             android:name=".CropImageActivity"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar" />
         <activity android:name=".HistoryActivity" />
         <activity android:name=".ViewHistoryActivity" />
-        <activity android:name=".LearnActivity"></activity>
+        <activity android:name=".StartActivity"></activity>
     </application>
 
 </manifest>
