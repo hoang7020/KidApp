@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.util.Log;
 
 import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
 
 import java.io.BufferedReader;
 import java.io.DataOutputStream;
@@ -13,11 +14,14 @@ import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.util.List;
+
+import vn.edu.fpt.kidapp.model.UserResultJSON;
 
 public class DBManagerAPI {
     private static final String TAG = DBManagerAPI.class.getSimpleName();
 
-    private static final String host = "http://192.168.1.9:49833";
+    private static final String host = "http://192.168.1.92:49833";
     private Gson gson;
 
     private Context context;
@@ -101,6 +105,32 @@ public class DBManagerAPI {
                     setParams(urlConnection, params);
                     String result = readResponse(urlConnection);
                     Log.e(TAG, "Result REGISTER: " + result);
+                    sendDataBroadcast(ACTION_REGISTER, result);
+                } catch (MalformedURLException e) {
+                    e.printStackTrace();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+        }).start();
+    }
+
+    public void getAllPicture(final String username) {
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                try {
+                    URL url = new URL(host + "/getAllResultOfOneUser");
+                    HttpURLConnection urlConnection = createConnection(url);
+                    String params = "username=" + username;
+                    setParams(urlConnection, params);
+                    String result = readResponse(urlConnection);
+                    Log.e(TAG, "Result REGISTER: " + result);
+                    UserResultJSON rs = gson.fromJson(result, new TypeToken<UserResultJSON>() {}.getType());
+                    List<UserResultJSON.Picture> lists = rs.getData().getPictures();
+                    for (UserResultJSON.Picture p: lists) {
+                        Log.e(TAG, "run: " + p.getImageId() + " " + p.getImageName() + " " + p.getEngSub().getEng1() + " " + p.getVieSub().getVie1());
+                    }
                     sendDataBroadcast(ACTION_REGISTER, result);
                 } catch (MalformedURLException e) {
                     e.printStackTrace();

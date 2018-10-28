@@ -37,6 +37,9 @@ public class LoginActivity extends AppCompatActivity {
 
         _instance = this;
 
+        DBManagerAPI api = new DBManagerAPI(this);
+        api.getAllPicture("hoang7020");
+
         if (checkLogin()) {
             Intent intent = new Intent(this, BeginActivity.class);
             startActivity(intent);
