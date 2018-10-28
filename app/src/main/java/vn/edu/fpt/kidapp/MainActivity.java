@@ -76,6 +76,7 @@ public class MainActivity extends AppCompatActivity implements TextToSpeech.OnIn
                 mMediaPlayer.start();
                 Constant.FLAG = true;
                 Intent intent = new Intent(MainActivity.this, CameraActivity.class);
+
                 startActivityForResult(intent, CAMERA_REQUEST_CODE);
             }
         });
