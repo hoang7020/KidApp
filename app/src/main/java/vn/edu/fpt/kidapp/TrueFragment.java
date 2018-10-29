@@ -1,6 +1,8 @@
 package vn.edu.fpt.kidapp;
 
 
+import android.annotation.SuppressLint;
+import android.app.Activity;
 import android.app.DialogFragment;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -15,11 +17,17 @@ import android.widget.Toast;
 /**
  * A simple {@link Fragment} subclass.
  */
-public class ResultFragment extends DialogFragment {
+@SuppressLint("ValidFragment")
+public class TrueFragment extends DialogFragment {
+
+    private String text;
+    LearnActivity act;
 
 
-    public ResultFragment() {
+    public TrueFragment(String text, LearnActivity act) {
         // Required empty public constructor
+        this.text = text;
+        this.act = act;
     }
 
 
@@ -28,21 +36,25 @@ public class ResultFragment extends DialogFragment {
                              Bundle savedInstanceState) {
         getDialog().getWindow().requestFeature(Window.FEATURE_NO_TITLE);
 
-        View view = inflater.inflate(R.layout.fragment_result, container, false);
-        Button btnCancel = view.findViewById(R.id.btnCancel);
+        View view = inflater.inflate(R.layout.fragment_true, container, false);
+//        Button btnCancel = view.findViewById(R.id.btnCancel);
         Button btnOk = view.findViewById(R.id.btnOk);
+        TextView txtResult = view.findViewById(R.id.txtText);
 
-        btnCancel.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Toast.makeText(getActivity(), "Cancel", Toast.LENGTH_SHORT).show();
-            }
-        });
+        txtResult.setText(text);
+
+//        btnCancel.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                Toast.makeText(getActivity(), "Cancel", Toast.LENGTH_SHORT).show();
+//            }
+//        });
 
         btnOk.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(getActivity(), "Ok", Toast.LENGTH_SHORT).show();
+                act.setResult(Activity.RESULT_OK);
+                act.finish();
             }
         });
 

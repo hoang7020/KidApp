@@ -1,23 +1,16 @@
 package vn.edu.fpt.kidapp;
 
-import android.content.DialogInterface;
-import android.content.Intent;
-import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.view.MotionEvent;
 import android.view.View;
-import android.widget.Button;
 import android.widget.EditText;
-import android.widget.ImageView;
-import android.widget.Toast;
-import android.widget.VideoView;
 
 public class LearnActivity extends AppCompatActivity {
-    EditText edt1,edt2,edt3,edt4,edt5,edt6;
+    static EditText edt1,edt2,edt3,edt4,edt5,edt6;
     //Button btnO,btnK,btnC,btnR,btnN,btnM,btnT,btnY,btnE,btnX;
 
-    ResultFragment resultFragment;
+    static TrueFragment trueFragment;
+    static FalseFragment falseFragment;
 
 
     @Override
@@ -30,8 +23,10 @@ public class LearnActivity extends AppCompatActivity {
         edt4= findViewById(R.id.editText4);
         edt5= findViewById(R.id.editText5);
         edt6= findViewById(R.id.editText6);
-        resultFragment = new ResultFragment();
-        resultFragment.setCancelable(false);
+        trueFragment = new TrueFragment("Đúng Rồi!!!", this);
+        trueFragment.setCancelable(false);
+        falseFragment = new FalseFragment("Sai Rồi!!!", this);
+        falseFragment.setCancelable(false);
 
 //        btnO=findViewById(R.id.charO);
 //        btnK=findViewById(R.id.charK);
@@ -71,40 +66,41 @@ public class LearnActivity extends AppCompatActivity {
 //            });
 //
 //            alert.show();
-            resultFragment.show(getFragmentManager(), "Result");
+            trueFragment.show(getFragmentManager(), "True");
 
 
         }else{
 
-            AlertDialog.Builder alert = new AlertDialog.Builder(LearnActivity.this);
-            alert.setTitle("Sai Rồi!!! :'< ");
-            alert.setMessage("Bạn có muốn thử lại không?");
-            alert.setIcon(R.drawable.flashon);
-            alert.setPositiveButton("Có", new DialogInterface.OnClickListener() {
-                @Override
-                public void onClick(DialogInterface dialog, int which) {
-                    edt1.setText("");
-                    edt2.setText("");
-                    edt3.setText("");
-                    edt4.setText("");
-                    edt5.setText("");
-                    edt6.setText("");
-
-
-
-
-                }
-            });
-            alert.setNegativeButton("Không", new DialogInterface.OnClickListener() {
-                @Override
-                public void onClick(DialogInterface dialog, int which) {
-                    setResult(RESULT_OK);
-
-                    finish();
-
-                }
-            });
-            alert.show();
+//            AlertDialog.Builder alert = new AlertDialog.Builder(LearnActivity.this);
+//            alert.setTitle("Sai Rồi!!! :'< ");
+//            alert.setMessage("Bạn có muốn thử lại không?");
+//            alert.setIcon(R.drawable.flashon);
+//            alert.setPositiveButton("Có", new DialogInterface.OnClickListener() {
+//                @Override
+//                public void onClick(DialogInterface dialog, int which) {
+//                    edt1.setText("");
+//                    edt2.setText("");
+//                    edt3.setText("");
+//                    edt4.setText("");
+//                    edt5.setText("");
+//                    edt6.setText("");
+//
+//
+//
+//
+//                }
+//            });
+//            alert.setNegativeButton("Không", new DialogInterface.OnClickListener() {
+//                @Override
+//                public void onClick(DialogInterface dialog, int which) {
+//                    setResult(RESULT_OK);
+//
+//                    finish();
+//
+//                }
+//            });
+//            alert.show();
+            falseFragment.show(getFragmentManager(), "False");
 
         }
     }
@@ -112,6 +108,7 @@ public class LearnActivity extends AppCompatActivity {
     public void clickToAddCharO(View view) {
         if(isEmpty(edt1)){
             edt1.setText("O");
+
             return;
         }
         if(isEmpty(edt2)){

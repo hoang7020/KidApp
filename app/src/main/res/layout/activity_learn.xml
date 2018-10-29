@@ -148,6 +148,7 @@
         app:layout_constraintTop_toBottomOf="@+id/imageView2" />
 
     <Button
+
         android:id="@+id/charO"
         android:layout_width="46dp"
         android:layout_height="38dp"
@@ -161,7 +162,8 @@
         app:layout_constraintHorizontal_bias="0.127"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/editText1"
-        android:onClick="clickToAddCharO"/>
+        android:onClick="clickToAddCharO"
+        />
 
     <Button
         android:id="@+id/charM"
@@ -305,6 +307,24 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/editText1"
         android:onClick="clickToAddCharK"/>
+
+    <TextView
+        android:id="@+id/textView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginLeft="8dp"
+        android:layout_marginTop="60dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginRight="8dp"
+        android:gravity="center"
+        android:text="Điền từ vào chỗ trống: "
+        android:textColor="#349c04"
+        android:textSize="25dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.504"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/imageView2" />
 
 
 </android.support.constraint.ConstraintLayout>
