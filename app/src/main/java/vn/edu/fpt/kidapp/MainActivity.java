@@ -6,6 +6,7 @@ import android.content.IntentFilter;
 import android.graphics.Bitmap;
 import android.media.MediaPlayer;
 import android.os.Bundle;
+import android.os.Handler;
 import android.speech.tts.TextToSpeech;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
@@ -37,7 +38,7 @@ public class MainActivity extends AppCompatActivity implements TextToSpeech.OnIn
     private static final int CAMERA_REQUEST_CODE = 1111;
     private static final int HISTORY_REQUEST_CODE = 2222;
 
-    private ImageView btnRead1, btnRead2, btnRead3, btnCamera;
+    private ImageView btnRead1, btnRead2, btnRead3, btnCamera, btnSpeak, btnLuyentap;
     private TextView txtResult1, txtResult2, txtResult3, txtVietname1, txtVietname2, txtVietname3, txtPronunciation;
     private ImageView ivResult;
     private Toolbar mToolbar;
@@ -66,7 +67,7 @@ public class MainActivity extends AppCompatActivity implements TextToSpeech.OnIn
         final Intent intent = this.getIntent();
         fileName = intent.getStringExtra("FILENAME");
         Bitmap bm = FileUtil.readFileFromSdCard(fileName);
-        ivResult.setImageResource(R.drawable.monkey);
+        ivResult.setImageResource(R.drawable.bookandpen);
         ClarifaiUtil util = new ClarifaiUtil();
         util.predictImage(FileUtil.convertBitmapToByteArray(bm), this);
 
@@ -99,12 +100,27 @@ public class MainActivity extends AppCompatActivity implements TextToSpeech.OnIn
 //            }
 //        });
 
-        txtResult1.setOnClickListener(new View.OnClickListener() {
+
+        btnLuyentap.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                speakOut(txtResult1);
                 Intent learnIntent = new Intent(MainActivity.this, LearnActivity.class);
                 startActivityForResult(learnIntent, 1234);
+            }
+        });
+
+        btnSpeak.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                btnSpeak.setImageResource(R.drawable.speaker);
+                Handler handler = new Handler();
+                handler.postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        btnSpeak.setImageResource(R.drawable.speaker2);
+                    }
+                }, 100);
+                speakOut(txtResult1);
             }
         });
     }
@@ -169,6 +185,8 @@ public class MainActivity extends AppCompatActivity implements TextToSpeech.OnIn
 //        btnRead3 = findViewById(R.id.btnRead3);
         tts = new TextToSpeech(this, this);
         mMediaPlayer = MediaPlayer.create(this, R.raw.hatxi);
+        btnSpeak = findViewById(R.id.btnSpeak);
+        btnLuyentap = findViewById(R.id.btnLuyentap);
     }
 
     @Override
@@ -236,15 +254,15 @@ public class MainActivity extends AppCompatActivity implements TextToSpeech.OnIn
     public void getNotification(int type, String rs1, String rs2, String rs3) {
         if (type == Observerable.PICTURE_PREDICT) {
 //            txtResult1.setText(rs1);
-            txtResult1.setText("Monkey");
-            txtPronunciation.setText("/'mʌŋki/ ");
+//            txtResult1.setText("Monkey");
+//            txtPronunciation.setText("/'mʌŋki/ ");
 //            txtResult2.setText(rs2);
 //            txtResult3.setText(rs3);
         }
         if (type == Observerable.ENGLISH_TRANSLATE) {
 //            txtVietname1.setText(rs1);
-            txtVietname1.setText("Con Khỉ");
-            speakOut(txtResult1);
+//            txtVietname1.setText("Con Khỉ");
+//            speakOut(txtResult1);
 //            txtVietname2.setText(rs2);
 //            txtVietname3.setText(rs3);
             mLoading.dismiss();
@@ -262,5 +280,17 @@ public class MainActivity extends AppCompatActivity implements TextToSpeech.OnIn
                     System.currentTimeMillis());
             db.addPicture(pic);
         }
+    }
+
+    public void clickBook(View view) {
+        txtResult1.setText("Book");
+        txtPronunciation.setText("/buk/");
+        txtVietname1.setText("Quyển Sách");
+    }
+
+    public void clickPen(View view) {
+        txtResult1.setText("Pen");
+        txtPronunciation.setText("/pen/");
+        txtVietname1.setText("Cây Bút");
     }
 }
