@@ -14,7 +14,7 @@
         android:roundIcon="@drawable/owl"
         android:supportsRtl="true"
         android:theme="@style/Theme.AppCompat.Light.NoActionBar">
-        <activity android:name=".BeginActivity">
+        <activity android:name=".LearnActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -22,7 +22,7 @@
             </intent-filter>
         </activity>
         <activity android:name=".MainActivity" />
-        <activity android:name=".LearnActivity" />
+        <activity android:name=".BeginActivity" />
         <activity android:name=".CameraActivity" />
         <activity
             android:name=".CropImageActivity"

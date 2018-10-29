@@ -17,7 +17,7 @@ public class LearnActivity extends AppCompatActivity {
     EditText edt1,edt2,edt3,edt4,edt5,edt6;
     //Button btnO,btnK,btnC,btnR,btnN,btnM,btnT,btnY,btnE,btnX;
 
-
+    ResultFragment resultFragment;
 
 
     @Override
@@ -30,6 +30,8 @@ public class LearnActivity extends AppCompatActivity {
         edt4= findViewById(R.id.editText4);
         edt5= findViewById(R.id.editText5);
         edt6= findViewById(R.id.editText6);
+        resultFragment = new ResultFragment();
+        resultFragment.setCancelable(false);
 
 //        btnO=findViewById(R.id.charO);
 //        btnK=findViewById(R.id.charK);
@@ -54,21 +56,22 @@ public class LearnActivity extends AppCompatActivity {
     public void showToast(){
         if(isTrue()){
 
-            AlertDialog.Builder alert = new AlertDialog.Builder(LearnActivity.this);
-            alert.setTitle("Đúng rồi!!! :> ");
-
-            alert.setIcon(R.drawable.flashon);
-            alert.setPositiveButton("Tiếp Tục", new DialogInterface.OnClickListener() {
-                @Override
-                public void onClick(DialogInterface dialog, int which) {
-                    setResult(RESULT_OK);
-
-                    finish();
-
-                }
-            });
-
-            alert.show();
+//            AlertDialog.Builder alert = new AlertDialog.Builder(LearnActivity.this);
+//            alert.setTitle("Đúng rồi!!! :> ");
+//
+//            alert.setIcon(R.drawable.flashon);
+//            alert.setPositiveButton("Tiếp Tục", new DialogInterface.OnClickListener() {
+//                @Override
+//                public void onClick(DialogInterface dialog, int which) {
+//                    setResult(RESULT_OK);
+//
+//                    finish();
+//
+//                }
+//            });
+//
+//            alert.show();
+            resultFragment.show(getFragmentManager(), "Result");
 
 
         }else{
