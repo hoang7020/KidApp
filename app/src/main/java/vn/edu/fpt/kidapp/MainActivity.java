@@ -104,7 +104,7 @@ public class MainActivity extends AppCompatActivity implements TextToSpeech.OnIn
             public void onClick(View v) {
                 speakOut(txtResult1);
                 Intent learnIntent = new Intent(MainActivity.this, LearnActivity.class);
-                startActivity(learnIntent);
+                startActivityForResult(learnIntent, 1234);
             }
         });
     }

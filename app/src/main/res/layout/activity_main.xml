@@ -4,8 +4,9 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/colorBackground"
-    tools:context=".MainActivity">
+    android:background="@drawable/bg"
+    tools:context=".MainActivity"
+    >
 
     <android.support.v7.widget.Toolbar
         android:id="@+id/my_toolbar"
@@ -61,7 +62,7 @@
             android:fontFamily="@font/lapsusprobold"
             android:gravity="center"
             android:text="Monkey"
-            android:textColor="#ff6f00"
+            android:textColor="#ecef56"
             android:textSize="50dp" />
 
         <TextView
@@ -69,7 +70,9 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="center"
-            android:text="/'mʌŋki/ " />
+            android:text="/'mʌŋki/ "
+            android:textSize="25dp"
+            android:textColor="#e4c4c4"/>
 
         <TextView
             android:textStyle="bold"
@@ -79,7 +82,8 @@
             android:fontFamily="@font/gloriahallelujah"
             android:gravity="center"
             android:text="Con Khỉ"
-            android:textSize="20dp" />
+            android:textSize="35dp"
+            android:textColor="#ecef56"/>
     </LinearLayout>
 
 

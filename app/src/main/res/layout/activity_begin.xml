@@ -5,39 +5,39 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:background="@color/colorToolbar"
+    android:background="@drawable/bg"
     tools:context=".BeginActivity">
 
     <ImageView
         android:id="@+id/btnCamera"
-        android:layout_width="150dp"
-        android:layout_height="150dp"
+        android:layout_width="230dp"
+        android:layout_height="201dp"
         android:layout_marginStart="8dp"
         android:layout_marginLeft="8dp"
         android:layout_marginTop="8dp"
         android:layout_marginEnd="8dp"
         android:layout_marginRight="8dp"
         android:layout_marginBottom="8dp"
-        android:src="@drawable/owl"
+        android:src="@drawable/owl2"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.498" />
+        app:layout_constraintVertical_bias="0.662" />
 
     <ImageView
         android:id="@+id/imageView"
-        android:layout_width="239dp"
-        android:layout_height="182dp"
-        android:layout_marginStart="24dp"
-        android:layout_marginLeft="24dp"
+        android:layout_width="291dp"
+        android:layout_height="184dp"
+        android:layout_marginStart="56dp"
+        android:layout_marginLeft="56dp"
         android:layout_marginTop="8dp"
         android:layout_marginBottom="340dp"
         android:src="@drawable/talk"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="@+id/btnCamera"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.623" />
+        app:layout_constraintVertical_bias="1.0" />
 
     <TextView
         android:layout_width="130dp"
