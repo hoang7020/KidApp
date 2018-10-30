@@ -5,7 +5,10 @@ import android.content.Intent;
 import android.util.Log;
 
 import com.google.gson.Gson;
+import com.google.gson.JsonObject;
 import com.google.gson.reflect.TypeToken;
+
+import org.json.JSONObject;
 
 import java.io.BufferedReader;
 import java.io.DataOutputStream;
@@ -21,13 +24,15 @@ import vn.edu.fpt.kidapp.model.UserResultJSON;
 public class DBManagerAPI {
     private static final String TAG = DBManagerAPI.class.getSimpleName();
 
-    private static final String host = "http://192.168.1.92:49833";
+    private static final String host = "http://192.168.1.2:49833";
     private Gson gson;
 
     private Context context;
 
     public static final String ACTION_LOGIN = "ACTION_LOGIN";
     public static final String ACTION_REGISTER = "ACTION_REGISTER";
+    public static final String ACTION_GET_ALL = "ACTION_GET_ALL";
+    public static final String ACTION_REMOVE_PICTURE = "ACTION_REMOVE_PICTURE";
 
     public DBManagerAPI(Context context) {
         gson = new Gson();
@@ -39,6 +44,18 @@ public class DBManagerAPI {
         try {
             urlConnection = (HttpURLConnection) url.openConnection();
             urlConnection.setRequestMethod("POST");
+            urlConnection.setDoOutput(true);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return urlConnection;
+    }
+
+    private HttpURLConnection createConnectionDelete(URL url) {
+        HttpURLConnection urlConnection = null;
+        try {
+            urlConnection = (HttpURLConnection) url.openConnection();
+            urlConnection.setRequestMethod("DELETE");
             urlConnection.setDoOutput(true);
         } catch (IOException e) {
             e.printStackTrace();
@@ -125,13 +142,42 @@ public class DBManagerAPI {
                     String params = "username=" + username;
                     setParams(urlConnection, params);
                     String result = readResponse(urlConnection);
-                    Log.e(TAG, "Result REGISTER: " + result);
+                    Log.e(TAG, "Result GetAll: " + result);
                     UserResultJSON rs = gson.fromJson(result, new TypeToken<UserResultJSON>() {}.getType());
                     List<UserResultJSON.Picture> lists = rs.getData().getPictures();
                     for (UserResultJSON.Picture p: lists) {
                         Log.e(TAG, "run: " + p.getImageId() + " " + p.getImageName() + " " + p.getEngSub().getEng1() + " " + p.getVieSub().getVie1());
                     }
-                    sendDataBroadcast(ACTION_REGISTER, result);
+                    sendDataBroadcast(ACTION_GET_ALL, result);
+                } catch (MalformedURLException e) {
+                    e.printStackTrace();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+        }).start();
+    }
+
+    public void addPicture(String username, String imageName, long time, String eng1, String eng2, String eng3, String vie1, String vie2, String vie3) {
+        JsonObject vieSub = new JsonObject();
+        vieSub.addProperty("vie_1", vie1);
+        vieSub.addProperty("vie_2", vie2);
+        vieSub.addProperty("vie_3", vie3);
+        Log.e(TAG, "addPicture: " + vieSub.toString());
+
+    }
+
+    public void deltePicture(final String imageId) {
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                try {
+                    URL url = new URL(host + "/removeImage");
+                    HttpURLConnection urlConnection = createConnectionDelete(url);
+                    String params = "image_id=" + imageId;
+                    setParams(urlConnection, params);
+                    String result = readResponse(urlConnection);
+                    sendDataBroadcast(ACTION_REMOVE_PICTURE, result);
                 } catch (MalformedURLException e) {
                     e.printStackTrace();
                 } catch (IOException e) {
@@ -147,4 +193,5 @@ public class DBManagerAPI {
         intent.putExtra("API_RESULT", result);
         context.sendBroadcast(intent);
     }
+
 }

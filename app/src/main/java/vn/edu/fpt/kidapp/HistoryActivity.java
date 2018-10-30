@@ -1,5 +1,7 @@
 package vn.edu.fpt.kidapp;
 
+import android.content.BroadcastReceiver;
+import android.content.Context;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -9,11 +11,17 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
 
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
+
 import java.util.List;
 
+import vn.edu.fpt.kidapp.database.DBManagerAPI;
 import vn.edu.fpt.kidapp.model.CapturePicture;
 import vn.edu.fpt.kidapp.adapter.PictureHistoryAdapter;
 import vn.edu.fpt.kidapp.database.DBManager;
+import vn.edu.fpt.kidapp.model.UserResultJSON;
+import vn.edu.fpt.kidapp.utils.PreferenceUtil;
 
 public class HistoryActivity extends AppCompatActivity {
 
@@ -21,6 +29,7 @@ public class HistoryActivity extends AppCompatActivity {
 
     private ListView lvHistory;
     private List<CapturePicture> listPicture;
+    private List<UserResultJSON.Picture> listPictures;
     private PictureHistoryAdapter adapter;
     private Toolbar mToolbar;
 
@@ -67,6 +76,21 @@ public class HistoryActivity extends AppCompatActivity {
             }
         });
     }
+
+    BroadcastReceiver getAllReceiver = new BroadcastReceiver() {
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            if (intent.getAction().equals(DBManagerAPI.ACTION_LOGIN)) {
+                String result = intent.getStringExtra("API_RESULT");
+                Gson gson = new Gson();
+                UserResultJSON resultJSON = gson.fromJson(result, new TypeToken<UserResultJSON>() {}.getType());
+                Log.e(TAG, "onReceive: " + resultJSON.getData().getUsername());
+                if (resultJSON.getStatus().getCode() == 200) {
+                    listPictures = resultJSON.getData().getPictures();
+                }
+            }
+        }
+    };
 
     private void initView() {
         lvHistory = findViewById(R.id.lvHistory);
