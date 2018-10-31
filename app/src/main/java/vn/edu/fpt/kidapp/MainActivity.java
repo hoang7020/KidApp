@@ -119,7 +119,11 @@ public class MainActivity extends AppCompatActivity implements TextToSpeech.OnIn
 
                 CapturePicture pic = (CapturePicture) data.getSerializableExtra("PICTURE");
                 Bitmap bm = FileUtil.readFileFromSdCard(pic.getName());
-                ivResult.setImageBitmap(bm);
+                if (!FileUtil.isPictureExist(pic.getName())) {
+                    ivResult.setImageResource(R.drawable.camera);
+                } else {
+                    ivResult.setImageBitmap(bm);
+                }
                 txtResult1.setText(pic.getEng1());
                 txtResult2.setText(pic.getEng2());
                 txtResult3.setText(pic.getEng3());

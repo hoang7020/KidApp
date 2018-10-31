@@ -8,14 +8,19 @@ import android.database.sqlite.SQLiteOpenHelper;
 import android.support.annotation.Nullable;
 import android.util.Log;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
 import vn.edu.fpt.kidapp.Model.CapturePicture;
+import vn.edu.fpt.kidapp.utils.FileUtil;
 
 public class DBManager extends SQLiteOpenHelper {
 
-    public static final String DATABASE_NAME = "picture_list";
+    private static final String TAG = DBManager.class.getSimpleName();
+
+    public static final String DATABASE_NAME = "PictureSQLite";
+    public static final String FILE_NAME = "PictureSQLite";
     private static final String TABLE_NAME = "picture";
     private static final String ID = "id";
     private static final String NAME = "name";
@@ -27,8 +32,11 @@ public class DBManager extends SQLiteOpenHelper {
     private static final String VIE3 = "vie3";
     private static final String TIMESHOOT = "timeshoot";
 
+    private Context context;
+
     public DBManager(@Nullable Context context) {
         super(context, DATABASE_NAME, null, 1);
+        this.context = context;
     }
 
     @Override

@@ -8,10 +8,14 @@ import android.os.Build;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 
+import java.io.IOException;
+
 import vn.edu.fpt.kidapp.utils.Constant;
+import vn.edu.fpt.kidapp.utils.FileUtil;
 
 public class BeginActivity extends AppCompatActivity {
 
@@ -28,6 +32,7 @@ public class BeginActivity extends AppCompatActivity {
         setContentView(R.layout.activity_begin);
 
         initPermission();
+
         mWelcome = MediaPlayer.create(this, R.raw.welcome);
         mWelcome.start();
         ImageView btnCamera = findViewById(R.id.btnCamera);
@@ -51,6 +56,7 @@ public class BeginActivity extends AppCompatActivity {
                 requestPermissions(new String[]{Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.CAMERA}, 1);
             }
         }
+
     }
 
     @Override
