@@ -21,13 +21,23 @@ import android.widget.Toast;
 public class TrueFragment extends DialogFragment {
 
     private String text;
-    LearnActivity act;
+
+    LearnBookActivity act2;
+    LearnPenActivity act3;
 
 
-    public TrueFragment(String text, LearnActivity act) {
+
+
+    public TrueFragment(String text, LearnBookActivity act2) {
         // Required empty public constructor
         this.text = text;
-        this.act = act;
+        this.act2 = act2;
+    }
+
+    public TrueFragment(String text, LearnPenActivity act3) {
+        // Required empty public constructor
+        this.text = text;
+        this.act3 = act3;
     }
 
 
@@ -53,8 +63,10 @@ public class TrueFragment extends DialogFragment {
         btnOk.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                act.setResult(Activity.RESULT_OK);
-                act.finish();
+                act2.setResult(Activity.RESULT_OK);
+                act2.finish();
+                act3.setResult(Activity.RESULT_OK);
+                act3.finish();
             }
         });
 

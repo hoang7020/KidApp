@@ -79,7 +79,7 @@
                 android:layout_weight="2"
                 android:fontFamily="@font/lapsusprobold"
                 android:gravity="center"
-                android:text="Monkey"
+                android:text="Book"
                 android:textColor="#ff0000"
                 android:textSize="40dp" />
 
@@ -89,7 +89,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:gravity="center"
-                android:text="/'mʌŋki/ "
+                android:text=" /buk/ "
                 android:textColor="#000000"
                 android:textSize="25dp" />
 
@@ -98,7 +98,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:gravity="center"
-                android:text="Con Khỉ"
+                android:text="Quyển Sách"
                 android:textColor="#ff0000"
                 android:textSize="30dp"
                 android:textStyle="bold" />

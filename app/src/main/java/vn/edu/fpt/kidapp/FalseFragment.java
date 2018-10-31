@@ -22,13 +22,21 @@ public class FalseFragment extends DialogFragment {
 
 
     private String text;
-    LearnActivity act;
+
+    LearnBookActivity act2;
+    LearnPenActivity act3;
 
 
-    public FalseFragment(String text, LearnActivity act) {
+    public FalseFragment(String text, LearnBookActivity act2) {
         // Required empty public constructor
         this.text = text;
-        this.act = act;
+        this.act2 = act2;
+    }
+
+    public FalseFragment(String text, LearnPenActivity act3) {
+        // Required empty public constructor
+        this.text = text;
+        this.act3 = act3;
     }
 
 
@@ -47,21 +55,24 @@ public class FalseFragment extends DialogFragment {
         btnCancel.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                act.setResult(Activity.RESULT_OK);
-                act.finish();
+                act2.setResult(Activity.RESULT_OK);
+                act2.finish();
+                act3.setResult(Activity.RESULT_OK);
+                act3.finish();
             }
         });
 
         btnOk.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                LearnActivity.edt1.setText("");
-                LearnActivity.edt2.setText("");
-                LearnActivity.edt3.setText("");
-                LearnActivity.edt4.setText("");
-                LearnActivity.edt5.setText("");
-                LearnActivity.edt6.setText("");
-                LearnActivity.falseFragment.dismiss();
+                LearnBookActivity.edt1.setText("");
+                LearnBookActivity.edt2.setText("");
+                LearnBookActivity.edt3.setText("");
+                LearnBookActivity.edt4.setText("");
+
+                LearnPenActivity.edt1.setText("");
+                LearnPenActivity.edt2.setText("");
+                LearnPenActivity.edt3.setText("");
             }
         });
 

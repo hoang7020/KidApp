@@ -104,8 +104,16 @@ public class MainActivity extends AppCompatActivity implements TextToSpeech.OnIn
         btnLuyentap.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent learnIntent = new Intent(MainActivity.this, LearnActivity.class);
-                startActivityForResult(learnIntent, 1234);
+
+                if(txtResult1.getText().toString().equalsIgnoreCase("Book")){
+                    Intent learnIntent = new Intent(MainActivity.this, LearnBookActivity.class);
+                    startActivityForResult(learnIntent, 1234);
+                }else if(txtResult1.getText().toString().equalsIgnoreCase("Pen")){
+                    Intent learnIntent = new Intent(MainActivity.this, LearnPenActivity.class);
+                    startActivityForResult(learnIntent, 1234);
+                }
+
+
             }
         });
 

@@ -5,7 +5,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.EditText;
 
-public class LearnActivity extends AppCompatActivity {
+public class LearnBookActivity extends AppCompatActivity {
     static EditText edt1,edt2,edt3,edt4,edt5,edt6;
     //Button btnO,btnK,btnC,btnR,btnN,btnM,btnT,btnY,btnE,btnX;
 
@@ -16,13 +16,12 @@ public class LearnActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_learn);
+        setContentView(R.layout.activity_learn_book);
         edt1= findViewById(R.id.editText1);
         edt2= findViewById(R.id.editText2);
         edt3= findViewById(R.id.editText3);
         edt4= findViewById(R.id.editText4);
-        edt5= findViewById(R.id.editText5);
-        edt6= findViewById(R.id.editText6);
+
         trueFragment = new TrueFragment("Đúng Rồi!!!", this);
         trueFragment.setCancelable(false);
         falseFragment = new FalseFragment("Sai Rồi!!!", this);
@@ -121,14 +120,6 @@ public class LearnActivity extends AppCompatActivity {
         }
         if(isEmpty(edt4)){
             edt4.setText("O");
-            return;
-        }
-        if(isEmpty(edt5)){
-            edt5.setText("O");
-            return;
-        }
-        if(isEmpty(edt6)){
-            edt6.setText("O");
             showToast();
             return;
         }
@@ -143,6 +134,7 @@ public class LearnActivity extends AppCompatActivity {
     public void clickToAddCharM(View view) {
         if(isEmpty(edt1)){
             edt1.setText("M");
+
             return;
         }
         if(isEmpty(edt2)){
@@ -155,14 +147,6 @@ public class LearnActivity extends AppCompatActivity {
         }
         if(isEmpty(edt4)){
             edt4.setText("M");
-            return;
-        }
-        if(isEmpty(edt5)){
-            edt5.setText("M");
-            return;
-        }
-        if(isEmpty(edt6)){
-            edt6.setText("M");
             showToast();
             return;
         }
@@ -171,6 +155,7 @@ public class LearnActivity extends AppCompatActivity {
     public void clickToAddCharT(View view) {
         if(isEmpty(edt1)){
             edt1.setText("T");
+
             return;
         }
         if(isEmpty(edt2)){
@@ -183,42 +168,27 @@ public class LearnActivity extends AppCompatActivity {
         }
         if(isEmpty(edt4)){
             edt4.setText("T");
-            return;
-        }
-        if(isEmpty(edt5)){
-            edt5.setText("T");
-            return;
-        }
-        if(isEmpty(edt6)){
-            edt6.setText("T");
             showToast();
             return;
         }
     }
 
-    public void clickToAddCharY(View view) {
+    public void clickToAddCharB(View view) {
         if(isEmpty(edt1)){
-            edt1.setText("Y");
+            edt1.setText("B");
+
             return;
         }
         if(isEmpty(edt2)){
-            edt2.setText("Y");
+            edt2.setText("B");
             return;
         }
         if(isEmpty(edt3)){
-            edt3.setText("Y");
+            edt3.setText("B");
             return;
         }
         if(isEmpty(edt4)){
-            edt4.setText("Y");
-            return;
-        }
-        if(isEmpty(edt5)){
-            edt5.setText("Y");
-            return;
-        }
-        if(isEmpty(edt6)){
-            edt6.setText("Y");
+            edt4.setText("B");
             showToast();
             return;
         }
@@ -227,6 +197,7 @@ public class LearnActivity extends AppCompatActivity {
     public void clickToAddCharE(View view) {
         if(isEmpty(edt1)){
             edt1.setText("E");
+
             return;
         }
         if(isEmpty(edt2)){
@@ -239,42 +210,27 @@ public class LearnActivity extends AppCompatActivity {
         }
         if(isEmpty(edt4)){
             edt4.setText("E");
-            return;
-        }
-        if(isEmpty(edt5)){
-            edt5.setText("E");
-            return;
-        }
-        if(isEmpty(edt6)){
-            edt6.setText("E");
             showToast();
             return;
         }
     }
 
-    public void clickToAddCharX(View view) {
+    public void clickToAddCharP(View view) {
         if(isEmpty(edt1)){
-            edt1.setText("X");
+            edt1.setText("P");
+
             return;
         }
         if(isEmpty(edt2)){
-            edt2.setText("X");
+            edt2.setText("P");
             return;
         }
         if(isEmpty(edt3)){
-            edt3.setText("X");
+            edt3.setText("P");
             return;
         }
         if(isEmpty(edt4)){
-            edt4.setText("X");
-            return;
-        }
-        if(isEmpty(edt5)){
-            edt5.setText("X");
-            return;
-        }
-        if(isEmpty(edt6)){
-            edt6.setText("X");
+            edt4.setText("P");
             showToast();
             return;
         }
@@ -283,6 +239,7 @@ public class LearnActivity extends AppCompatActivity {
     public void clickToAddCharN(View view) {
         if(isEmpty(edt1)){
             edt1.setText("N");
+
             return;
         }
         if(isEmpty(edt2)){
@@ -295,14 +252,6 @@ public class LearnActivity extends AppCompatActivity {
         }
         if(isEmpty(edt4)){
             edt4.setText("N");
-            return;
-        }
-        if(isEmpty(edt5)){
-            edt5.setText("N");
-            return;
-        }
-        if(isEmpty(edt6)){
-            edt6.setText("N");
             showToast();
             return;
         }
@@ -311,6 +260,7 @@ public class LearnActivity extends AppCompatActivity {
     public void clickToAddCharR(View view) {
         if(isEmpty(edt1)){
             edt1.setText("R");
+
             return;
         }
         if(isEmpty(edt2)){
@@ -323,14 +273,6 @@ public class LearnActivity extends AppCompatActivity {
         }
         if(isEmpty(edt4)){
             edt4.setText("R");
-            return;
-        }
-        if(isEmpty(edt5)){
-            edt5.setText("R");
-            return;
-        }
-        if(isEmpty(edt6)){
-            edt6.setText("R");
             showToast();
             return;
         }
@@ -339,6 +281,7 @@ public class LearnActivity extends AppCompatActivity {
     public void clickToAddCharC(View view) {
         if(isEmpty(edt1)){
             edt1.setText("C");
+
             return;
         }
         if(isEmpty(edt2)){
@@ -351,14 +294,6 @@ public class LearnActivity extends AppCompatActivity {
         }
         if(isEmpty(edt4)){
             edt4.setText("C");
-            return;
-        }
-        if(isEmpty(edt5)){
-            edt5.setText("C");
-            return;
-        }
-        if(isEmpty(edt6)){
-            edt6.setText("C");
             showToast();
             return;
         }
@@ -367,6 +302,7 @@ public class LearnActivity extends AppCompatActivity {
     public void clickToAddCharK(View view) {
         if(isEmpty(edt1)){
             edt1.setText("K");
+
             return;
         }
         if(isEmpty(edt2)){
@@ -379,25 +315,14 @@ public class LearnActivity extends AppCompatActivity {
         }
         if(isEmpty(edt4)){
             edt4.setText("K");
-            return;
-        }
-        if(isEmpty(edt5)){
-            edt5.setText("K");
-            return;
-        }
-        if(isEmpty(edt6)){
-            edt6.setText("K");
             showToast();
-
-
-
             return;
         }
     }
 
     public  boolean isTrue(){
-        if((edt1.getText().toString()+edt2.getText().toString()+edt3.getText().toString()+edt4.getText().toString()+edt5.getText().toString()+edt6.getText().toString()).equalsIgnoreCase("MONKEY"))
-        return true;
+        if((edt1.getText().toString()+edt2.getText().toString()+edt3.getText().toString()+edt4.getText().toString()).equalsIgnoreCase("BOOK"))
+            return true;
 
 
 
