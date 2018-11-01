@@ -8,7 +8,7 @@ import android.util.Log;
 import java.util.List;
 import java.util.Vector;
 
-import vn.edu.fpt.kidapp.Model.TranslateResult;
+import vn.edu.fpt.kidapp.model.TranslateResult;
 import vn.edu.fpt.kidapp.interfaces.Observer;
 import vn.edu.fpt.kidapp.interfaces.Observerable;
 import vn.edu.fpt.kidapp.utils.TranslateUtil;

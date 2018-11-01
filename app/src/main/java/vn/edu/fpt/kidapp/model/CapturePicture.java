@@ -1,4 +1,4 @@
-package vn.edu.fpt.kidapp.Model;
+package vn.edu.fpt.kidapp.model;
 
 import java.io.Serializable;
 

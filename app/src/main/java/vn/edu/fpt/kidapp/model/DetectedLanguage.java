@@ -1,4 +1,4 @@
-package vn.edu.fpt.kidapp.Model;
+package vn.edu.fpt.kidapp.model;
 
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;

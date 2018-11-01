@@ -8,12 +8,10 @@ import android.database.sqlite.SQLiteOpenHelper;
 import android.support.annotation.Nullable;
 import android.util.Log;
 
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-import vn.edu.fpt.kidapp.Model.CapturePicture;
-import vn.edu.fpt.kidapp.utils.FileUtil;
+import vn.edu.fpt.kidapp.model.CapturePicture;
 
 public class DBManager extends SQLiteOpenHelper {
 

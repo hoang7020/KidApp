@@ -57,7 +57,7 @@ public class ClarifaiUtil {
             public void run() {
                 try {
                     //predict with default model
-//                Model<Concept> generalModel = client.getDefaultModels().generalModel();
+//                model<Concept> generalModel = client.getDefaultModels().generalModel();
 //                PredictRequest < Concept > request = generalModel.predict().withInputs(
 //                        ClarifaiInput.forImage(imageFile)
 //                );
