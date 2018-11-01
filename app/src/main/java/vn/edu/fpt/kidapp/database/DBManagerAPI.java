@@ -6,9 +6,6 @@ import android.util.Log;
 
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
-import com.google.gson.reflect.TypeToken;
-
-import org.json.JSONObject;
 
 import java.io.BufferedReader;
 import java.io.DataOutputStream;
@@ -17,14 +14,11 @@ import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
-import java.util.List;
-
-import vn.edu.fpt.kidapp.model.UserResultJSON;
 
 public class DBManagerAPI {
     private static final String TAG = DBManagerAPI.class.getSimpleName();
 
-    private static final String host = "http://192.168.1.2:49833";
+    private static final String host = "http://192.168.1.5:49833";
     private Gson gson;
 
     private Context context;
@@ -39,11 +33,11 @@ public class DBManagerAPI {
         this.context = context;
     }
 
-    private HttpURLConnection createConnection(URL url) {
+    private HttpURLConnection createConnection(URL url, String method) {
         HttpURLConnection urlConnection = null;
         try {
             urlConnection = (HttpURLConnection) url.openConnection();
-            urlConnection.setRequestMethod("POST");
+            urlConnection.setRequestMethod(method);
             urlConnection.setDoOutput(true);
         } catch (IOException e) {
             e.printStackTrace();
@@ -51,11 +45,12 @@ public class DBManagerAPI {
         return urlConnection;
     }
 
-    private HttpURLConnection createConnectionDelete(URL url) {
+    private HttpURLConnection createConnectionJson(URL url) {
         HttpURLConnection urlConnection = null;
         try {
             urlConnection = (HttpURLConnection) url.openConnection();
-            urlConnection.setRequestMethod("DELETE");
+            urlConnection.setRequestMethod("POST");
+            urlConnection.setRequestProperty("Content-Type", "application/json; charset=UTF-8");
             urlConnection.setDoOutput(true);
         } catch (IOException e) {
             e.printStackTrace();
@@ -68,6 +63,19 @@ public class DBManagerAPI {
         try {
             dos = new DataOutputStream(urlConnection.getOutputStream());
             dos.write(params.getBytes());
+            dos.flush();
+            dos.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    private void setParamsJson(HttpURLConnection urlConnection, JsonObject params) {
+        DataOutputStream dos = null;
+        try {
+            dos = new DataOutputStream(urlConnection.getOutputStream());
+//            dos.write(gson.toJson(params).getBytes("UTF-8"), 0, gson.toJson(params).getBytes("UTF-8").length);
+            dos.write(gson.toJson(params).getBytes());
             dos.flush();
             dos.close();
         } catch (IOException e) {
@@ -97,7 +105,7 @@ public class DBManagerAPI {
             public void run() {
                 try {
                     URL url = new URL(host + "/login");
-                    HttpURLConnection urlConnection = createConnection(url);
+                    HttpURLConnection urlConnection = createConnection(url, "POST");
                     String params = "username=" + username + "&password=" + password;
                     setParams(urlConnection, params);
                     String result = readResponse(urlConnection);
@@ -117,7 +125,7 @@ public class DBManagerAPI {
             public void run() {
                 try {
                     URL url = new URL(host + "/register");
-                    HttpURLConnection urlConnection = createConnection(url);
+                    HttpURLConnection urlConnection = createConnection(url, "POST");
                     String params = "username=" + username + "&password=" + password + "&address=" + address;
                     setParams(urlConnection, params);
                     String result = readResponse(urlConnection);
@@ -138,16 +146,11 @@ public class DBManagerAPI {
             public void run() {
                 try {
                     URL url = new URL(host + "/getAllResultOfOneUser");
-                    HttpURLConnection urlConnection = createConnection(url);
+                    HttpURLConnection urlConnection = createConnection(url, "POST");
                     String params = "username=" + username;
                     setParams(urlConnection, params);
                     String result = readResponse(urlConnection);
                     Log.e(TAG, "Result GetAll: " + result);
-                    UserResultJSON rs = gson.fromJson(result, new TypeToken<UserResultJSON>() {}.getType());
-                    List<UserResultJSON.Picture> lists = rs.getData().getPictures();
-                    for (UserResultJSON.Picture p: lists) {
-                        Log.e(TAG, "run: " + p.getImageId() + " " + p.getImageName() + " " + p.getEngSub().getEng1() + " " + p.getVieSub().getVie1());
-                    }
                     sendDataBroadcast(ACTION_GET_ALL, result);
                 } catch (MalformedURLException e) {
                     e.printStackTrace();
@@ -158,22 +161,54 @@ public class DBManagerAPI {
         }).start();
     }
 
-    public void addPicture(String username, String imageName, long time, String eng1, String eng2, String eng3, String vie1, String vie2, String vie3) {
-        JsonObject vieSub = new JsonObject();
-        vieSub.addProperty("vie_1", vie1);
-        vieSub.addProperty("vie_2", vie2);
-        vieSub.addProperty("vie_3", vie3);
-        Log.e(TAG, "addPicture: " + vieSub.toString());
+    public void addPicture(final String username, final String imageName, final long time,
+                           final String eng1, final String eng2, final String eng3,
+                           final String vie1, final String vie2, final String vie3) {
+
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                try {
+                    JsonObject object = new JsonObject();
+                    object.addProperty("username", username);
+                    object.addProperty("image_name", imageName);
+                    object.addProperty("image_time", time);
+                    JsonObject engSub = new JsonObject();
+                    engSub.addProperty("eng_1", eng1);
+                    engSub.addProperty("eng_2", eng2);
+                    engSub.addProperty("eng_3", eng3);
+                    JsonObject vieSub = new JsonObject();
+                    vieSub.addProperty("vie_1", vie1);
+                    vieSub.addProperty("vie_2", vie2);
+                    vieSub.addProperty("vie_3", vie3);
+                    object.add("eng_sub", engSub);
+                    object.add("vie_sub", vieSub);
+                    Log.e(TAG, "addPicture: " + object.toString());
+
+                    URL url = new URL(host + "/add-an-image");
+                    HttpURLConnection urlConnection = createConnection(url, "POST");
+                    urlConnection.setRequestProperty("Content-Type", "application/json; charset=UTF-8");
+                    String params = gson.toJson(object);
+                    setParams(urlConnection, params);
+                    String result = readResponse(urlConnection);
+                    Log.e(TAG, "addPicture: " + result);
+                } catch (MalformedURLException e) {
+                    e.printStackTrace();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+        }).start();
 
     }
 
-    public void deltePicture(final String imageId) {
+    public void deletePicture(final String imageId) {
         new Thread(new Runnable() {
             @Override
             public void run() {
                 try {
                     URL url = new URL(host + "/removeImage");
-                    HttpURLConnection urlConnection = createConnectionDelete(url);
+                    HttpURLConnection urlConnection = createConnection(url, "DELETE");
                     String params = "image_id=" + imageId;
                     setParams(urlConnection, params);
                     String result = readResponse(urlConnection);

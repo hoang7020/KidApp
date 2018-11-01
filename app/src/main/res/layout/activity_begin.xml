@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:background="@color/colorToolbar"
-    tools:context=".BeginActivity">
+    tools:context=".activity.BeginActivity">
 
     <ImageView
         android:id="@+id/btnCamera"

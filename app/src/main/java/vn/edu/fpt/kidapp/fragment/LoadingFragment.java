@@ -1,4 +1,4 @@
-package vn.edu.fpt.kidapp;
+package vn.edu.fpt.kidapp.fragment;
 
 
 import android.app.DialogFragment;
@@ -13,6 +13,8 @@ import android.view.Window;
 import android.widget.TextView;
 
 import com.airbnb.lottie.LottieAnimationView;
+
+import vn.edu.fpt.kidapp.R;
 
 /**
  * A simple {@link Fragment} subclass.

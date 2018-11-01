@@ -5,28 +5,55 @@ import com.google.gson.annotations.SerializedName;
 
 import java.util.List;
 
-public class UserResultJSON {
-    @SerializedName("status")
-    @Expose
-    private Status status;
-    @SerializedName("data")
-    @Expose
-    private Data data;
+public class APIObjectJSON {
 
-    public Status getStatus() {
-        return status;
-    }
+        @SerializedName("status")
+        @Expose
+        private Status status;
+        @SerializedName("data")
+        @Expose
+        private Data data;
 
-    public void setStatus(Status status) {
-        this.status = status;
-    }
+        public Status getStatus() {
+            return status;
+        }
 
-    public Data getData() {
-        return data;
-    }
+        public void setStatus(Status status) {
+            this.status = status;
+        }
 
-    public void setData(Data data) {
-        this.data = data;
+        public Data getData() {
+            return data;
+        }
+
+        public void setData(Data data) {
+            this.data = data;
+        }
+
+    public class Status {
+
+        @SerializedName("code")
+        @Expose
+        private Integer code;
+        @SerializedName("message")
+        @Expose
+        private String message;
+
+        public Integer getCode() {
+            return code;
+        }
+
+        public void setCode(Integer code) {
+            this.code = code;
+        }
+
+        public String getMessage() {
+            return message;
+        }
+
+        public void setMessage(String message) {
+            this.message = message;
+        }
     }
 
     public class Data {
@@ -39,7 +66,7 @@ public class UserResultJSON {
         @SerializedName("address")
         @Expose
         private String address;
-        @SerializedName("Pictures")
+        @SerializedName("pictures")
         @Expose
         private List<Picture> pictures = null;
 
@@ -73,32 +100,6 @@ public class UserResultJSON {
 
         public void setPictures(List<Picture> pictures) {
             this.pictures = pictures;
-        }
-
-    }
-
-    public class Status {
-        @SerializedName("code")
-        @Expose
-        private Integer code;
-        @SerializedName("message")
-        @Expose
-        private String message;
-
-        public Integer getCode() {
-            return code;
-        }
-
-        public void setCode(Integer code) {
-            this.code = code;
-        }
-
-        public String getMessage() {
-            return message;
-        }
-
-        public void setMessage(String message) {
-            this.message = message;
         }
     }
 
@@ -159,7 +160,6 @@ public class UserResultJSON {
         public void setVieSub(VieSub vieSub) {
             this.vieSub = vieSub;
         }
-
     }
 
     public class EngSub {
@@ -235,10 +235,5 @@ public class UserResultJSON {
         public void setVie3(String vie3) {
             this.vie3 = vie3;
         }
-
     }
-
 }
-
-
-

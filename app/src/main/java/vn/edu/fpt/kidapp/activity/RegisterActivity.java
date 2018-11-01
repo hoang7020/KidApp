@@ -1,4 +1,4 @@
-package vn.edu.fpt.kidapp;
+package vn.edu.fpt.kidapp.activity;
 
 import android.content.BroadcastReceiver;
 import android.content.Context;
@@ -14,9 +14,9 @@ import android.widget.EditText;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 
+import vn.edu.fpt.kidapp.R;
 import vn.edu.fpt.kidapp.database.DBManagerAPI;
-import vn.edu.fpt.kidapp.model.UserResultJSON;
-import vn.edu.fpt.kidapp.receiver.UserReceiver;
+import vn.edu.fpt.kidapp.model.APIObjectJSON;
 import vn.edu.fpt.kidapp.utils.PreferenceUtil;
 
 public class RegisterActivity extends AppCompatActivity {
@@ -60,7 +60,7 @@ public class RegisterActivity extends AppCompatActivity {
             if (intent.getAction().equals(DBManagerAPI.ACTION_REGISTER)) {
                 String result = intent.getStringExtra("API_RESULT");
                 Gson gson = new Gson();
-                UserResultJSON resultJSON = gson.fromJson(result, new TypeToken<UserResultJSON>() {}.getType());
+                APIObjectJSON resultJSON = gson.fromJson(result, new TypeToken<APIObjectJSON>() {}.getType());
                 Log.e(TAG, "onReceive: " + resultJSON.getData().getUsername());
                 if (resultJSON.getStatus().getCode() == 200) {
                     PreferenceUtil.getInstance(context).putStringValue("Username", resultJSON.getData().getUsername());

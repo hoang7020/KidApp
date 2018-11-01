@@ -12,15 +12,16 @@ import java.util.List;
 
 import vn.edu.fpt.kidapp.R;
 import vn.edu.fpt.kidapp.model.CapturePicture;
+import vn.edu.fpt.kidapp.model.APIObjectJSON;
 import vn.edu.fpt.kidapp.utils.FileUtil;
 
-public class PictureHistoryAdapter extends ArrayAdapter<CapturePicture> {
+public class PictureHistoryAdapter extends ArrayAdapter<APIObjectJSON.Picture> {
 
     private Context context;
     private int resource;
-    private List<CapturePicture> data;
+    private List<APIObjectJSON.Picture> data;
 
-    public PictureHistoryAdapter(Context context, int resource, List<CapturePicture> objects) {
+    public PictureHistoryAdapter(Context context, int resource, List<APIObjectJSON.Picture> objects) {
         super(context, resource, objects);
         this.context = context;
         this.resource = resource;
@@ -39,8 +40,8 @@ public class PictureHistoryAdapter extends ArrayAdapter<CapturePicture> {
         } else {
             viewHolder = (ViewHolder) convertView.getTag();
         }
-        CapturePicture pic = getItem(position);
-        Bitmap picture = FileUtil.readFileFromSdCard(pic.getName());
+        APIObjectJSON.Picture pic = getItem(position);
+        Bitmap picture = FileUtil.readFileFromSdCard(pic.getImageName());
         viewHolder.imvPicture.setImageBitmap(picture);
 
         return convertView;
@@ -49,7 +50,7 @@ public class PictureHistoryAdapter extends ArrayAdapter<CapturePicture> {
     }
 
     @Override
-    public CapturePicture getItem(int position) {
+    public APIObjectJSON.Picture getItem(int position) {
         return data.get(position);
     }
 

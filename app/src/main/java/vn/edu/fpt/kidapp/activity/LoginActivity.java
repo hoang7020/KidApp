@@ -1,11 +1,11 @@
-package vn.edu.fpt.kidapp;
+package vn.edu.fpt.kidapp.activity;
 
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -14,9 +14,9 @@ import android.widget.EditText;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 
+import vn.edu.fpt.kidapp.R;
 import vn.edu.fpt.kidapp.database.DBManagerAPI;
-import vn.edu.fpt.kidapp.model.UserResultJSON;
-import vn.edu.fpt.kidapp.receiver.UserReceiver;
+import vn.edu.fpt.kidapp.model.APIObjectJSON;
 import vn.edu.fpt.kidapp.utils.PreferenceUtil;
 
 public class LoginActivity extends AppCompatActivity {
@@ -28,8 +28,6 @@ public class LoginActivity extends AppCompatActivity {
     private EditText edtUsername, edtPassword;
     private Button btnLogin, btnRegister;
 
-    private UserReceiver userReceiver;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -39,8 +37,8 @@ public class LoginActivity extends AppCompatActivity {
 
         DBManagerAPI api = new DBManagerAPI(this);
         api.getAllPicture("hoang7020");
-        api.addPicture("hoang7020", "i1", System.currentTimeMillis(), "dog", "cat", "mouse", "cho", "meo", "chuot");
-        api.deltePicture("Image1");
+//        api.addPicture("hoang7020", "i1", System.currentTimeMillis(), "dog", "cat", "mouse", "cho", "meo", "chuot");
+//        api.deltePicture("Image1");
 
         if (checkLogin()) {
             Intent intent = new Intent(this, BeginActivity.class);
@@ -74,11 +72,11 @@ public class LoginActivity extends AppCompatActivity {
             if (intent.getAction().equals(DBManagerAPI.ACTION_LOGIN)) {
                 String result = intent.getStringExtra("API_RESULT");
                 Gson gson = new Gson();
-                UserResultJSON resultJSON = gson.fromJson(result, new TypeToken<UserResultJSON>() {}.getType());
+                APIObjectJSON resultJSON = gson.fromJson(result, new TypeToken<APIObjectJSON>() {}.getType());
                 Log.e(TAG, "onReceive: " + resultJSON.getData().getUsername());
                 if (resultJSON.getStatus().getCode() == 200) {
-                    PreferenceUtil.getInstance(context).putStringValue("Username", resultJSON.getData().getUsername());
-                    PreferenceUtil.getInstance(context).putStringValue("Address", resultJSON.getData().getAddress());
+                    PreferenceUtil.getInstance(context).putStringValue("username", resultJSON.getData().getUsername());
+                    PreferenceUtil.getInstance(context).putStringValue("address", resultJSON.getData().getAddress());
                     Intent i = new Intent(context, BeginActivity.class);
                     startActivity(i);
                     finish();
@@ -90,7 +88,6 @@ public class LoginActivity extends AppCompatActivity {
     @Override
     protected void onStart() {
         super.onStart();
-        userReceiver = new UserReceiver();
         registerReceiver(loginReciver, new IntentFilter(DBManagerAPI.ACTION_LOGIN));
     }
 
@@ -109,7 +106,7 @@ public class LoginActivity extends AppCompatActivity {
 
     private boolean checkLogin() {
         boolean result = false;
-        String username = PreferenceUtil.getInstance(this).getStringValue("Username", "");
+        String username = PreferenceUtil.getInstance(this).getStringValue("username", "");
         if (username != "") {
             return true;
         }

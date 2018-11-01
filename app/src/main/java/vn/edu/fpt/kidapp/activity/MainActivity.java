@@ -1,6 +1,8 @@
-package vn.edu.fpt.kidapp;
+package vn.edu.fpt.kidapp.activity;
 
 import android.app.DialogFragment;
+import android.content.BroadcastReceiver;
+import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.graphics.Bitmap;
@@ -19,6 +21,9 @@ import android.widget.TextView;
 
 import java.util.Locale;
 
+import vn.edu.fpt.kidapp.database.DBManagerAPI;
+import vn.edu.fpt.kidapp.fragment.LoadingFragment;
+import vn.edu.fpt.kidapp.R;
 import vn.edu.fpt.kidapp.model.CapturePicture;
 import vn.edu.fpt.kidapp.database.DBManager;
 import vn.edu.fpt.kidapp.interfaces.Observer;
@@ -28,6 +33,7 @@ import vn.edu.fpt.kidapp.receiver.PicturePredictReceiver;
 import vn.edu.fpt.kidapp.utils.ClarifaiUtil;
 import vn.edu.fpt.kidapp.utils.Constant;
 import vn.edu.fpt.kidapp.utils.FileUtil;
+import vn.edu.fpt.kidapp.utils.PreferenceUtil;
 
 
 public class MainActivity extends AppCompatActivity implements TextToSpeech.OnInitListener, Observer {
@@ -44,6 +50,7 @@ public class MainActivity extends AppCompatActivity implements TextToSpeech.OnIn
     private MediaPlayer mMediaPlayer;
     private DialogFragment mLoading;
     private String fileName;
+    private DBManagerAPI dbManagerAPI;
 
     private PicturePredictReceiver mReceiverPicturePredict;
     private EnglishTranslateReceiver mReceiverEnglishTranslate;
@@ -142,6 +149,8 @@ public class MainActivity extends AppCompatActivity implements TextToSpeech.OnIn
         mReceiverEnglishTranslate.registerObserver(this);
         registerReceiver(mReceiverEnglishTranslate, new IntentFilter("ACTION_TRANSLATE_SUCCESS"));
 
+        registerReceiver(getAllReceiver, new IntentFilter(DBManagerAPI.ACTION_GET_ALL));
+
     }
 
     private void initView() {
@@ -158,6 +167,7 @@ public class MainActivity extends AppCompatActivity implements TextToSpeech.OnIn
         btnRead3 = findViewById(R.id.btnRead3);
         tts = new TextToSpeech(this, this);
         mMediaPlayer = MediaPlayer.create(this, R.raw.hatxi);
+        dbManagerAPI = new DBManagerAPI(this);
     }
 
     @Override
@@ -165,6 +175,7 @@ public class MainActivity extends AppCompatActivity implements TextToSpeech.OnIn
         super.onStop();
         unregisterReceiver(mReceiverPicturePredict);
         unregisterReceiver(mReceiverEnglishTranslate);
+        unregisterReceiver(getAllReceiver);
     }
 
     @Override
@@ -195,9 +206,8 @@ public class MainActivity extends AppCompatActivity implements TextToSpeech.OnIn
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.btnHistory:
-
-                Intent intent = new Intent(MainActivity.this, ViewHistoryActivity.class);
-                startActivityForResult(intent, HISTORY_REQUEST_CODE);
+                DBManagerAPI dbManagerAPI = new DBManagerAPI(this);
+                dbManagerAPI.getAllPicture(PreferenceUtil.getInstance(this).getStringValue("username", ""));
                 return true;
             default:
                 return true;
@@ -235,17 +245,34 @@ public class MainActivity extends AppCompatActivity implements TextToSpeech.OnIn
             mLoading.dismiss();
             DBManager db = new DBManager(this);
             int id = db.getMaxId();
-            CapturePicture pic = new CapturePicture(
-                    id + 1,
-                    fileName,
-                    txtResult1.getText().toString(),
-                    txtResult2.getText().toString(),
-                    txtResult3.getText().toString(),
-                    rs1,
-                    rs2,
-                    rs3,
-                    System.currentTimeMillis());
-            db.addPicture(pic);
+//            CapturePicture pic = new CapturePicture(
+//                    id + 1,
+//                    fileName,
+//                    txtResult1.getText().toString(),
+//                    txtResult2.getText().toString(),
+//                    txtResult3.getText().toString(),
+//                    rs1,
+//                    rs2,
+//                    rs3,
+//                    System.currentTimeMillis());
+//            db.addPicture(pic);
+            dbManagerAPI.addPicture(PreferenceUtil.getInstance(this).getStringValue("username", ""), fileName, System.currentTimeMillis(),
+                    txtResult1.getText().toString(), txtResult2.getText().toString(), txtResult3.getText().toString(),
+                    rs1, rs2, rs3);
         }
     }
+
+
+    BroadcastReceiver getAllReceiver = new BroadcastReceiver() {
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            if (intent.getAction().equals(DBManagerAPI.ACTION_GET_ALL)) {
+                String result = intent.getStringExtra("API_RESULT");
+                Log.e(TAG, "onReceive: " + result);
+                Intent historyIntent = new Intent(MainActivity.this, ViewHistoryActivity.class);
+                historyIntent.putExtra("LIST_PICTURE", result);
+                startActivityForResult(historyIntent, HISTORY_REQUEST_CODE);
+            }
+        }
+    };
 }
