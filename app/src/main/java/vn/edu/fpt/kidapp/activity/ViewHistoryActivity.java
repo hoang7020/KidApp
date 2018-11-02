@@ -1,9 +1,12 @@
 package vn.edu.fpt.kidapp.activity;
 
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.GridView;
@@ -19,6 +22,7 @@ import vn.edu.fpt.kidapp.database.DBManagerAPI;
 import vn.edu.fpt.kidapp.model.APIObjectJSON;
 import vn.edu.fpt.kidapp.model.CapturePicture;
 import vn.edu.fpt.kidapp.adapter.PictureHistoryAdapter;
+import vn.edu.fpt.kidapp.utils.FileUtil;
 
 public class ViewHistoryActivity extends AppCompatActivity {
 
@@ -36,6 +40,7 @@ public class ViewHistoryActivity extends AppCompatActivity {
         setContentView(R.layout.activity_view_history);
 
         grvHistory = findViewById(R.id.grvHistory);
+        dbManagerAPI = new DBManagerAPI(this);
         
         Intent intent = getIntent();
         String result = intent.getStringExtra("LIST_PICTURE");
@@ -64,18 +69,49 @@ public class ViewHistoryActivity extends AppCompatActivity {
         grvHistory.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
             @Override
             public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
-                showPopup(view);
+                showPopup(view, position);
                 return true;
             }
         });
 
     }
 
-    public void showPopup(View v) {
+    public void showPopup(View v, final int pos) {
         PopupMenu popupMenu = new PopupMenu(this, v);
         popupMenu.inflate(R.menu.menu_history);
         popupMenu.show();
+        popupMenu.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
+            @Override
+            public boolean onMenuItemClick(MenuItem item) {
 
+                if(item.getTitle().equals("Delete")){
+                    AlertDialog.Builder alert = new AlertDialog.Builder(ViewHistoryActivity.this);
+                    alert.setTitle("Confirm");
+                    alert.setMessage("Do you want to delete this photo?");
+                    alert.setIcon(R.drawable.flashon);
+                    alert.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+//                            db.deletePictureByName(listPicture.get(pos).getName());
+                            dbManagerAPI.deletePicture(listPictures.get(pos).getImageName());
+                            FileUtil.deleteFileFromSdCard(listPictures.get(pos).getImageName());
+                            listPictures.remove(pos);
+                            adapter.notifyDataSetChanged();
+
+                        }
+                    });
+                    alert.setNegativeButton("No", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+
+                        }
+                    });
+                    alert.show();
+
+                }
+                return false;
+            }
+        });
     }
 
 
