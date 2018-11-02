@@ -1,11 +1,14 @@
 package vn.edu.fpt.kidapp.model;
 
+import android.os.Parcelable;
+
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
+import java.io.Serializable;
 import java.util.List;
 
-public class APIObjectJSON {
+public class APIObjectJSON implements Serializable {
 
         @SerializedName("status")
         @Expose
@@ -30,7 +33,7 @@ public class APIObjectJSON {
             this.data = data;
         }
 
-    public class Status {
+    public class Status implements Serializable {
 
         @SerializedName("code")
         @Expose
@@ -56,7 +59,7 @@ public class APIObjectJSON {
         }
     }
 
-    public class Data {
+    public class Data implements Serializable {
         @SerializedName("username")
         @Expose
         private String username;
@@ -103,7 +106,7 @@ public class APIObjectJSON {
         }
     }
 
-    public class Picture {
+    public class Picture implements Serializable {
 
         @SerializedName("image_id")
         @Expose
@@ -162,7 +165,7 @@ public class APIObjectJSON {
         }
     }
 
-    public class EngSub {
+    public class EngSub implements Serializable {
 
         @SerializedName("eng_1")
         @Expose
@@ -200,7 +203,7 @@ public class APIObjectJSON {
 
     }
 
-    public class VieSub {
+    public class VieSub implements Serializable {
 
         @SerializedName("vie_1")
         @Expose

@@ -10,6 +10,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Toast;
 
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
@@ -73,13 +74,14 @@ public class LoginActivity extends AppCompatActivity {
                 String result = intent.getStringExtra("API_RESULT");
                 Gson gson = new Gson();
                 APIObjectJSON resultJSON = gson.fromJson(result, new TypeToken<APIObjectJSON>() {}.getType());
-                Log.e(TAG, "onReceive: " + resultJSON.getData().getUsername());
                 if (resultJSON.getStatus().getCode() == 200) {
                     PreferenceUtil.getInstance(context).putStringValue("username", resultJSON.getData().getUsername());
                     PreferenceUtil.getInstance(context).putStringValue("address", resultJSON.getData().getAddress());
                     Intent i = new Intent(context, BeginActivity.class);
                     startActivity(i);
                     finish();
+                } else {
+                    Toast.makeText(context, resultJSON.getStatus().getMessage(), Toast.LENGTH_SHORT).show();
                 }
             }
         }

@@ -42,7 +42,11 @@ public class PictureHistoryAdapter extends ArrayAdapter<APIObjectJSON.Picture> {
         }
         APIObjectJSON.Picture pic = getItem(position);
         Bitmap picture = FileUtil.readFileFromSdCard(pic.getImageName());
-        viewHolder.imvPicture.setImageBitmap(picture);
+        if (!FileUtil.isPictureExist(pic.getImageName())) {
+            viewHolder.imvPicture.setImageResource(R.drawable.camera);
+        } else {
+            viewHolder.imvPicture.setImageBitmap(picture);
+        }
 
         return convertView;
 

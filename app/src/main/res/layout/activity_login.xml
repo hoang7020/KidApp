@@ -5,9 +5,22 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
+    android:gravity="center"
+    android:background="@color/colorToolbar"
     tools:context=".activity.LoginActivity">
 
+    <ImageView
+        android:layout_marginBottom="15dp"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:src="@drawable/owl"/>
+
     <EditText
+        android:textSize="25sp"
+        android:layout_marginBottom="15dp"
+        android:background="#ffffff"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
         android:text="hoang7020"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -15,22 +28,41 @@
         android:hint="Username"/>
 
     <EditText
+        android:layout_marginBottom="15dp"
+        android:textSize="25sp"
+        android:background="#ffffff"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/edtPassword"
         android:text="123456"
         android:hint="Password"/>
 
-    <Button
+    <LinearLayout
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
+        android:weightSum="2"
+        android:orientation="horizontal"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/btnLogin"
-        android:text="Login"/>
+        android:layout_height="wrap_content">
 
-    <Button
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/btnRegister"
-        android:text="Register"/>
+        <Button
+            android:layout_weight="1"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:id="@+id/btnLogin"
+            android:text="Login"/>
+
+        <Button
+            android:layout_weight="1"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:id="@+id/btnRegister"
+            android:text="Register"/>
+
+    </LinearLayout>
+
+
 
 </LinearLayout>

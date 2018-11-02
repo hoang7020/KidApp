@@ -18,7 +18,7 @@ import java.net.URL;
 public class DBManagerAPI {
     private static final String TAG = DBManagerAPI.class.getSimpleName();
 
-    private static final String host = "http://192.168.1.5:49833";
+    private static final String host = "http://10.82.140.22:49833";
     private Gson gson;
 
     private Context context;

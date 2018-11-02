@@ -15,6 +15,7 @@ import android.widget.PopupMenu;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 
+import java.io.Serializable;
 import java.util.List;
 
 import vn.edu.fpt.kidapp.R;
@@ -58,7 +59,9 @@ public class ViewHistoryActivity extends AppCompatActivity {
         grvHistory.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                CapturePicture pic = (CapturePicture) parent.getItemAtPosition(position);
+//                CapturePicture pic = (CapturePicture) parent.getItemAtPosition(position);
+                APIObjectJSON.Picture pic = (APIObjectJSON.Picture) parent.getItemAtPosition(position);
+                Log.e(TAG, "onItemClick: " + pic.getImageId() + " " + pic.getImageName() + " " + pic.getEngSub().getEng1() + " " + pic.getVieSub().getVie1());
                 Intent intent = new Intent();
                 intent.putExtra("PICTURE", pic);
                 setResult(RESULT_OK, intent);
@@ -93,7 +96,7 @@ public class ViewHistoryActivity extends AppCompatActivity {
                         @Override
                         public void onClick(DialogInterface dialog, int which) {
 //                            db.deletePictureByName(listPicture.get(pos).getName());
-                            dbManagerAPI.deletePicture(listPictures.get(pos).getImageName());
+                            dbManagerAPI.deletePicture(listPictures.get(pos).getImageId());
                             FileUtil.deleteFileFromSdCard(listPictures.get(pos).getImageName());
                             listPictures.remove(pos);
                             adapter.notifyDataSetChanged();

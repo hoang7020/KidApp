@@ -24,6 +24,7 @@ import java.util.Locale;
 import vn.edu.fpt.kidapp.database.DBManagerAPI;
 import vn.edu.fpt.kidapp.fragment.LoadingFragment;
 import vn.edu.fpt.kidapp.R;
+import vn.edu.fpt.kidapp.model.APIObjectJSON;
 import vn.edu.fpt.kidapp.model.CapturePicture;
 import vn.edu.fpt.kidapp.database.DBManager;
 import vn.edu.fpt.kidapp.interfaces.Observer;
@@ -121,17 +122,19 @@ public class MainActivity extends AppCompatActivity implements TextToSpeech.OnIn
         }
         if (requestCode == HISTORY_REQUEST_CODE) {
             if (resultCode == RESULT_OK) {
-
-
-                CapturePicture pic = (CapturePicture) data.getSerializableExtra("PICTURE");
-                Bitmap bm = FileUtil.readFileFromSdCard(pic.getName());
-                ivResult.setImageBitmap(bm);
-                txtResult1.setText(pic.getEng1());
-                txtResult2.setText(pic.getEng2());
-                txtResult3.setText(pic.getEng3());
-                txtVietname1.setText(pic.getVie1());
-                txtVietname2.setText(pic.getVie2());
-                txtVietname3.setText(pic.getVie3());
+                APIObjectJSON.Picture pic = (APIObjectJSON.Picture) data.getSerializableExtra("PICTURE");
+                Bitmap bm = FileUtil.readFileFromSdCard(pic.getImageName());
+                if (!FileUtil.isPictureExist(pic.getImageName())) {
+                    ivResult.setImageResource(R.drawable.camera);
+                } else {
+                    ivResult.setImageBitmap(bm);
+                }
+                txtResult1.setText(pic.getEngSub().getEng1());
+                txtResult2.setText(pic.getEngSub().getEng2());
+                txtResult3.setText(pic.getEngSub().getEng3());
+                txtVietname1.setText(pic.getVieSub().getVie1());
+                txtVietname2.setText(pic.getVieSub().getVie2());
+                txtVietname3.setText(pic.getVieSub().getVie3());
 
 
             }
