@@ -16,19 +16,19 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.util.Locale;
 
-import vn.edu.fpt.kidapp.fragment.LoadingFragment;
 import vn.edu.fpt.kidapp.R;
-import vn.edu.fpt.kidapp.model.CapturePicture;
 import vn.edu.fpt.kidapp.database.DBManager;
+import vn.edu.fpt.kidapp.fragment.LoadingFragment;
 import vn.edu.fpt.kidapp.interfaces.Observer;
 import vn.edu.fpt.kidapp.interfaces.Observerable;
+import vn.edu.fpt.kidapp.model.CapturePicture;
 import vn.edu.fpt.kidapp.receiver.EnglishTranslateReceiver;
 import vn.edu.fpt.kidapp.receiver.PicturePredictReceiver;
 import vn.edu.fpt.kidapp.utils.ClarifaiUtil;
-import vn.edu.fpt.kidapp.utils.Constant;
 import vn.edu.fpt.kidapp.utils.FileUtil;
 
 
@@ -75,7 +75,6 @@ public class MainActivity extends AppCompatActivity implements TextToSpeech.OnIn
             @Override
             public void onClick(View v) {
                 mMediaPlayer.start();
-                Constant.FLAG = true;
                 Intent intent = new Intent(MainActivity.this, CameraActivity.class);
                 startActivityForResult(intent, CAMERA_REQUEST_CODE);
             }
@@ -251,7 +250,12 @@ public class MainActivity extends AppCompatActivity implements TextToSpeech.OnIn
                     rs2,
                     rs3,
                     System.currentTimeMillis());
-            db.addPicture(pic);
+            boolean result = db.addPicture(pic);
+            if (result) {
+                Toast.makeText(this, "Add Image Success!!!", Toast.LENGTH_SHORT).show();
+            } else {
+                Toast.makeText(this, "Add Image Fail!!!", Toast.LENGTH_SHORT).show();
+            }
         }
     }
 }

@@ -12,7 +12,6 @@ import android.view.View;
 import android.widget.ImageView;
 
 import vn.edu.fpt.kidapp.R;
-import vn.edu.fpt.kidapp.utils.Constant;
 
 public class BeginActivity extends AppCompatActivity {
 
@@ -39,7 +38,6 @@ public class BeginActivity extends AppCompatActivity {
             public void onClick(View v) {
                 mWelcome.stop();
                 mMediaPlayer.start();
-                Constant.FLAG = true;
                 Intent intent = new Intent(BeginActivity.this, CameraActivity.class);
                 startActivityForResult(intent, CAMERA_REQUEST_CODE);
             }

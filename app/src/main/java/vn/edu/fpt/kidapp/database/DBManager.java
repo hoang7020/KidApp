@@ -57,7 +57,7 @@ public class DBManager extends SQLiteOpenHelper {
 
     }
 
-    public void addPicture(CapturePicture pic) {
+    public boolean addPicture(CapturePicture pic) {
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues values = new ContentValues();
         values.put(ID, pic.getId());
@@ -69,8 +69,12 @@ public class DBManager extends SQLiteOpenHelper {
         values.put(VIE2, pic.getVie2());
         values.put(VIE3, pic.getVie3());
         values.put(TIMESHOOT, pic.getTimeshoot());
-        db.insert(TABLE_NAME, null, values);
+        long result = db.insert(TABLE_NAME, null, values);
+        if (result != -1) {
+            return true;
+        }
         db.close();
+        return false;
     }
 
     public List<CapturePicture> getAllPicture() {
@@ -92,39 +96,44 @@ public class DBManager extends SQLiteOpenHelper {
                 listPicture.add(pic);
             } while (cursor.moveToNext());
         }
+        db.close();
         return listPicture;
     }
 
-    public CapturePicture getPictureByName(String name) {
-        SQLiteDatabase db = this.getReadableDatabase();
-        Cursor cursor = db.query(TABLE_NAME,
-                new String[] {ID, NAME, ENG1, ENG2, ENG3, VIE1, VIE2, VIE3, TIMESHOOT},
-                NAME + "=?",
-                new String[] {String.valueOf(name)},
-                null, null, null, null);
-        if (cursor != null) {
-            cursor.moveToFirst();
-        }
-        Log.e("DB", "getPictureById: " + cursor.toString());
-        CapturePicture pic = new CapturePicture(
-                cursor.getInt(0),
-                cursor.getString(1),
-                cursor.getString(2),
-                cursor.getString(3),
-                cursor.getString(4),
-                cursor.getString(5),
-                cursor.getString(6),
-                cursor.getString(7),
-                cursor.getDouble(8));
-        cursor.close();
-        db.close();
-        return pic;
-    }
+//    public CapturePicture getPictureByName(String name) {
+//        SQLiteDatabase db = this.getReadableDatabase();
+//        Cursor cursor = db.query(TABLE_NAME,
+//                new String[] {ID, NAME, ENG1, ENG2, ENG3, VIE1, VIE2, VIE3, TIMESHOOT},
+//                NAME + "=?",
+//                new String[] {String.valueOf(name)},
+//                null, null, null, null);
+//        if (cursor != null) {
+//            cursor.moveToFirst();
+//        }
+//        Log.e("DB", "getPictureById: " + cursor.toString());
+//        CapturePicture pic = new CapturePicture(
+//                cursor.getInt(0),
+//                cursor.getString(1),
+//                cursor.getString(2),
+//                cursor.getString(3),
+//                cursor.getString(4),
+//                cursor.getString(5),
+//                cursor.getString(6),
+//                cursor.getString(7),
+//                cursor.getDouble(8));
+//        cursor.close();
+//        db.close();
+//        return pic;
+//    }
 
-    public void deletePictureByName(String name) {
+    public boolean deletePictureByName(String name) {
         SQLiteDatabase db = this.getWritableDatabase();
-        db.delete(TABLE_NAME, NAME + "=?", new String[] {String.valueOf(name)});
+        int result = db.delete(TABLE_NAME, NAME + "=?", new String[] {String.valueOf(name)});
+        if (result > 0) {
+            return true;
+        }
         db.close();
+        return false;
     }
 
     public int getMaxId() {
