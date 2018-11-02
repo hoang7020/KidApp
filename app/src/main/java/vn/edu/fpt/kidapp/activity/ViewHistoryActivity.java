@@ -2,9 +2,9 @@ package vn.edu.fpt.kidapp.activity;
 
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.os.Bundle;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
@@ -15,9 +15,9 @@ import android.widget.Toast;
 import java.util.List;
 
 import vn.edu.fpt.kidapp.R;
-import vn.edu.fpt.kidapp.model.CapturePicture;
 import vn.edu.fpt.kidapp.adapter.PictureHistoryAdapter;
 import vn.edu.fpt.kidapp.database.DBManager;
+import vn.edu.fpt.kidapp.model.CapturePicture;
 import vn.edu.fpt.kidapp.utils.FileUtil;
 
 public class ViewHistoryActivity extends AppCompatActivity {

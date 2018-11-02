@@ -1,8 +1,8 @@
 package vn.edu.fpt.kidapp.activity;
 
 import android.content.Intent;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.View;
@@ -12,9 +12,9 @@ import android.widget.ListView;
 import java.util.List;
 
 import vn.edu.fpt.kidapp.R;
-import vn.edu.fpt.kidapp.model.CapturePicture;
 import vn.edu.fpt.kidapp.adapter.PictureHistoryAdapter;
 import vn.edu.fpt.kidapp.database.DBManager;
+import vn.edu.fpt.kidapp.model.CapturePicture;
 
 public class HistoryActivity extends AppCompatActivity {
 
