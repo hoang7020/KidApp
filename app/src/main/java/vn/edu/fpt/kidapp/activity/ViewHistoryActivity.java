@@ -36,9 +36,7 @@ public class ViewHistoryActivity extends AppCompatActivity {
         setContentView(R.layout.activity_view_history);
 
         grvHistory = findViewById(R.id.grvHistory);
-
-//        DBManager db = new DBManager(this);
-//        listPicture = db.getAllPicture();
+        
         Intent intent = getIntent();
         String result = intent.getStringExtra("LIST_PICTURE");
         Log.e(TAG, "onCreate: " + result);

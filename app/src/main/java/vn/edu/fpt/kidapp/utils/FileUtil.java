@@ -51,6 +51,12 @@ public class FileUtil {
         return bitmap;
     }
 
+    public static boolean deleteFileFromSdCard(String fileName) {
+        File sdcard = Environment.getExternalStorageDirectory();
+        File file = new File(sdcard.getAbsolutePath() + "/KidApp/", fileName);
+        return file.delete();
+    }
+
     public static byte[] convertBitmapToByteArray(Bitmap bm) {
         ByteArrayOutputStream stream = new ByteArrayOutputStream();
         bm.compress(Bitmap.CompressFormat.JPEG, 100, stream);
