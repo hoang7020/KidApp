@@ -1,4 +1,4 @@
-package vn.edu.fpt.kidapp;
+package vn.edu.fpt.kidapp.activity;
 
 import android.content.Intent;
 import android.graphics.Bitmap;
@@ -10,6 +10,7 @@ import android.widget.ImageButton;
 
 import com.theartofdev.edmodo.cropper.CropImageView;
 
+import vn.edu.fpt.kidapp.R;
 import vn.edu.fpt.kidapp.utils.FileUtil;
 
 public class CropImageActivity extends AppCompatActivity {

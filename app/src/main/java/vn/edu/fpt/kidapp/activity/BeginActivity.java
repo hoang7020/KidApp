@@ -1,4 +1,4 @@
-package vn.edu.fpt.kidapp;
+package vn.edu.fpt.kidapp.activity;
 
 import android.Manifest;
 import android.content.Intent;
@@ -8,14 +8,11 @@ import android.os.Build;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 
-import java.io.IOException;
-
+import vn.edu.fpt.kidapp.R;
 import vn.edu.fpt.kidapp.utils.Constant;
-import vn.edu.fpt.kidapp.utils.FileUtil;
 
 public class BeginActivity extends AppCompatActivity {
 

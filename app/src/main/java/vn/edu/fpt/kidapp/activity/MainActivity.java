@@ -1,4 +1,4 @@
-package vn.edu.fpt.kidapp;
+package vn.edu.fpt.kidapp.activity;
 
 import android.app.DialogFragment;
 import android.content.Intent;
@@ -19,6 +19,8 @@ import android.widget.TextView;
 
 import java.util.Locale;
 
+import vn.edu.fpt.kidapp.fragment.LoadingFragment;
+import vn.edu.fpt.kidapp.R;
 import vn.edu.fpt.kidapp.model.CapturePicture;
 import vn.edu.fpt.kidapp.database.DBManager;
 import vn.edu.fpt.kidapp.interfaces.Observer;

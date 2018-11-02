@@ -1,4 +1,4 @@
-package vn.edu.fpt.kidapp;
+package vn.edu.fpt.kidapp.activity;
 
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
@@ -11,6 +11,7 @@ import android.widget.ListView;
 
 import java.util.List;
 
+import vn.edu.fpt.kidapp.R;
 import vn.edu.fpt.kidapp.model.CapturePicture;
 import vn.edu.fpt.kidapp.adapter.PictureHistoryAdapter;
 import vn.edu.fpt.kidapp.database.DBManager;

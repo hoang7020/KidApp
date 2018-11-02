@@ -1,4 +1,4 @@
-package vn.edu.fpt.kidapp;
+package vn.edu.fpt.kidapp.activity;
 
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -13,9 +13,11 @@ import android.widget.PopupMenu;
 
 import java.util.List;
 
+import vn.edu.fpt.kidapp.R;
 import vn.edu.fpt.kidapp.model.CapturePicture;
 import vn.edu.fpt.kidapp.adapter.PictureHistoryAdapter;
 import vn.edu.fpt.kidapp.database.DBManager;
+import vn.edu.fpt.kidapp.utils.FileUtil;
 
 public class ViewHistoryActivity extends AppCompatActivity {
     private GridView grvHistory;
@@ -39,11 +41,8 @@ public class ViewHistoryActivity extends AppCompatActivity {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 CapturePicture pic = (CapturePicture) parent.getItemAtPosition(position);
-
-
                 Intent intent = new Intent();
                 intent.putExtra("PICTURE", pic);
-
                 setResult(RESULT_OK, intent);
                 finish();
             }
@@ -52,16 +51,10 @@ public class ViewHistoryActivity extends AppCompatActivity {
         grvHistory.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
             @Override
             public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
-
                 showPopup(view, position);
-
-
-
                 return true;
             }
         });
-
-
     }
 
 
@@ -82,9 +75,8 @@ public class ViewHistoryActivity extends AppCompatActivity {
                         @Override
                         public void onClick(DialogInterface dialog, int which) {
                             db.deletePictureByName(listPicture.get(pos).getName());
+                            FileUtil.deleteFileFromSdCard(listPicture.get(pos).getName());
                             listPicture.remove(pos);
-
-
                             adapter.notifyDataSetChanged();
 
                         }
@@ -98,50 +90,8 @@ public class ViewHistoryActivity extends AppCompatActivity {
                     alert.show();
 
                 }
-
-
-
-
-
                 return false;
             }
         });
-
-//        popupMenu.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
-//            @Override
-//            public boolean onMenuItemClick(MenuItem item) {
-//                Toast.makeText(ViewHistoryActivity.this, item.getTitle(), Toast.LENGTH_SHORT).show();
-//                AlertDialog.Builder alert = new AlertDialog.Builder(getApplicationContext());
-//                alert.setTitle("Confirm");
-//                alert.setMessage("Do you want to delete this photo?");
-//                alert.setIcon(R.drawable.flashoff);
-//
-//                alert.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
-//                    @Override
-//                    public void onClick(DialogInterface dialog, int which) {
-//                        listPicture.remove(pos);
-//                        adapter.notifyDataSetChanged();
-//
-//
-//                    }
-//                });
-//
-//                alert.setNegativeButton("No", new DialogInterface.OnClickListener() {
-//                    @Override
-//                    public void onClick(DialogInterface dialog, int which) {
-//
-//                    }
-//                });
-//
-//                alert.show();
-//                return true;
-//            }
-//        });
-
-
-
     }
-
-
-
 }

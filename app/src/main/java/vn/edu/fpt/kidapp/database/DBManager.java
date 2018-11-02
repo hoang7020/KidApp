@@ -39,17 +39,17 @@ public class DBManager extends SQLiteOpenHelper {
 
     @Override
     public void onCreate(SQLiteDatabase db) {
-        String sql = "CREATE TABLE " + TABLE_NAME + " (" +
-                ID + " INTEGER PRIMARY KEY, " +
-                NAME + " TEXT, " +
-                ENG1 + " TEXT, " +
-                ENG2 + " TEXT, " +
-                ENG3 + " TEXT, " +
-                VIE1 + " TEXT, " +
-                VIE2 + " TEXT, " +
-                VIE3 + " TEXT, " +
-                TIMESHOOT + " DOUBLE)";
-        db.execSQL(sql);
+//        String sql = "CREATE TABLE " + TABLE_NAME + " (" +
+//                ID + " INTEGER PRIMARY KEY, " +
+//                NAME + " TEXT, " +
+//                ENG1 + " TEXT, " +
+//                ENG2 + " TEXT, " +
+//                ENG3 + " TEXT, " +
+//                VIE1 + " TEXT, " +
+//                VIE2 + " TEXT, " +
+//                VIE3 + " TEXT, " +
+//                TIMESHOOT + " DOUBLE)";
+//        db.execSQL(sql);
     }
 
     @Override

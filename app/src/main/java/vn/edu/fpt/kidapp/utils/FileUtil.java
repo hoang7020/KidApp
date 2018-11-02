@@ -55,6 +55,13 @@ public class FileUtil {
         return bitmap;
     }
 
+    public static boolean deleteFileFromSdCard(String fileName) {
+        File sdcard = Environment.getExternalStorageDirectory();
+        File file = new File(sdcard.getAbsolutePath() + "/KidApp/", fileName);
+        return file.delete();
+    }
+
+
     public static boolean isPictureExist(String fileName) {
         File sdcard = Environment.getExternalStorageDirectory();
         File file = new File(sdcard.getAbsolutePath() + "/KidApp/", fileName);

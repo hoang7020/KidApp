@@ -1,4 +1,4 @@
-package vn.edu.fpt.kidapp;
+package vn.edu.fpt.kidapp.activity;
 
 import android.content.Intent;
 import android.os.Handler;
@@ -10,6 +10,7 @@ import com.airbnb.lottie.LottieAnimationView;
 
 import java.io.IOException;
 
+import vn.edu.fpt.kidapp.R;
 import vn.edu.fpt.kidapp.utils.FileUtil;
 
 public class StartActivity extends AppCompatActivity {
