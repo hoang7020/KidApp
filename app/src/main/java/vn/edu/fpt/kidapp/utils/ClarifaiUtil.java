@@ -1,34 +1,20 @@
 package vn.edu.fpt.kidapp.utils;
 
-import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
-import android.content.IntentFilter;
-import android.os.Environment;
-import android.os.Handler;
 import android.util.Log;
-import android.widget.Toast;
 
-import java.io.File;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 
-import javax.security.auth.login.LoginException;
-
 import clarifai2.api.ClarifaiBuilder;
 import clarifai2.api.ClarifaiClient;
-import clarifai2.api.ClarifaiResponse;
 import clarifai2.api.request.model.PredictRequest;
-import clarifai2.api.request.model.WorkflowPredictRequest;
 import clarifai2.dto.input.ClarifaiInput;
-import clarifai2.dto.model.Model;
 import clarifai2.dto.model.ModelVersion;
 import clarifai2.dto.model.output.ClarifaiOutput;
-import clarifai2.dto.prediction.Concept;
 import clarifai2.dto.prediction.Prediction;
-import clarifai2.dto.workflow.WorkflowPredictResult;
 import okhttp3.OkHttpClient;
-import vn.edu.fpt.kidapp.receiver.PicturePredictReceiver;
 
 public class ClarifaiUtil {
 

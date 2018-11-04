@@ -1,9 +1,9 @@
 package vn.edu.fpt.kidapp.activity;
 
 import android.content.Intent;
+import android.os.Bundle;
 import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 
 import com.airbnb.lottie.LottieAnimationView;
 
@@ -25,7 +25,7 @@ public class StartActivity extends AppCompatActivity {
         lavStarting.playAnimation();
         lavStarting.loop(true);
         Handler handler = new Handler();
-        final Intent intent = new Intent(this, BeginActivity.class);
+        final Intent intent = new Intent(this, LoginActivity.class);
         handler.postDelayed(new Runnable() {
             @Override
             public void run() {

@@ -4,12 +4,13 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Toast;
 
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
@@ -48,6 +49,7 @@ public class RegisterActivity extends AppCompatActivity {
                     dba.register(username, password, address);
                 } else {
                     Log.e(TAG, "onClick: " + "Confirm Password does not match!!!");
+                    Toast.makeText(RegisterActivity.this, "Confirm Password does not match!!!", Toast.LENGTH_SHORT).show();
                     return;
                 }
             }
@@ -61,13 +63,14 @@ public class RegisterActivity extends AppCompatActivity {
                 String result = intent.getStringExtra("API_RESULT");
                 Gson gson = new Gson();
                 APIObjectJSON resultJSON = gson.fromJson(result, new TypeToken<APIObjectJSON>() {}.getType());
-                Log.e(TAG, "onReceive: " + resultJSON.getData().getUsername());
                 if (resultJSON.getStatus().getCode() == 200) {
                     PreferenceUtil.getInstance(context).putStringValue("Username", resultJSON.getData().getUsername());
                     PreferenceUtil.getInstance(context).putStringValue("Address", resultJSON.getData().getAddress());
                     Intent i = new Intent(context, BeginActivity.class);
                     startActivity(i);
                     getInstance().finish();
+                } else {
+                    Toast.makeText(context, resultJSON.getStatus().getMessage(), Toast.LENGTH_SHORT).show();
                 }
             }
         }

@@ -2,27 +2,27 @@ package vn.edu.fpt.kidapp.activity;
 
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.os.Bundle;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.GridView;
 import android.widget.PopupMenu;
+import android.widget.Toast;
 
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 
-import java.io.Serializable;
 import java.util.List;
 
 import vn.edu.fpt.kidapp.R;
+import vn.edu.fpt.kidapp.adapter.PictureHistoryAdapter;
 import vn.edu.fpt.kidapp.database.DBManagerAPI;
 import vn.edu.fpt.kidapp.model.APIObjectJSON;
 import vn.edu.fpt.kidapp.model.CapturePicture;
-import vn.edu.fpt.kidapp.adapter.PictureHistoryAdapter;
 import vn.edu.fpt.kidapp.utils.FileUtil;
 
 public class ViewHistoryActivity extends AppCompatActivity {
@@ -49,9 +49,6 @@ public class ViewHistoryActivity extends AppCompatActivity {
         Gson gson = new Gson();
         APIObjectJSON resultJSON = gson.fromJson(result, new TypeToken<APIObjectJSON>(){}.getType());
         listPictures = resultJSON.getData().getPictures();
-        for (APIObjectJSON.Picture p: listPictures) {
-            Log.e(TAG, "onCreate: " + p.getImageName());
-        }
         adapter = new PictureHistoryAdapter(this, R.layout.picture_history_item_layout, listPictures);
         grvHistory.setAdapter(adapter);
 
@@ -95,12 +92,11 @@ public class ViewHistoryActivity extends AppCompatActivity {
                     alert.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
                         @Override
                         public void onClick(DialogInterface dialog, int which) {
-//                            db.deletePictureByName(listPicture.get(pos).getName());
                             dbManagerAPI.deletePicture(listPictures.get(pos).getImageId());
                             FileUtil.deleteFileFromSdCard(listPictures.get(pos).getImageName());
+                            Toast.makeText(ViewHistoryActivity.this, "Delete " + listPictures.get(pos).getImageName() + " Success!!!", Toast.LENGTH_SHORT).show();
                             listPictures.remove(pos);
                             adapter.notifyDataSetChanged();
-
                         }
                     });
                     alert.setNegativeButton("No", new DialogInterface.OnClickListener() {

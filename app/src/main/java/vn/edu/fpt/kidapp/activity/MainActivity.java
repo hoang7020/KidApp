@@ -18,21 +18,23 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
+
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
 
 import java.util.Locale;
 
+import vn.edu.fpt.kidapp.R;
+import vn.edu.fpt.kidapp.database.DBManager;
 import vn.edu.fpt.kidapp.database.DBManagerAPI;
 import vn.edu.fpt.kidapp.fragment.LoadingFragment;
-import vn.edu.fpt.kidapp.R;
-import vn.edu.fpt.kidapp.model.APIObjectJSON;
-import vn.edu.fpt.kidapp.model.CapturePicture;
-import vn.edu.fpt.kidapp.database.DBManager;
 import vn.edu.fpt.kidapp.interfaces.Observer;
 import vn.edu.fpt.kidapp.interfaces.Observerable;
+import vn.edu.fpt.kidapp.model.APIObjectJSON;
 import vn.edu.fpt.kidapp.receiver.EnglishTranslateReceiver;
 import vn.edu.fpt.kidapp.receiver.PicturePredictReceiver;
 import vn.edu.fpt.kidapp.utils.ClarifaiUtil;
-import vn.edu.fpt.kidapp.utils.Constant;
 import vn.edu.fpt.kidapp.utils.FileUtil;
 import vn.edu.fpt.kidapp.utils.PreferenceUtil;
 
@@ -52,6 +54,7 @@ public class MainActivity extends AppCompatActivity implements TextToSpeech.OnIn
     private DialogFragment mLoading;
     private String fileName;
     private DBManagerAPI dbManagerAPI;
+    private Gson gson;
 
     private PicturePredictReceiver mReceiverPicturePredict;
     private EnglishTranslateReceiver mReceiverEnglishTranslate;
@@ -81,7 +84,6 @@ public class MainActivity extends AppCompatActivity implements TextToSpeech.OnIn
             @Override
             public void onClick(View v) {
                 mMediaPlayer.start();
-                Constant.FLAG = true;
                 Intent intent = new Intent(MainActivity.this, CameraActivity.class);
                 startActivityForResult(intent, CAMERA_REQUEST_CODE);
             }
@@ -152,7 +154,10 @@ public class MainActivity extends AppCompatActivity implements TextToSpeech.OnIn
         mReceiverEnglishTranslate.registerObserver(this);
         registerReceiver(mReceiverEnglishTranslate, new IntentFilter("ACTION_TRANSLATE_SUCCESS"));
 
-        registerReceiver(getAllReceiver, new IntentFilter(DBManagerAPI.ACTION_GET_ALL));
+        IntentFilter filters = new IntentFilter();
+        filters.addAction(DBManagerAPI.ACTION_GET_ALL);
+        filters.addAction(DBManagerAPI.ACTION_ADD_PICTURE);;
+        registerReceiver(getAllReceiver, filters);
 
     }
 
@@ -171,6 +176,7 @@ public class MainActivity extends AppCompatActivity implements TextToSpeech.OnIn
         tts = new TextToSpeech(this, this);
         mMediaPlayer = MediaPlayer.create(this, R.raw.hatxi);
         dbManagerAPI = new DBManagerAPI(this);
+        gson = new Gson();
     }
 
     @Override
@@ -246,19 +252,6 @@ public class MainActivity extends AppCompatActivity implements TextToSpeech.OnIn
             txtVietname2.setText(rs2);
             txtVietname3.setText(rs3);
             mLoading.dismiss();
-            DBManager db = new DBManager(this);
-            int id = db.getMaxId();
-//            CapturePicture pic = new CapturePicture(
-//                    id + 1,
-//                    fileName,
-//                    txtResult1.getText().toString(),
-//                    txtResult2.getText().toString(),
-//                    txtResult3.getText().toString(),
-//                    rs1,
-//                    rs2,
-//                    rs3,
-//                    System.currentTimeMillis());
-//            db.addPicture(pic);
             dbManagerAPI.addPicture(PreferenceUtil.getInstance(this).getStringValue("username", ""), fileName, System.currentTimeMillis(),
                     txtResult1.getText().toString(), txtResult2.getText().toString(), txtResult3.getText().toString(),
                     rs1, rs2, rs3);
@@ -271,10 +264,20 @@ public class MainActivity extends AppCompatActivity implements TextToSpeech.OnIn
         public void onReceive(Context context, Intent intent) {
             if (intent.getAction().equals(DBManagerAPI.ACTION_GET_ALL)) {
                 String result = intent.getStringExtra("API_RESULT");
-                Log.e(TAG, "onReceive: " + result);
+                Log.e(TAG, "GET ALL: " + result);
                 Intent historyIntent = new Intent(MainActivity.this, ViewHistoryActivity.class);
                 historyIntent.putExtra("LIST_PICTURE", result);
                 startActivityForResult(historyIntent, HISTORY_REQUEST_CODE);
+            }
+            if (intent.getAction().equals(DBManagerAPI.ACTION_ADD_PICTURE)) {
+                String result = intent.getStringExtra("API_RESULT");
+                Log.e(TAG, "ADD PICTURE: " + result);
+                APIObjectJSON resultJSON = gson.fromJson(result, new TypeToken<APIObjectJSON>(){}.getType());
+                if (resultJSON.getStatus().getCode() == 200) {
+                    Toast.makeText(context, resultJSON.getStatus().getMessage(), Toast.LENGTH_SHORT).show();
+                } else {
+                    Toast.makeText(context, resultJSON.getStatus().getMessage(), Toast.LENGTH_SHORT).show();
+                }
             }
         }
     };

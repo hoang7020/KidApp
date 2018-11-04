@@ -11,7 +11,6 @@ import android.widget.ImageView;
 import java.util.List;
 
 import vn.edu.fpt.kidapp.R;
-import vn.edu.fpt.kidapp.model.CapturePicture;
 import vn.edu.fpt.kidapp.model.APIObjectJSON;
 import vn.edu.fpt.kidapp.utils.FileUtil;
 

@@ -3,9 +3,11 @@ package vn.edu.fpt.kidapp.database;
 import android.content.Context;
 import android.content.Intent;
 import android.util.Log;
+import android.widget.Toast;
 
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
+import com.google.gson.reflect.TypeToken;
 
 import java.io.BufferedReader;
 import java.io.DataOutputStream;
@@ -15,10 +17,12 @@ import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
 
+import vn.edu.fpt.kidapp.model.APIObjectJSON;
+
 public class DBManagerAPI {
     private static final String TAG = DBManagerAPI.class.getSimpleName();
 
-    private static final String host = "http://10.82.140.22:49833";
+    private static final String host = "http://192.168.1.6:49833";
     private Gson gson;
 
     private Context context;
@@ -27,6 +31,7 @@ public class DBManagerAPI {
     public static final String ACTION_REGISTER = "ACTION_REGISTER";
     public static final String ACTION_GET_ALL = "ACTION_GET_ALL";
     public static final String ACTION_REMOVE_PICTURE = "ACTION_REMOVE_PICTURE";
+    public static final String ACTION_ADD_PICTURE = "ACTION_ADD_PICTURE";
 
     public DBManagerAPI(Context context) {
         gson = new Gson();
@@ -192,6 +197,8 @@ public class DBManagerAPI {
                     setParams(urlConnection, params);
                     String result = readResponse(urlConnection);
                     Log.e(TAG, "addPicture: " + result);
+
+                    sendDataBroadcast(ACTION_ADD_PICTURE, result);
                 } catch (MalformedURLException e) {
                     e.printStackTrace();
                 } catch (IOException e) {
