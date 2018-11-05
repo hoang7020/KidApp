@@ -22,7 +22,7 @@ import vn.edu.fpt.kidapp.model.APIObjectJSON;
 public class DBManagerAPI {
     private static final String TAG = DBManagerAPI.class.getSimpleName();
 
-    private static final String host = "http://192.168.1.6:49833";
+    private static final String host = "http://10.82.140.22:49833";
     private Gson gson;
 
     private Context context;
@@ -32,6 +32,7 @@ public class DBManagerAPI {
     public static final String ACTION_GET_ALL = "ACTION_GET_ALL";
     public static final String ACTION_REMOVE_PICTURE = "ACTION_REMOVE_PICTURE";
     public static final String ACTION_ADD_PICTURE = "ACTION_ADD_PICTURE";
+    public static final String ACTION_CHANGE_PASSWORD = "ACTION_CHANGE_PASSWORD";
 
     public DBManagerAPI(Context context) {
         gson = new Gson();
@@ -50,37 +51,11 @@ public class DBManagerAPI {
         return urlConnection;
     }
 
-    private HttpURLConnection createConnectionJson(URL url) {
-        HttpURLConnection urlConnection = null;
-        try {
-            urlConnection = (HttpURLConnection) url.openConnection();
-            urlConnection.setRequestMethod("POST");
-            urlConnection.setRequestProperty("Content-Type", "application/json; charset=UTF-8");
-            urlConnection.setDoOutput(true);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        return urlConnection;
-    }
-
     private void setParams(HttpURLConnection urlConnection, String params) {
         DataOutputStream dos = null;
         try {
             dos = new DataOutputStream(urlConnection.getOutputStream());
             dos.write(params.getBytes());
-            dos.flush();
-            dos.close();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
-
-    private void setParamsJson(HttpURLConnection urlConnection, JsonObject params) {
-        DataOutputStream dos = null;
-        try {
-            dos = new DataOutputStream(urlConnection.getOutputStream());
-//            dos.write(gson.toJson(params).getBytes("UTF-8"), 0, gson.toJson(params).getBytes("UTF-8").length);
-            dos.write(gson.toJson(params).getBytes());
             dos.flush();
             dos.close();
         } catch (IOException e) {
@@ -220,6 +195,26 @@ public class DBManagerAPI {
                     setParams(urlConnection, params);
                     String result = readResponse(urlConnection);
                     sendDataBroadcast(ACTION_REMOVE_PICTURE, result);
+                } catch (MalformedURLException e) {
+                    e.printStackTrace();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+        }).start();
+    }
+
+    public void changePassword(final String username, final String oldPassword, final String newPassword) {
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                try {
+                    URL url = new URL(host + "/changePassword");
+                    HttpURLConnection urlConnection = createConnection(url, "PUT");
+                    String params = "username=" + username + "&old_password=" + oldPassword + "&new_password=" + newPassword;
+                    setParams(urlConnection, params);
+                    String result = readResponse(urlConnection);
+                    sendDataBroadcast(ACTION_CHANGE_PASSWORD, result);
                 } catch (MalformedURLException e) {
                     e.printStackTrace();
                 } catch (IOException e) {

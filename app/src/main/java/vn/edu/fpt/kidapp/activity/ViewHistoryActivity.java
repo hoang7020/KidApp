@@ -1,7 +1,10 @@
 package vn.edu.fpt.kidapp.activity;
 
+import android.content.BroadcastReceiver;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.os.Bundle;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
@@ -34,12 +37,14 @@ public class ViewHistoryActivity extends AppCompatActivity {
     private PictureHistoryAdapter adapter;
     private DBManagerAPI dbManagerAPI;
     private List<APIObjectJSON.Picture> listPictures;
+    private Gson gson;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_view_history);
 
+        gson = new Gson();
         grvHistory = findViewById(R.id.grvHistory);
         dbManagerAPI = new DBManagerAPI(this);
         
@@ -112,9 +117,4 @@ public class ViewHistoryActivity extends AppCompatActivity {
             }
         });
     }
-
-
-
-
-
 }

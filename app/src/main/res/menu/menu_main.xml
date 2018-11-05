@@ -3,7 +3,17 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
     <item
         android:id="@+id/btnHistory"
-        app:showAsAction="always"
+        app:showAsAction="never"
         android:title="History">
+    </item>
+    <item
+        android:id="@+id/btnProfile"
+        app:showAsAction="never"
+        android:title="Profile">
+    </item>
+    <item
+        android:id="@+id/btnLogout"
+        app:showAsAction="never"
+        android:title="Logout">
     </item>
 </menu>

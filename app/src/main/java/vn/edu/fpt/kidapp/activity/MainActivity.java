@@ -26,7 +26,6 @@ import com.google.gson.reflect.TypeToken;
 import java.util.Locale;
 
 import vn.edu.fpt.kidapp.R;
-import vn.edu.fpt.kidapp.database.DBManager;
 import vn.edu.fpt.kidapp.database.DBManagerAPI;
 import vn.edu.fpt.kidapp.fragment.LoadingFragment;
 import vn.edu.fpt.kidapp.interfaces.Observer;
@@ -218,6 +217,14 @@ public class MainActivity extends AppCompatActivity implements TextToSpeech.OnIn
                 DBManagerAPI dbManagerAPI = new DBManagerAPI(this);
                 dbManagerAPI.getAllPicture(PreferenceUtil.getInstance(this).getStringValue("username", ""));
                 return true;
+            case R.id.btnLogout:
+                PreferenceUtil.getInstance(this).putStringValue("username", "");
+                finish();
+                Intent intent = new Intent(this, LoginActivity.class);
+                startActivity(intent);
+            case R.id.btnProfile:
+                Intent intent1 = new Intent(this, ProfileActivity.class);
+                startActivity(intent1);
             default:
                 return true;
         }

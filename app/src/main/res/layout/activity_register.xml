@@ -5,33 +5,62 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
+    android:gravity="center"
+    android:background="@color/colorToolbar"
     tools:context=".activity.RegisterActivity">
 
     <EditText
+        android:textSize="25sp"
+        android:layout_marginBottom="15dp"
+        android:background="#ffffff"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/edtUsername"
         android:hint="Username"/>
 
     <EditText
+        android:inputType="textPassword"
+        android:textSize="25sp"
+        android:layout_marginBottom="15dp"
+        android:background="#ffffff"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/edtPassword"
         android:hint="Password"/>
 
     <EditText
+        android:inputType="textPassword"
+        android:textSize="25sp"
+        android:layout_marginBottom="15dp"
+        android:background="#ffffff"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/edtConfirmPassword"
         android:hint="Confirm Password"/>
 
     <EditText
+        android:textSize="25sp"
+        android:layout_marginBottom="15dp"
+        android:background="#ffffff"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/edtAddress"
         android:hint="Address"/>
 
     <Button
+        android:textSize="25sp"
+        android:layout_marginBottom="15dp"
+        android:background="#ffffff"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/btnRegister"
