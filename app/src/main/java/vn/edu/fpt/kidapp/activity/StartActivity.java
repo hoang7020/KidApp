@@ -17,7 +17,7 @@ public class StartActivity extends AppCompatActivity {
 
     private static final String TAG = StartActivity.class.getSimpleName();
 
-    LottieAnimationView lavStarting;
+    private LottieAnimationView lavStarting;
     private final String dbName = "PictureSQLite";
 
 

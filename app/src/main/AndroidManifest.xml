@@ -28,7 +28,6 @@
         <activity
             android:name=".activity.CropImageActivity"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar" />
-        <activity android:name=".activity.HistoryActivity" />
         <activity android:name=".activity.ViewHistoryActivity"></activity>
     </application>
 

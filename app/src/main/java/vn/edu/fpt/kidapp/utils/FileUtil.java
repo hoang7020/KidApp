@@ -114,7 +114,7 @@ public class FileUtil {
         if (!directory.exists()) {
             directory.mkdir();
         }
-        File f = new File(directory.getAbsolutePath(), fileName);
+//        File f = new File(directory.getAbsolutePath(), fileName);
         InputStream is = context.getAssets().open(fileName);
         OutputStream os = new FileOutputStream(desDirectory + "/" + fileName);
         copyDB(is, os);

@@ -63,13 +63,31 @@ public class MainActivity extends AppCompatActivity implements TextToSpeech.OnIn
 
         initView();
 
-        initLoadingDialog();
         Intent intent = this.getIntent();
-        fileName = intent.getStringExtra("FILENAME");
-        Bitmap bm = FileUtil.readFileFromSdCard(fileName);
-        ivResult.setImageBitmap(bm);
-        ClarifaiUtil util = new ClarifaiUtil();
-        util.predictImage(FileUtil.convertBitmapToByteArray(bm), this);
+        if (intent.getIntExtra("TYPE", 0) == BeginActivity.CAMERA_REQUEST_CODE) {
+            initLoadingDialog();
+            fileName = intent.getStringExtra("FILENAME");
+            Bitmap bm = FileUtil.readFileFromSdCard(fileName);
+            ivResult.setImageBitmap(bm);
+            ClarifaiUtil util = new ClarifaiUtil();
+            util.predictImage(FileUtil.convertBitmapToByteArray(bm), this);
+        }
+        if (intent.getIntExtra("TYPE", 0) == BeginActivity.HISTORY_REQUEST_CODE) {
+            CapturePicture pic = (CapturePicture) intent.getSerializableExtra("PICTURE");
+            Bitmap bm = FileUtil.readFileFromSdCard(pic.getName());
+            if (!FileUtil.isPictureExist(pic.getName())) {
+                ivResult.setImageResource(R.drawable.camera);
+            } else {
+                ivResult.setImageBitmap(bm);
+            }
+            txtResult1.setText(pic.getEng1());
+            txtResult2.setText(pic.getEng2());
+            txtResult3.setText(pic.getEng3());
+            txtVietname1.setText(pic.getVie1());
+            txtVietname2.setText(pic.getVie2());
+            txtVietname3.setText(pic.getVie3());
+        }
+
 
         btnCamera.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -200,7 +218,6 @@ public class MainActivity extends AppCompatActivity implements TextToSpeech.OnIn
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.btnHistory:
-
                 Intent intent = new Intent(MainActivity.this, ViewHistoryActivity.class);
                 startActivityForResult(intent, HISTORY_REQUEST_CODE);
                 return true;
