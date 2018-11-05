@@ -22,7 +22,7 @@ import vn.edu.fpt.kidapp.model.APIObjectJSON;
 public class DBManagerAPI {
     private static final String TAG = DBManagerAPI.class.getSimpleName();
 
-    private static final String host = "http://10.82.140.22:49833";
+    private static final String host = "http://192.168.1.6:49833";
     private Gson gson;
 
     private Context context;

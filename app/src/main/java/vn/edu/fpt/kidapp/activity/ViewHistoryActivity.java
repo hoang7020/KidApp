@@ -27,6 +27,7 @@ import vn.edu.fpt.kidapp.database.DBManagerAPI;
 import vn.edu.fpt.kidapp.model.APIObjectJSON;
 import vn.edu.fpt.kidapp.model.CapturePicture;
 import vn.edu.fpt.kidapp.utils.FileUtil;
+import vn.edu.fpt.kidapp.utils.PreferenceUtil;
 
 public class ViewHistoryActivity extends AppCompatActivity {
 
@@ -47,16 +48,8 @@ public class ViewHistoryActivity extends AppCompatActivity {
         gson = new Gson();
         grvHistory = findViewById(R.id.grvHistory);
         dbManagerAPI = new DBManagerAPI(this);
-        
-        Intent intent = getIntent();
-        String result = intent.getStringExtra("LIST_PICTURE");
-        Log.e(TAG, "onCreate: " + result);
-        Gson gson = new Gson();
-        APIObjectJSON resultJSON = gson.fromJson(result, new TypeToken<APIObjectJSON>(){}.getType());
-        listPictures = resultJSON.getData().getPictures();
-        adapter = new PictureHistoryAdapter(this, R.layout.picture_history_item_layout, listPictures);
-        grvHistory.setAdapter(adapter);
 
+        dbManagerAPI.getAllPicture(PreferenceUtil.getInstance(this).getStringValue("username", ""));
 
         grvHistory.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
@@ -116,5 +109,32 @@ public class ViewHistoryActivity extends AppCompatActivity {
                 return false;
             }
         });
+    }
+
+    BroadcastReceiver historyReceiver = new BroadcastReceiver() {
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            if (intent.getAction().equals(DBManagerAPI.ACTION_GET_ALL)) {
+                String result = intent.getStringExtra("API_RESULT");
+                APIObjectJSON resultJSON = gson.fromJson(result, new TypeToken<APIObjectJSON>() {}.getType());
+                listPictures = resultJSON.getData().getPictures();
+                adapter = new PictureHistoryAdapter(getApplicationContext(), R.layout.picture_history_item_layout, listPictures);
+                grvHistory.setAdapter(adapter);
+            }
+        }
+    };
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        IntentFilter filter = new IntentFilter();
+        filter.addAction(DBManagerAPI.ACTION_GET_ALL);
+        registerReceiver(historyReceiver, filter);
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        unregisterReceiver(historyReceiver);
     }
 }

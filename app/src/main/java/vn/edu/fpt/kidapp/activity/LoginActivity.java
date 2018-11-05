@@ -44,6 +44,7 @@ public class LoginActivity extends AppCompatActivity {
         if (checkLogin()) {
             Intent intent = new Intent(this, BeginActivity.class);
             startActivity(intent);
+            finish();
         }
 
         initView();
@@ -86,6 +87,7 @@ public class LoginActivity extends AppCompatActivity {
                 if (resultJSON.getStatus().getCode() == 200) {
                     PreferenceUtil.getInstance(context).putStringValue("username", resultJSON.getData().getUsername());
                     PreferenceUtil.getInstance(context).putStringValue("address", resultJSON.getData().getAddress());
+                    PreferenceUtil.getInstance(context).putStringValue("date", resultJSON.getData().getDateCreate());
                     Intent i = new Intent(context, BeginActivity.class);
                     Toast.makeText(context, resultJSON.getStatus().getMessage(), Toast.LENGTH_SHORT).show();
                     startActivity(i);
@@ -100,7 +102,7 @@ public class LoginActivity extends AppCompatActivity {
     @Override
     protected void onStart() {
         super.onStart();
-        registerReceiver(loginReceiver, new IntentFilter(DBManagerAPI.ACTION_LOGIN));
+
     }
 
     @Override
@@ -114,6 +116,7 @@ public class LoginActivity extends AppCompatActivity {
         edtPassword = findViewById(R.id.edtPassword);
         btnLogin = findViewById(R.id.btnLogin);
         btnRegister = findViewById(R.id.btnRegister);
+        registerReceiver(loginReceiver, new IntentFilter(DBManagerAPI.ACTION_LOGIN));
     }
 
     private boolean checkLogin() {

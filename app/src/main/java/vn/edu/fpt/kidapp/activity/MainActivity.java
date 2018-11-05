@@ -71,13 +71,30 @@ public class MainActivity extends AppCompatActivity implements TextToSpeech.OnIn
 
         initView();
 
-        initLoadingDialog();
         Intent intent = this.getIntent();
-        fileName = intent.getStringExtra("FILENAME");
-        Bitmap bm = FileUtil.readFileFromSdCard(fileName);
-        ivResult.setImageBitmap(bm);
-        ClarifaiUtil util = new ClarifaiUtil();
-        util.predictImage(FileUtil.convertBitmapToByteArray(bm), this);
+        if (intent.getIntExtra("TYPE", 0) == BeginActivity.CAMERA_REQUEST_CODE) {
+            initLoadingDialog();
+            fileName = intent.getStringExtra("FILENAME");
+            Bitmap bm = FileUtil.readFileFromSdCard(fileName);
+            ivResult.setImageBitmap(bm);
+            ClarifaiUtil util = new ClarifaiUtil();
+            util.predictImage(FileUtil.convertBitmapToByteArray(bm), this);
+        }
+        if (intent.getIntExtra("TYPE", 0) == BeginActivity.HISTORY_REQUEST_CODE) {
+            APIObjectJSON.Picture pic = (APIObjectJSON.Picture) intent.getSerializableExtra("PICTURE");
+            Bitmap bm = FileUtil.readFileFromSdCard(pic.getImageName());
+            if (!FileUtil.isPictureExist(pic.getImageName())) {
+                ivResult.setImageResource(R.drawable.camera);
+            } else {
+                ivResult.setImageBitmap(bm);
+            }
+            txtResult1.setText(pic.getEngSub().getEng1());
+            txtResult2.setText(pic.getEngSub().getEng2());
+            txtResult3.setText(pic.getEngSub().getEng3());
+            txtVietname1.setText(pic.getVieSub().getVie1());
+            txtVietname2.setText(pic.getVieSub().getVie2());
+            txtVietname3.setText(pic.getVieSub().getVie3());
+        }
 
         btnCamera.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -154,9 +171,9 @@ public class MainActivity extends AppCompatActivity implements TextToSpeech.OnIn
         registerReceiver(mReceiverEnglishTranslate, new IntentFilter("ACTION_TRANSLATE_SUCCESS"));
 
         IntentFilter filters = new IntentFilter();
-        filters.addAction(DBManagerAPI.ACTION_GET_ALL);
+//        filters.addAction(DBManagerAPI.ACTION_GET_ALL);
         filters.addAction(DBManagerAPI.ACTION_ADD_PICTURE);;
-        registerReceiver(getAllReceiver, filters);
+        registerReceiver(addReceiver, filters);
 
     }
 
@@ -183,7 +200,7 @@ public class MainActivity extends AppCompatActivity implements TextToSpeech.OnIn
         super.onStop();
         unregisterReceiver(mReceiverPicturePredict);
         unregisterReceiver(mReceiverEnglishTranslate);
-        unregisterReceiver(getAllReceiver);
+        unregisterReceiver(addReceiver);
     }
 
     @Override
@@ -214,17 +231,17 @@ public class MainActivity extends AppCompatActivity implements TextToSpeech.OnIn
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.btnHistory:
-                DBManagerAPI dbManagerAPI = new DBManagerAPI(this);
-                dbManagerAPI.getAllPicture(PreferenceUtil.getInstance(this).getStringValue("username", ""));
+                Intent historyIntent = new Intent(MainActivity.this, ViewHistoryActivity.class);
+                startActivityForResult(historyIntent, HISTORY_REQUEST_CODE);
                 return true;
             case R.id.btnLogout:
                 PreferenceUtil.getInstance(this).putStringValue("username", "");
                 finish();
-                Intent intent = new Intent(this, LoginActivity.class);
-                startActivity(intent);
+                Intent loginIntent = new Intent(this, LoginActivity.class);
+                startActivity(loginIntent);
             case R.id.btnProfile:
-                Intent intent1 = new Intent(this, ProfileActivity.class);
-                startActivity(intent1);
+                Intent profileIntent = new Intent(this, ProfileActivity.class);
+                startActivity(profileIntent);
             default:
                 return true;
         }
@@ -266,16 +283,9 @@ public class MainActivity extends AppCompatActivity implements TextToSpeech.OnIn
     }
 
 
-    BroadcastReceiver getAllReceiver = new BroadcastReceiver() {
+    BroadcastReceiver addReceiver = new BroadcastReceiver() {
         @Override
         public void onReceive(Context context, Intent intent) {
-            if (intent.getAction().equals(DBManagerAPI.ACTION_GET_ALL)) {
-                String result = intent.getStringExtra("API_RESULT");
-                Log.e(TAG, "GET ALL: " + result);
-                Intent historyIntent = new Intent(MainActivity.this, ViewHistoryActivity.class);
-                historyIntent.putExtra("LIST_PICTURE", result);
-                startActivityForResult(historyIntent, HISTORY_REQUEST_CODE);
-            }
             if (intent.getAction().equals(DBManagerAPI.ACTION_ADD_PICTURE)) {
                 String result = intent.getStringExtra("API_RESULT");
                 Log.e(TAG, "ADD PICTURE: " + result);

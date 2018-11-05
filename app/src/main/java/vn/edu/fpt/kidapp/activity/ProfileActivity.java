@@ -27,8 +27,8 @@ public class ProfileActivity extends AppCompatActivity {
     public static final String TAG = ProfileActivity.class.getSimpleName();
 
     private Toolbar mToolbar;
-    private TextView txtUsername, txtAddress;
-    private Button btnChangePassword, btnChange;
+    private TextView txtUsername, txtAddress, txtDateCreated;
+    private Button btnChangePassword;
     private EditText edtOldPassword, edtNewPassword;
     private DBManagerAPI dbManagerAPI;
     private Gson gson;
@@ -45,6 +45,7 @@ public class ProfileActivity extends AppCompatActivity {
 
         txtUsername.setText("Username: " + PreferenceUtil.getInstance(this).getStringValue("username", ""));
         txtAddress.setText("Address: " + PreferenceUtil.getInstance(this).getStringValue("address", ""));
+        txtDateCreated.setText("Date Created: " + PreferenceUtil.getInstance(this).getStringValue("date", ""));
 
         btnChangePassword.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -87,8 +88,8 @@ public class ProfileActivity extends AppCompatActivity {
         mToolbar = findViewById(R.id.my_toolbar);
         txtUsername = findViewById(R.id.txtUsername);
         txtAddress = findViewById(R.id.txtAddress);
+        txtDateCreated = findViewById(R.id.txtDateCreated);
         btnChangePassword = findViewById(R.id.btnChangePassword);
-        btnChange = findViewById(R.id.btnChange);
         edtOldPassword = findViewById(R.id.edtOldPassword);
         edtNewPassword = findViewById(R.id.edtNewPassword);
         dbManagerAPI = new DBManagerAPI(this);
