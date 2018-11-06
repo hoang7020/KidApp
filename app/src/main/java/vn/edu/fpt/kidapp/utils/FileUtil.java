@@ -30,9 +30,9 @@ public class FileUtil {
             fos.write(data);
             fos.close();
         } catch (FileNotFoundException e) {
-            Log.e(TAG, "convertByteArrayToFileImage: " + e.getMessage());
+            Log.e(TAG, "FileNotFoundException: " + e.getMessage());
         } catch (IOException e) {
-            Log.e(TAG, "convertByteArrayToFileImage: " + e.getMessage());
+            Log.e(TAG, "IOException: " + e.getMessage());
         }
     }
 
@@ -46,9 +46,9 @@ public class FileUtil {
             bitmap = BitmapFactory.decodeStream(fis);
             fis.close();
         } catch (FileNotFoundException e) {
-            e.printStackTrace();
+            Log.e(TAG, "FileNotFoundException: " + e.getMessage());
         } catch (IOException e) {
-            e.printStackTrace();
+            Log.e(TAG, "IOException: " + e.getMessage());
         }
 
         return bitmap;

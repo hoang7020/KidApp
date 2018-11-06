@@ -41,8 +41,7 @@ public class ClarifaiUtil {
         Thread t = new Thread(new Runnable() {
             @Override
             public void run() {
-                try {
-                    //predict with default model
+                //predict with default model
 //                model<Concept> generalModel = client.getDefaultModels().generalModel();
 //                PredictRequest < Concept > request = generalModel.predict().withInputs(
 //                        ClarifaiInput.forImage(imageFile)
@@ -61,23 +60,21 @@ public class ClarifaiUtil {
 //                    intent.putExtra("result2", rs.get().workflowResults().get(0).predictions().get(0).start().get(1).asConcept().name());
 //                    intent.putExtra("result3", rs.get().workflowResults().get(0).predictions().get(0).start().get(2).asConcept().name());
 
-                    //predict with model
-                    ModelVersion modelVersion = client.getModelVersionByID("General", "aa9ca48295b37401f8af92ad1af0d91d")
-                            .executeSync()
-                            .get();
-                    PredictRequest<Prediction> request = client.predict("General")
-                            .withVersion(modelVersion)
-                            .withInputs(ClarifaiInput.forImage(imageFile));
-                    result = request.executeSync().get();
-                    Intent intent = new Intent();
-                    intent.setAction("ACTION_PREDICT_SUCCESS");
-                    intent.putExtra("result1", result.get(0).data().get(0).asConcept().name());
-                    intent.putExtra("result2", result.get(0).data().get(1).asConcept().name());
-                    intent.putExtra("result3", result.get(0).data().get(2).asConcept().name());
-                    context.sendBroadcast(intent);
-                } catch (Exception e) {
-                    Log.e(TAG, "run: " + e.getMessage());
-                }
+                //predict with model
+                ModelVersion modelVersion = client.getModelVersionByID("General", "aa9ca48295b37401f8af92ad1af0d91d")
+                        .executeSync()
+                        .get();
+                PredictRequest<Prediction> request = client.predict("General")
+                        .withVersion(modelVersion)
+                        .withInputs(ClarifaiInput.forImage(imageFile));
+                result = request.executeSync().get();
+                Intent intent = new Intent();
+                intent.setAction("ACTION_PREDICT_SUCCESS");
+                intent.putExtra("result1", result.get(0).data().get(0).asConcept().name());
+                intent.putExtra("result2", result.get(0).data().get(1).asConcept().name());
+                intent.putExtra("result3", result.get(0).data().get(2).asConcept().name());
+                Log.e(TAG, "predictImage: " + result.get(0).data().get(2).asConcept().name());
+                context.sendBroadcast(intent);
             }
         });
         t.start();
