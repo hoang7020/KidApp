@@ -6,6 +6,7 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.support.annotation.Nullable;
+import android.util.Log;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -139,8 +140,7 @@ public class DBManager extends SQLiteOpenHelper {
         int id = 0;
         SQLiteDatabase db = getReadableDatabase();
         Cursor cursor = db.rawQuery("select max(" + ID + ") from " + TABLE_NAME, null);
-        if (cursor != null) {
-            cursor.moveToFirst();
+        if (cursor.moveToFirst()) {
             id = cursor.getInt(0);
         }
         return id;

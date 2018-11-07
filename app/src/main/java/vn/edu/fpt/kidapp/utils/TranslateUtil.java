@@ -49,7 +49,7 @@ public class TranslateUtil {
                     connection.setRequestMethod("POST");
                     connection.setRequestProperty("Content-Type", "application/json");
                     connection.setRequestProperty("Ocp-Apim-Subscription-Key", subscriptionKey);
-                    connection.setRequestProperty("X-ClientTraceId", UUID.randomUUID().toString());
+//                    connection.setRequestProperty("X-ClientTraceId", UUID.randomUUID().toString());
                     connection.setDoOutput(true);
 
                     DataOutputStream dos = new DataOutputStream(connection.getOutputStream());
