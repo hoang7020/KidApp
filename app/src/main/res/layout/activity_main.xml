@@ -65,6 +65,7 @@
                     android:text="Read" />
 
                 <TextView
+                    android:fontFamily="@font/lapus"
                     android:id="@+id/txtResult1"
                     android:layout_width="0dp"
                     android:layout_height="40dp"
@@ -76,6 +77,7 @@
                     android:text="English" />
 
                 <TextView
+                    android:fontFamily="@font/lapus"
                     android:id="@+id/txtVietname1"
                     android:layout_width="0dp"
                     android:layout_height="40dp"
@@ -93,6 +95,7 @@
             </LinearLayout>
 
             <LinearLayout
+
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
                 android:layout_gravity="center"
@@ -111,6 +114,7 @@
                     android:text="Read" />
 
                 <TextView
+                    android:fontFamily="@font/lapus"
                     android:id="@+id/txtResult2"
                     android:layout_width="0dp"
                     android:layout_height="40dp"
@@ -123,6 +127,7 @@
 
 
                 <TextView
+                    android:fontFamily="@font/lapus"
                     android:id="@+id/txtVietname2"
                     android:layout_width="0dp"
                     android:layout_height="40dp"
@@ -158,6 +163,7 @@
                     android:text="Read" />
 
                 <TextView
+                    android:fontFamily="@font/lapus"
                     android:id="@+id/txtResult3"
                     android:layout_width="0dp"
                     android:layout_height="40dp"
@@ -169,6 +175,7 @@
                     android:text="English" />
 
                 <TextView
+                    android:fontFamily="@font/lapus"
                     android:id="@+id/txtVietname3"
                     android:layout_width="0dp"
                     android:layout_height="40dp"
