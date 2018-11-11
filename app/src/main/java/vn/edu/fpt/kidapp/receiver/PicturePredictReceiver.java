@@ -9,10 +9,10 @@ import java.util.List;
 import java.util.Vector;
 
 import vn.edu.fpt.kidapp.interfaces.Observer;
-import vn.edu.fpt.kidapp.interfaces.Observerable;
+import vn.edu.fpt.kidapp.interfaces.Subject;
 import vn.edu.fpt.kidapp.utils.TranslateUtil;
 
-public class PicturePredictReceiver extends BroadcastReceiver implements Observerable {
+public class PicturePredictReceiver extends BroadcastReceiver implements Subject {
 
     private static final String TAG = PicturePredictReceiver.class.getSimpleName();
 
@@ -28,7 +28,7 @@ public class PicturePredictReceiver extends BroadcastReceiver implements Observe
             String rs1 = intent.getStringExtra("result1");
             String rs2 = intent.getStringExtra("result2");
             String rs3 = intent.getStringExtra("result3");
-            sendNotification(Observerable.PICTURE_PREDICT, rs1, rs2, rs3);
+            sendNotification(Subject.PICTURE_PREDICT, rs1, rs2, rs3);
             List<TranslateUtil.RequestBody> listEng = new ArrayList<>();
             listEng.add(new TranslateUtil.RequestBody(rs1));
             listEng.add(new TranslateUtil.RequestBody(rs2));

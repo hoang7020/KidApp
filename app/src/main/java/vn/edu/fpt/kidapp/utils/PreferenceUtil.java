@@ -6,8 +6,8 @@ import android.preference.PreferenceManager;
 
 public class PreferenceUtil {
 
-    private static SharedPreferences pref;
-    private static PreferenceUtil _instance;
+    private static volatile SharedPreferences pref;
+    private static volatile PreferenceUtil _instance;
 
     public synchronized static PreferenceUtil getInstance(Context context) {
 

@@ -9,11 +9,11 @@ import java.util.List;
 import java.util.Vector;
 
 import vn.edu.fpt.kidapp.interfaces.Observer;
-import vn.edu.fpt.kidapp.interfaces.Observerable;
+import vn.edu.fpt.kidapp.interfaces.Subject;
 import vn.edu.fpt.kidapp.model.TranslateResult;
 import vn.edu.fpt.kidapp.utils.TranslateUtil;
 
-public class EnglishTranslateReceiver extends BroadcastReceiver implements Observerable {
+public class EnglishTranslateReceiver extends BroadcastReceiver implements Subject {
 
     private static final String TAG = EnglishTranslateReceiver.class.getSimpleName();
 
@@ -32,7 +32,7 @@ public class EnglishTranslateReceiver extends BroadcastReceiver implements Obser
             String rs1 = results.get(0).getTranslations().get(1).getText();
             String rs2 = results.get(1).getTranslations().get(1).getText();
             String rs3 = results.get(2).getTranslations().get(1).getText();
-            sendNotification(Observerable.ENGLISH_TRANSLATE, rs1, rs2, rs3);
+            sendNotification(Subject.ENGLISH_TRANSLATE, rs1, rs2, rs3);
         }
     }
 

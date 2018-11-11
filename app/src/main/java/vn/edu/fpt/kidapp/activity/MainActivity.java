@@ -29,7 +29,7 @@ import vn.edu.fpt.kidapp.R;
 import vn.edu.fpt.kidapp.database.DBManagerAPI;
 import vn.edu.fpt.kidapp.fragment.LoadingFragment;
 import vn.edu.fpt.kidapp.interfaces.Observer;
-import vn.edu.fpt.kidapp.interfaces.Observerable;
+import vn.edu.fpt.kidapp.interfaces.Subject;
 import vn.edu.fpt.kidapp.model.APIObjectJSON;
 import vn.edu.fpt.kidapp.receiver.EnglishTranslateReceiver;
 import vn.edu.fpt.kidapp.receiver.PicturePredictReceiver;
@@ -266,12 +266,12 @@ public class MainActivity extends AppCompatActivity implements TextToSpeech.OnIn
 
     @Override
     public void getNotification(int type, String rs1, String rs2, String rs3) {
-        if (type == Observerable.PICTURE_PREDICT) {
+        if (type == Subject.PICTURE_PREDICT) {
             txtResult1.setText(rs1);
             txtResult2.setText(rs2);
             txtResult3.setText(rs3);
         }
-        if (type == Observerable.ENGLISH_TRANSLATE) {
+        if (type == Subject.ENGLISH_TRANSLATE) {
             txtVietname1.setText(rs1);
             txtVietname2.setText(rs2);
             txtVietname3.setText(rs3);
